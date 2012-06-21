@@ -11,18 +11,15 @@
 
 static Candidates *sharedInstance = nil;
 
-+ (void)allocateSharedInstanceWithServer:(IMKServer *)server
-{
++ (void)allocateSharedInstanceWithServer:(IMKServer *)server {
 	sharedInstance = [[self alloc] initWithServer:server panelType:kIMKSingleRowSteppingCandidatePanel];
 }
 
-+ (void)deallocateSharedInstance
-{
++ (void)deallocateSharedInstance {
 	[sharedInstance release];
 }
 
-+ (Candidates *)sharedInstance;
-{
++ (Candidates *)sharedInstance; {
 	return sharedInstance;
 }
 

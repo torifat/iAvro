@@ -13,12 +13,11 @@
 const NSString* kConnectionName = @"Avro_Keyboard_Connection";
 
 //let this be a global so our application controller delegate can access it easily
-IMKServer*       server;
+IMKServer* server;
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     
-    NSString*       identifier;
+    NSString* identifier;
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
 	//find the bundle identifier and then initialize the input method server

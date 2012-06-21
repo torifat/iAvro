@@ -23,7 +23,7 @@
     //the current active client.
     id								_currentClient;
     
-    NSMutableArray*                        _currentCandidates;
+    NSMutableArray*                 _currentCandidates;
 }
 
 //These are simple methods for managing our composition and original buffers

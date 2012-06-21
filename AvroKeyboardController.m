@@ -10,12 +10,10 @@
 
 @implementation AvroKeyboardController
 
-- (id)initWithServer:(IMKServer*)server delegate:(id)delegate client:(id)inputClient
-{
+- (id)initWithServer:(IMKServer*)server delegate:(id)delegate client:(id)inputClient {
     self = [super initWithServer:server delegate:delegate client:inputClient];
     
-	if (self)
-	{
+	if (self) {
 		_currentClient = inputClient;
 		_composedBuffer = [[NSMutableString alloc] initWithString:@""];
 		_currentCandidates = nil;
@@ -24,15 +22,13 @@
 	return self;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
 	[_composedBuffer release];
 	
 	[super dealloc];
 }
 
-- (void)findCurrentCandidates
-{
+- (void)findCurrentCandidates {
     /*
      if(_composedBuffer) {
         NSString *convertedText = nil;
@@ -51,10 +47,8 @@
      */
 }
 
-- (void)updateCandidatesPanel
-{
-    if (_currentCandidates)
-    {
+- (void)updateCandidatesPanel {
+    if (_currentCandidates) {
         // Need to set font here; setting it in init... doesn't work.		
         // NSUserDefaults *defaultsDictionary = [NSUserDefaults standardUserDefaults];
         
@@ -73,23 +67,19 @@
         [[Candidates sharedInstance] hide];
 }
 
-- (NSArray*)candidates:(id)sender
-{
+- (NSArray*)candidates:(id)sender {
 	return _currentCandidates;	
 }
 
-- (void)candidateSelectionChanged:(NSAttributedString*)candidateString
-{
+- (void)candidateSelectionChanged:(NSAttributedString*)candidateString {
 	// Intentionally blank.
 }
 
-- (void)clearCompositionBuffer
-{
+- (void)clearCompositionBuffer {
 	[_composedBuffer deleteCharactersInRange:NSMakeRange(0, [_composedBuffer length])];	
 }
 
-- (void)candidateSelected:(NSAttributedString*)candidateString
-{
+- (void)candidateSelected:(NSAttributedString*)candidateString {
 	[_currentClient insertText:candidateString replacementRange:NSMakeRange(NSNotFound, 0)];
 	
 	[self clearCompositionBuffer];
@@ -98,8 +88,7 @@
 	_currentCandidates = nil;
 }
 
-- (void)commitComposition:(id)sender
-{
+- (void)commitComposition:(id)sender {
 	[sender insertText:_composedBuffer replacementRange:NSMakeRange(NSNotFound, 0)];
 	
 	[self clearCompositionBuffer];
@@ -108,13 +97,11 @@
 	_currentCandidates = nil;
 }
 
-- (id)composedString:(id)sender
-{
+- (id)composedString:(id)sender {
 	return [[[NSAttributedString alloc] initWithString:_composedBuffer] autorelease];
 }
 
-- (NSString *)convertPunctuation:(NSString*)string
-{
+- (NSString *)convertPunctuation:(NSString*)string {
     /*
      NSDictionary *punctuations = [[ConversionEngine sharedInstance] punctuations];
      
@@ -123,8 +110,7 @@
     return @"";
 }
 
-- (BOOL)areValidCharacters:(NSString*)string
-{
+- (BOOL)areValidCharacters:(NSString*)string {
     char key = [string characterAtIndex:0];
     return ((key >= 'a' && key <= 'z') || (key >= 'A' && key <= 'Z') || key == '\'');
     /*
@@ -158,8 +144,7 @@
  @abstract   Receive incoming text.
  @discussion This method receives key board input from the client application.  The method receives the key input as an NSString. The string will have been created from the keydown event by the InputMethodKit.
  */
--(BOOL)inputText:(NSString*)string client:(id)sender
-{
+-(BOOL)inputText:(NSString*)string client:(id)sender {
     // Return YES to indicate the the key input was received and dealt with.  Key processing will not continue in that case.  In
     // other words the system will not deliver a key down event to the application.
     // Returning NO means the original key down will be passed on to the client.
@@ -173,14 +158,11 @@
      
      return YES;
      }
-     else */if ([string isEqualToString:@" "])
-     {
-         if ([_composedBuffer length] == 0)
-         {
+     else */if ([string isEqualToString:@" "]) {
+         if ([_composedBuffer length] == 0) {
              [_currentClient insertText:@" " replacementRange:NSMakeRange(NSNotFound, 0)];
          }
-         else
-         {
+         else {
              [_currentClient insertText:[self convert:_composedBuffer] replacementRange:NSMakeRange(NSNotFound, 0)];
              
              [self clearCompositionBuffer];
@@ -188,12 +170,10 @@
              [_currentCandidates release];
              _currentCandidates = nil;
              /*
-             if (_currentCandidates)
-             {
+             if (_currentCandidates) {
                  [self candidateSelected:[_currentCandidates objectAtIndex:0]];
              }
-             else
-             {
+             else {
                  NSBeep();
              }
               */
@@ -201,8 +181,7 @@
          
          return YES;
      }
-     else if ([self areValidCharacters:string])
-     {
+     else if ([self areValidCharacters:string]) {
          [_composedBuffer appendString:string];
          
          [self findCurrentCandidates];
@@ -217,8 +196,7 @@
          return NO;
 }
 
--(NSString*)convert:(NSString*)string
-{
+-(NSString*)convert:(NSString*)string {
     NSTask *task;
     task = [[NSTask alloc] init];
     [task setLaunchPath: @"/usr/bin/avro"];
@@ -248,8 +226,7 @@
 	return [ret substringToIndex:[ret length] - 1];
 }
 
-- (void)deleteBackward:(id)sender
-{
+- (void)deleteBackward:(id)sender {
     // We're called only when [compositionBuffer length] > 0
     [_composedBuffer deleteCharactersInRange:NSMakeRange([_composedBuffer length] - 1, 1)];
     
@@ -260,10 +237,8 @@
     [self updateCandidatesPanel];
 }
 
--(BOOL)didCommandBySelector:(SEL)aSelector client:(id)sender
-{
-    if ([self respondsToSelector:aSelector] && [_composedBuffer length] > 0)
-    {
+-(BOOL)didCommandBySelector:(SEL)aSelector client:(id)sender {
+    if ([self respondsToSelector:aSelector] && [_composedBuffer length] > 0) {
         [self performSelector:aSelector withObject:sender];
         return YES; 
     }
@@ -271,8 +246,7 @@
         return NO;
 }
 
-- (NSMenu*)menu
-{
+- (NSMenu*)menu {
     return [[NSApp delegate] menu];
 }
 
