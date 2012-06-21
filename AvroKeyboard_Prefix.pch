@@ -1,0 +1,10 @@
+//
+//  AvroKeyboard
+//
+//  Created by Rifat Nabi on 6/21/12.
+//  Copyright (c) 2012 OmicronLab. All rights reserved.
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
