@@ -157,6 +157,7 @@
              [_currentClient insertText:@" " replacementRange:NSMakeRange(NSNotFound, 0)];
          }
          else {
+             [_composedBuffer appendString:string];
              [_currentClient insertText:[[AvroParser sharedInstance] parse:_composedBuffer] replacementRange:NSMakeRange(NSNotFound, 0)];
              
              [self clearCompositionBuffer];
