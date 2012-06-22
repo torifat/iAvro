@@ -69,7 +69,8 @@ static AvroParser* sharedInstance = nil;
     int len = [string length];
     unichar *fixedArray = calloc(len, sizeof(unichar));
     [string getCharacters:fixedArray];
-    for (int i = 0; i < [string length]; ++i) {
+    int i;
+    for (i = 0; i < len; ++i) {
         unichar c = [string characterAtIndex:i];
         if(![self isCaseSensitive:c]) {
             fixedArray[i] = [self smallCap:c];
@@ -81,7 +82,8 @@ static AvroParser* sharedInstance = nil;
     NSMutableString* output = [[NSMutableString alloc] initWithCapacity:0];
     
     len = [fixed length];
-    for(int cur = 0; cur < len; ++cur) {
+    int cur;
+    for(cur = 0; cur < len; ++cur) {
         int start = cur, end = cur + 1, prev = start - 1;
         BOOL matched = FALSE;
         
@@ -208,8 +210,8 @@ static AvroParser* sharedInstance = nil;
 - (BOOL)isVowel:(unichar)c {
 	// Making it lowercase for checking
     c = [self smallCap:c];
-    int len = [vowel length];
-    for (int i = 0; i < len; ++i) {
+    int i, len = [vowel length];
+    for (i = 0; i < len; ++i) {
         if ([vowel characterAtIndex:i] == c) {
             return TRUE;
         }
@@ -220,8 +222,8 @@ static AvroParser* sharedInstance = nil;
 - (BOOL)isConsonant:(unichar)c {
 	// Making it lowercase for checking
     c = [self smallCap:c];
-    int len = [consonant length];
-    for (int i = 0; i < len; ++i) {
+    int i, len = [consonant length];
+    for (i = 0; i < len; ++i) {
         if ([consonant characterAtIndex:i] == c) {
             return TRUE;
         }
@@ -237,8 +239,8 @@ static AvroParser* sharedInstance = nil;
 - (BOOL)isCaseSensitive:(unichar)c {
     // Making it lowercase for checking
     c = [self smallCap:c];
-    int len = [casesensitive length];
-    for (int i = 0; i < len; ++i) {
+    int i, len = [casesensitive length];
+    for (i = 0; i < len; ++i) {
         if ([casesensitive characterAtIndex:i] == c) {
             return TRUE;
         }
