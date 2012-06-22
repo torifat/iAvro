@@ -31,13 +31,11 @@
 
 - (void)findCurrentCandidates {
     if(_composedBuffer) {
-        [_currentCandidates addObject:[[AvroParser sharedInstance] parse:_composedBuffer]];
+        _currentCandidates = [NSMutableArray arrayWithObject:[[AvroParser sharedInstance] parse:_composedBuffer]];
     }
-    /*
     if (_currentCandidates) {
         [_currentCandidates retain];
     }
-    */
 }
 
 - (void)updateCandidatesPanel {
