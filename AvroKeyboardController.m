@@ -93,27 +93,6 @@
 	return [[[NSAttributedString alloc] initWithString:_composedBuffer] autorelease];
 }
 
-- (NSString *)convertPunctuation:(NSString*)string {
-    /*
-     NSDictionary *punctuations = [[ConversionEngine sharedInstance] punctuations];
-     
-     return [punctuations objectForKey:[compositionBuffer stringByAppendingString:string]];
-     */
-    return @"";
-}
-
-- (BOOL)areValidCharacters:(NSString*)string {
-    char key = [string characterAtIndex:0];
-    return ((key >= 'a' && key <= 'z') || (key >= 'A' && key <= 'Z') || key == '\'' || key == '`');
-    /*
-     NSCharacterSet *validCharacterSet = [NSCharacterSet lowercaseLetterCharacterSet];
-     
-     NSScanner *scanner = [NSScanner scannerWithString:string];
-     
-     return [scanner scanCharactersFromSet:validCharacterSet intoString:NULL] && [scanner isAtEnd];
-     */
-}
-
 /*
  Implement one of the three ways to receive input from the client. 
  Here are the three approaches:
@@ -140,53 +119,28 @@
     // Return YES to indicate the the key input was received and dealt with.  Key processing will not continue in that case.  In
     // other words the system will not deliver a key down event to the application.
     // Returning NO means the original key down will be passed on to the client.
-    /*
-     NSString *punctuation = [self convertPunctuation:string];
-     if (punctuation)
-     {
-     [client insertText:punctuation replacementRange:NSMakeRange(NSNotFound, 0)];
-     
-     [self clearCompositionBuffer];
-     
-     return YES;
-     }
-     else */if ([string isEqualToString:@" "]) {
+    if ([string isEqualToString:@" "]) {
          if ([_composedBuffer length] == 0) {
              [_currentClient insertText:@" " replacementRange:NSMakeRange(NSNotFound, 0)];
          }
          else {
-             [_composedBuffer appendString:string];
-             [_currentClient insertText:[[AvroParser sharedInstance] parse:_composedBuffer] replacementRange:NSMakeRange(NSNotFound, 0)];
-             
-             [self clearCompositionBuffer];
-             
-             [_currentCandidates release];
-             _currentCandidates = nil;
-             /*
              if (_currentCandidates) {
+                 [_composedBuffer appendString:string];
+                 [self findCurrentCandidates];
                  [self candidateSelected:[_currentCandidates objectAtIndex:0]];
              }
              else {
                  NSBeep();
              }
-              */
          }
-         
-         return YES;
-     }
-     else if ([self areValidCharacters:string]) {
-         [_composedBuffer appendString:string];
-         
-         [self findCurrentCandidates];
-         
-         [self updateComposition];
-         
-         [self updateCandidatesPanel];
-         
          return YES;
      }
      else {
-         return NO;
+         [_composedBuffer appendString:string];
+         [self findCurrentCandidates];
+         [self updateComposition];
+         [self updateCandidatesPanel];
+         return YES;
      }
 }
 
