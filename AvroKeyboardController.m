@@ -30,22 +30,14 @@
 }
 
 - (void)findCurrentCandidates {
-    /*
-     if(_composedBuffer) {
-        NSString *convertedText = nil;
-        convertedText = [self convert:_composedBuffer];
-        if(convertedText) {
-            [_currentCandidates addObject:convertedText];
-        }
+    if(_composedBuffer) {
+        [_currentCandidates addObject:[[AvroParser sharedInstance] parse:_composedBuffer]];
     }
-     _currentCandidates = [[[ConversionEngine sharedInstance] characters] objectForKey:_composedBuffer];
-     
-     if (!_currentCandidates)
-     currentCandidates = [[[ConversionEngine sharedInstance] phrases] objectForKey:_composedBuffer];
-     
-     if (currentCandidates)
-     [currentCandidates retain];
-     */
+    /*
+    if (_currentCandidates) {
+        [_currentCandidates retain];
+    }
+    */
 }
 
 - (void)updateCandidatesPanel {
@@ -60,12 +52,13 @@
         // [[Candidates sharedInstance] setAttributes:[NSDictionary dictionaryWithObject:candidateFont forKey:NSFontAttributeName]];
         
         // [[Candidates sharedInstance] setPanelType:[defaultsDictionary integerForKey:@"candidatePanelType"]];		
-        // [[Candidates sharedInstance] setPanelType:kIMKSingleColumnScrollingCandidatePanel];
+        [[Candidates sharedInstance] setPanelType:kIMKSingleColumnScrollingCandidatePanel];
         [[Candidates sharedInstance] updateCandidates];
         [[Candidates sharedInstance] show:kIMKLocateCandidatesBelowHint];
     }
-    else
+    else {
         [[Candidates sharedInstance] hide];
+    }
 }
 
 - (NSArray*)candidates:(id)sender {
@@ -113,7 +106,7 @@
 
 - (BOOL)areValidCharacters:(NSString*)string {
     char key = [string characterAtIndex:0];
-    return ((key >= 'a' && key <= 'z') || (key >= 'A' && key <= 'Z') || key == '\'');
+    return ((key >= 'a' && key <= 'z') || (key >= 'A' && key <= 'Z') || key == '\'' || key == '`');
     /*
      NSCharacterSet *validCharacterSet = [NSCharacterSet lowercaseLetterCharacterSet];
      
@@ -164,7 +157,7 @@
              [_currentClient insertText:@" " replacementRange:NSMakeRange(NSNotFound, 0)];
          }
          else {
-             //[_currentClient insertText:[[AvroParser sharedInstance] parse:_composedBuffer] replacementRange:NSMakeRange(NSNotFound, 0)];
+             [_currentClient insertText:[[AvroParser sharedInstance] parse:_composedBuffer] replacementRange:NSMakeRange(NSNotFound, 0)];
              
              [self clearCompositionBuffer];
              
@@ -193,8 +186,9 @@
          
          return YES;
      }
-     else
+     else {
          return NO;
+     }
 }
 
 - (void)deleteBackward:(id)sender {
@@ -213,8 +207,9 @@
         [self performSelector:aSelector withObject:sender];
         return YES; 
     }
-    else
+    else {
         return NO;
+    }
 }
 
 - (NSMenu*)menu {

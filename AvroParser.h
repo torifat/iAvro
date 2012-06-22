@@ -8,10 +8,10 @@
 #import <Foundation/Foundation.h>
 
 @interface AvroParser : NSObject {
-	NSString*       vowel;
-    NSString*       consonant;
-    NSString*       casesensitive;
-    NSDictionary*   patterns;
+	NSString*       _vowel;
+    NSString*       _consonant;
+    NSString*       _casesensitive;
+    NSDictionary*   _patterns;
 }
 
 + (void)allocateSharedInstance;

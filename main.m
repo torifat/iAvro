@@ -35,8 +35,9 @@ int main(int argc, char *argv[]) {
 	//finally run everything
 	[[NSApplication sharedApplication] run];
 	
-    //[AvroParser deallocateSharedInstance];
+    [AvroParser deallocateSharedInstance];
     [Candidates deallocateSharedInstance];
+    [server release];
     [pool release];
     return 0;
 }

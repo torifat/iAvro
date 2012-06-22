@@ -26,10 +26,10 @@
                 @throw error;
                 // @throw [NSException exceptionWithName:@"AvroParser init" reason:@"Error parsing JSON" userInfo:nil];
             } else {
-                vowel = [jsonArray objectForKey:@"vowel"];
-                consonant = [jsonArray objectForKey:@"consonant"];
-                casesensitive = [jsonArray objectForKey:@"casesensitive"];
-                patterns = [jsonArray objectForKey:@"patterns"];
+                _vowel = [jsonArray objectForKey:@"vowel"];
+                _consonant = [jsonArray objectForKey:@"consonant"];
+                _casesensitive = [jsonArray objectForKey:@"casesensitive"];
+                _patterns = [jsonArray objectForKey:@"patterns"];
             }
             
         } else {
@@ -41,10 +41,10 @@
 }
 
 - (void)dealloc {
-	[vowel release];
-	[consonant release];
-	[casesensitive release];
-	[patterns release];
+	[_vowel release];
+	[_consonant release];
+	[_casesensitive release];
+	[_patterns release];
 	
 	[super dealloc];
 }
@@ -87,7 +87,7 @@ static AvroParser* sharedInstance = nil;
         int start = cur, end = cur + 1, prev = start - 1;
         BOOL matched = FALSE;
         
-        for(NSDictionary *pattern in patterns) {
+        for(NSDictionary *pattern in _patterns) {
             NSString* find = [pattern objectForKey:@"find"];
             int findLen = [find length];
             end = cur + findLen;
@@ -210,9 +210,9 @@ static AvroParser* sharedInstance = nil;
 - (BOOL)isVowel:(unichar)c {
 	// Making it lowercase for checking
     c = [self smallCap:c];
-    int i, len = [vowel length];
+    int i, len = [_vowel length];
     for (i = 0; i < len; ++i) {
-        if ([vowel characterAtIndex:i] == c) {
+        if ([_vowel characterAtIndex:i] == c) {
             return TRUE;
         }
     }
@@ -222,9 +222,9 @@ static AvroParser* sharedInstance = nil;
 - (BOOL)isConsonant:(unichar)c {
 	// Making it lowercase for checking
     c = [self smallCap:c];
-    int i, len = [consonant length];
+    int i, len = [_consonant length];
     for (i = 0; i < len; ++i) {
-        if ([consonant characterAtIndex:i] == c) {
+        if ([_consonant characterAtIndex:i] == c) {
             return TRUE;
         }
     }
@@ -239,9 +239,9 @@ static AvroParser* sharedInstance = nil;
 - (BOOL)isCaseSensitive:(unichar)c {
     // Making it lowercase for checking
     c = [self smallCap:c];
-    int i, len = [casesensitive length];
+    int i, len = [_casesensitive length];
     for (i = 0; i < len; ++i) {
-        if ([casesensitive characterAtIndex:i] == c) {
+        if ([_casesensitive characterAtIndex:i] == c) {
             return TRUE;
         }
     }
