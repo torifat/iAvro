@@ -6,6 +6,7 @@
 //
 
 #import "AvroKeyboardController.h"
+#import "AvroParser.h"
 #import "Candidates.h"
 
 @implementation AvroKeyboardController
@@ -59,7 +60,7 @@
         // [[Candidates sharedInstance] setAttributes:[NSDictionary dictionaryWithObject:candidateFont forKey:NSFontAttributeName]];
         
         // [[Candidates sharedInstance] setPanelType:[defaultsDictionary integerForKey:@"candidatePanelType"]];		
-        [[Candidates sharedInstance] setPanelType:kIMKSingleColumnScrollingCandidatePanel];
+        // [[Candidates sharedInstance] setPanelType:kIMKSingleColumnScrollingCandidatePanel];
         [[Candidates sharedInstance] updateCandidates];
         [[Candidates sharedInstance] show:kIMKLocateCandidatesBelowHint];
     }
@@ -163,7 +164,7 @@
              [_currentClient insertText:@" " replacementRange:NSMakeRange(NSNotFound, 0)];
          }
          else {
-             [_currentClient insertText:[self convert:_composedBuffer] replacementRange:NSMakeRange(NSNotFound, 0)];
+             [_currentClient insertText:[[AvroParser sharedInstance] parse:_composedBuffer] replacementRange:NSMakeRange(NSNotFound, 0)];
              
              [self clearCompositionBuffer];
              
@@ -194,36 +195,6 @@
      }
      else
          return NO;
-}
-
--(NSString*)convert:(NSString*)string {
-    NSTask *task;
-    task = [[NSTask alloc] init];
-    [task setLaunchPath: @"/usr/bin/avro"];
-    
-    NSArray *arguments;
-    arguments = [NSArray arrayWithObjects: string, nil];
-    [task setArguments: arguments];
-    
-    NSPipe *pipe;
-    pipe = [NSPipe pipe];
-    [task setStandardOutput: pipe];
-    
-    NSFileHandle *file;
-    file = [pipe fileHandleForReading];
-    
-    [task launch];
-    
-    NSData *data;
-    data = [file readDataToEndOfFile];
-    
-    NSString *ret;
-    ret = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
-    NSLog (@"avro returned:\n%@", ret);
-    
-    // [string release];
-    [task release];
-	return [ret substringToIndex:[ret length] - 1];
 }
 
 - (void)deleteBackward:(id)sender {
