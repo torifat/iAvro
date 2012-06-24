@@ -80,6 +80,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
+      customArchiveName = "Avro Keyboard"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

@@ -7,6 +7,7 @@
 
 #import "AvroKeyboardController.h"
 #import "AvroParser.h"
+#import "AutoCorrect.h"
 #import "Candidates.h"
 
 @implementation AvroKeyboardController
@@ -17,7 +18,7 @@
 	if (self) {
 		_currentClient = inputClient;
 		_composedBuffer = [[NSMutableString alloc] initWithString:@""];
-		_currentCandidates = nil;
+		_currentCandidates = [[NSMutableArray alloc] init];
     }
     
 	return self;
@@ -30,7 +31,12 @@
 
 - (void)findCurrentCandidates {
     if(_composedBuffer) {
-        _currentCandidates = [NSMutableArray arrayWithObject:[[AvroParser sharedInstance] parse:_composedBuffer]];
+        _currentCandidates = [[NSMutableArray alloc] init];
+        NSString* autoCorrectResult = [[AutoCorrect sharedInstance] find:_composedBuffer];
+        if(autoCorrectResult) {
+            [_currentCandidates addObject:[[AvroParser sharedInstance] parse:autoCorrectResult]];
+        }
+        [_currentCandidates addObject:[[AvroParser sharedInstance] parse:_composedBuffer]];
     }
     if (_currentCandidates) {
         [_currentCandidates retain];
@@ -170,9 +176,8 @@
     }
     else {
         if (_currentCandidates) {
-            [_composedBuffer appendString:string];
-            [self findCurrentCandidates];
             [self candidateSelected:[_currentCandidates objectAtIndex:0]];
+            [_currentClient insertText:string replacementRange:NSMakeRange(NSNotFound, 0)];
         }
         else {
             NSBeep();
