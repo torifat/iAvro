@@ -18,7 +18,7 @@
 	if (self) {
 		_currentClient = inputClient;
 		_composedBuffer = [[NSMutableString alloc] initWithString:@""];
-		_currentCandidates = [NSMutableArray new];
+		_currentCandidates = [[NSMutableArray alloc] init];
     }
     
 	return self;
@@ -31,7 +31,7 @@
 
 - (void)findCurrentCandidates {
     if(_composedBuffer) {
-        _currentCandidates = [NSMutableArray new];
+        _currentCandidates = [[NSMutableArray alloc] init];
         NSString* autoCorrectResult = [[AutoCorrect sharedInstance] find:_composedBuffer];
         if(autoCorrectResult) {
             [_currentCandidates addObject:[[AvroParser sharedInstance] parse:autoCorrectResult]];

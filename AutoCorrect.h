@@ -8,9 +8,12 @@
 #import <Foundation/Foundation.h>
 
 @interface AutoCorrect : NSObject {
-    NSMutableArray *_keys;
-    NSMutableArray *_values;
+    NSMutableArray* keys;
+    NSMutableArray* values;
 }
+
+@property (copy) NSMutableArray* keys;
+@property (copy) NSMutableArray* values;
 
 + (void)allocateSharedInstance;
 + (void)deallocateSharedInstance;

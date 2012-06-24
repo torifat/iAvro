@@ -9,6 +9,8 @@
 
 @implementation AutoCorrect
 
+@synthesize keys, values;
+
 - (id)init {
     
     self = [super init];
@@ -21,11 +23,11 @@
         
         // Read from the file
         char keyBuffer[512], valueBuffer[512];
-        _keys = [NSMutableArray array];
-        _values = [NSMutableArray array];
+        keys = [[NSMutableArray alloc] init];
+        values = [[NSMutableArray alloc] init];
         while(fscanf(file, "%s %[^\n]\n", keyBuffer, valueBuffer) == 2) {
-            [_keys addObject:[NSString stringWithFormat:@"%s", keyBuffer]];
-            [_values addObject:[NSString stringWithFormat:@"%s", valueBuffer]];
+            [keys addObject:[NSString stringWithFormat:@"%s", keyBuffer]];
+            [values addObject:[NSString stringWithFormat:@"%s", valueBuffer]];
         }
         fclose(file);
     }
@@ -54,18 +56,18 @@ static AutoCorrect* sharedInstance = nil;
 // Instance Methods
 
 - (NSString*)find:(NSString*)key {
-    int keyCount = [_keys count];
+    int keyCount = [keys count];
     
     NSString* result = nil;
     
     // Binary Search
-    CFIndex stringIndex = CFArrayBSearchValues((CFArrayRef)_keys, CFRangeMake(0, keyCount), key, (CFComparatorFunction)CFStringCompare, NULL);
+    CFIndex stringIndex = CFArrayBSearchValues((CFArrayRef)keys, CFRangeMake(0, keyCount), key, (CFComparatorFunction)CFStringCompare, NULL);
     if ((stringIndex < 0) || (stringIndex >= keyCount)) {
         // NSLog(@"Something went wrong");
-    } else if ([key isEqualToString:[_keys objectAtIndex:stringIndex]] == NO) {
+    } else if ([key isEqualToString:[keys objectAtIndex:stringIndex]] == NO) {
         // NSLog(@"Not Found");
     } else {
-        result = [_values objectAtIndex:stringIndex];
+        result = [values objectAtIndex:stringIndex];
     }
     
     return result;

@@ -5,10 +5,10 @@
 //  Copyright (c) 2012 OmicronLab. All rights reserved.
 //
 
-#import "ApplicationDelegate.h"
+#import "MainMenuController.h"
 
 
-@implementation ApplicationDelegate
+@implementation MainMenuController
 
 //this method is added so that our controllers can access the shared NSMenu.
 -(NSMenu*)menu {
@@ -16,9 +16,9 @@
 }
 
 //add an awakeFromNib item so that we can set the action method.  Note that any menuItems without an action will be disabled when
-//displayed in the Text Input Menud.
+//displayed in the Text Input Menu.
 -(void)awakeFromNib {
-	NSMenuItem*		preferences = [_menu itemWithTag:1];
+	NSMenuItem* preferences = [_menu itemWithTag:1];
 	
 	if (preferences) {
 		[preferences setAction:@selector(showPreferences:)];
