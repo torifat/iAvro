@@ -17,8 +17,8 @@
 + (void)allocateSharedInstance;
 + (void)deallocateSharedInstance;
 + (AvroParser *)sharedInstance;
-- (NSString*)parse:(NSString*)string;
 
+- (NSString*)parse:(NSString*)string;
 - (BOOL)isVowel:(unichar)c;
 - (BOOL)isConsonant:(unichar)c;
 - (BOOL)isPunctuation:(unichar)c;

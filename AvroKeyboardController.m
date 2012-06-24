@@ -25,7 +25,6 @@
 
 - (void)dealloc {
 	[_composedBuffer release];
-	
 	[super dealloc];
 }
 
@@ -115,53 +114,69 @@
  @abstract   Receive incoming text.
  @discussion This method receives key board input from the client application.  The method receives the key input as an NSString. The string will have been created from the keydown event by the InputMethodKit.
  */
--(BOOL)inputText:(NSString*)string client:(id)sender {
+- (BOOL)inputText:(NSString*)string client:(id)sender {
     // Return YES to indicate the the key input was received and dealt with.  Key processing will not continue in that case.  In
     // other words the system will not deliver a key down event to the application.
     // Returning NO means the original key down will be passed on to the client.
     if ([string isEqualToString:@" "]) {
-         if ([_composedBuffer length] == 0) {
-             [_currentClient insertText:@" " replacementRange:NSMakeRange(NSNotFound, 0)];
-         }
-         else {
-             if (_currentCandidates) {
-                 [_composedBuffer appendString:string];
-                 [self findCurrentCandidates];
-                 [self candidateSelected:[_currentCandidates objectAtIndex:0]];
-             }
-             else {
-                 NSBeep();
-             }
-         }
-         return YES;
-     }
-     else {
-         [_composedBuffer appendString:string];
-         [self findCurrentCandidates];
-         [self updateComposition];
-         [self updateCandidatesPanel];
-         return YES;
-     }
+        [self commitText:string];
+        return YES;
+    }
+    else {
+        [_composedBuffer appendString:string];
+        [self findCurrentCandidates];
+        [self updateComposition];
+        [self updateCandidatesPanel];
+        return YES;
+    }
 }
 
 - (void)deleteBackward:(id)sender {
     // We're called only when [compositionBuffer length] > 0
     [_composedBuffer deleteCharactersInRange:NSMakeRange([_composedBuffer length] - 1, 1)];
-    
     [self findCurrentCandidates];
-    
     [self updateComposition];
-    
     [self updateCandidatesPanel];
 }
 
--(BOOL)didCommandBySelector:(SEL)aSelector client:(id)sender {
-    if ([self respondsToSelector:aSelector] && [_composedBuffer length] > 0) {
-        [self performSelector:aSelector withObject:sender];
-        return YES; 
+- (void)insertTab:(id)sender {
+    [self commitText:@"\t"];
+}
+
+- (BOOL)didCommandBySelector:(SEL)aSelector client:(id)sender {
+    if ([self respondsToSelector:aSelector]) {
+		// The NSResponder methods like insertNewline: or deleteBackward: are
+		// methods that return void. didCommandBySelector method requires
+		// that you return YES if the command is handled and NO if you do not. 
+		// This is necessary so that unhandled commands can be passed on to the
+		// client application. For that reason we need to test in the case where
+		// we might not handle the command.
+		
+		if ( _composedBuffer && [_composedBuffer length] > 0 ) {
+			if (aSelector == @selector(insertTab:) ||
+				aSelector == @selector(deleteBackward:) ) {
+                [self performSelector:aSelector withObject:sender];
+                return YES; 
+			}
+		}
+		
+    }
+	return NO;
+}
+
+- (void)commitText:(NSString*)string {
+    if ([_composedBuffer length] == 0) {
+        [_currentClient insertText:string replacementRange:NSMakeRange(NSNotFound, 0)];
     }
     else {
-        return NO;
+        if (_currentCandidates) {
+            [_composedBuffer appendString:string];
+            [self findCurrentCandidates];
+            [self candidateSelected:[_currentCandidates objectAtIndex:0]];
+        }
+        else {
+            NSBeep();
+        }
     }
 }
 
