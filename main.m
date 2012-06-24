@@ -9,6 +9,7 @@
 #import <InputMethodKit/InputMethodKit.h>
 
 #import "AvroParser.h"
+#import "AutoCorrect.h"
 #import "Candidates.h"
 
 //Each input method needs a unique connection name. 
@@ -28,6 +29,7 @@ int main(int argc, char *argv[]) {
     server = [[IMKServer alloc] initWithName:(NSString*)kConnectionName bundleIdentifier:[[NSBundle mainBundle] bundleIdentifier]];
 	[Candidates allocateSharedInstanceWithServer:server];
     [AvroParser allocateSharedInstance];
+    [AutoCorrect allocateSharedInstance];
     
     //load the bundle explicitly because in this case the input method is a background only application 
 	[NSBundle loadNibNamed:@"MainMenu" owner:[NSApplication sharedApplication]];
@@ -36,6 +38,7 @@ int main(int argc, char *argv[]) {
 	[[NSApplication sharedApplication] run];
 	
     [AvroParser deallocateSharedInstance];
+    [AutoCorrect deallocateSharedInstance];
     [Candidates deallocateSharedInstance];
     [server release];
     [pool release];

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3513E96A159255AF00E06F55 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3513E969159255AF00E06F55 /* icon.png */; };
+		35895BF01597639A00F2A3ED /* AutoCorrect.m in Sources */ = {isa = PBXBuildFile; fileRef = 35895BEF1597639A00F2A3ED /* AutoCorrect.m */; };
+		35895BF3159763A300F2A3ED /* autodict.dct in Resources */ = {isa = PBXBuildFile; fileRef = 35895BF2159763A300F2A3ED /* autodict.dct */; };
 		359C1C70159286750080E2FD /* Candidates.m in Sources */ = {isa = PBXBuildFile; fileRef = 359C1C6F159286750080E2FD /* Candidates.m */; };
 		35F4DE73159404A3001EAC81 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 35F4DE72159404A3001EAC81 /* data.json */; };
 		35F4DE7F1594096B001EAC81 /* AvroParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F4DE7E1594096B001EAC81 /* AvroParser.m */; };
@@ -26,6 +28,9 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* AvroKeyboard_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvroKeyboard_Prefix.pch; sourceTree = "<group>"; };
 		3513E969159255AF00E06F55 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		35895BEE1597639A00F2A3ED /* AutoCorrect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoCorrect.h; sourceTree = "<group>"; };
+		35895BEF1597639A00F2A3ED /* AutoCorrect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoCorrect.m; sourceTree = "<group>"; };
+		35895BF2159763A300F2A3ED /* autodict.dct */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = autodict.dct; sourceTree = "<group>"; };
 		359C1C6E159286750080E2FD /* Candidates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Candidates.h; sourceTree = "<group>"; };
 		359C1C6F159286750080E2FD /* Candidates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Candidates.m; sourceTree = "<group>"; };
 		35F4DE72159404A3001EAC81 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
@@ -60,6 +65,8 @@
 				359C1C6F159286750080E2FD /* Candidates.m */,
 				E93074E00A5C2F1200470842 /* AvroKeyboardController.h */,
 				E93074E10A5C2F1200470842 /* AvroKeyboardController.m */,
+				35895BEE1597639A00F2A3ED /* AutoCorrect.h */,
+				35895BEF1597639A00F2A3ED /* AutoCorrect.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -114,6 +121,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				35895BF2159763A300F2A3ED /* autodict.dct */,
 				E93396E20A9A0AAD0073E6C4 /* images */,
 				35F4DE72159404A3001EAC81 /* data.json */,
 				8D1107310486CEB800E47090 /* Info.plist */,
@@ -192,6 +200,7 @@
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				3513E96A159255AF00E06F55 /* icon.png in Resources */,
 				35F4DE73159404A3001EAC81 /* data.json in Resources */,
+				35895BF3159763A300F2A3ED /* autodict.dct in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,6 +215,7 @@
 				E93074E20A5C2F1200470842 /* AvroKeyboardController.m in Sources */,
 				359C1C70159286750080E2FD /* Candidates.m in Sources */,
 				35F4DE7F1594096B001EAC81 /* AvroParser.m in Sources */,
+				35895BF01597639A00F2A3ED /* AutoCorrect.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
