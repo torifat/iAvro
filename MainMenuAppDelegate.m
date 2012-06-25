@@ -5,10 +5,10 @@
 //  Copyright (c) 2012 OmicronLab. All rights reserved.
 //
 
-#import "MainMenuController.h"
+#import "MainMenuAppDelegate.h"
 
 
-@implementation MainMenuController
+@implementation MainMenuAppDelegate
 
 //this method is added so that our controllers can access the shared NSMenu.
 -(NSMenu*)menu {

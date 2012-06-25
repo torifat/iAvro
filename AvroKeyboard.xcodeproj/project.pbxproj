@@ -15,7 +15,7 @@
 		359C1C70159286750080E2FD /* Candidates.m in Sources */ = {isa = PBXBuildFile; fileRef = 359C1C6F159286750080E2FD /* Candidates.m */; };
 		35B007C81597BF89000CE409 /* AutoCorrectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B007C71597BF89000CE409 /* AutoCorrectModel.m */; };
 		35B007CB1597BF9A000CE409 /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B007CA1597BF9A000CE409 /* PreferencesController.m */; };
-		35DBC86B1597A15B00B9772E /* MainMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35DBC86A1597A15B00B9772E /* MainMenuController.m */; };
+		35DBC86B1597A15B00B9772E /* MainMenuAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 35DBC86A1597A15B00B9772E /* MainMenuAppDelegate.m */; };
 		35F4DE73159404A3001EAC81 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 35F4DE72159404A3001EAC81 /* data.json */; };
 		35F4DE7F1594096B001EAC81 /* AvroParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F4DE7E1594096B001EAC81 /* AvroParser.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
@@ -44,8 +44,8 @@
 		35B007C71597BF89000CE409 /* AutoCorrectModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoCorrectModel.m; sourceTree = "<group>"; };
 		35B007C91597BF9A000CE409 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
 		35B007CA1597BF9A000CE409 /* PreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesController.m; sourceTree = "<group>"; };
-		35DBC8691597A15B00B9772E /* MainMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuController.h; sourceTree = "<group>"; };
-		35DBC86A1597A15B00B9772E /* MainMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuController.m; sourceTree = "<group>"; };
+		35DBC8691597A15B00B9772E /* MainMenuAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuAppDelegate.h; sourceTree = "<group>"; };
+		35DBC86A1597A15B00B9772E /* MainMenuAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuAppDelegate.m; sourceTree = "<group>"; };
 		35F4DE72159404A3001EAC81 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		35F4DE7D1594096B001EAC81 /* AvroParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvroParser.h; sourceTree = "<group>"; };
 		35F4DE7E1594096B001EAC81 /* AvroParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvroParser.m; sourceTree = "<group>"; };
@@ -75,8 +75,6 @@
 				35B007C51597BF56000CE409 /* Controllers */,
 				35B007C31597BF4C000CE409 /* Models */,
 				35B007CC1597BFC3000CE409 /* Others */,
-				E93074E00A5C2F1200470842 /* AvroKeyboardController.h */,
-				E93074E10A5C2F1200470842 /* AvroKeyboardController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -163,10 +161,10 @@
 		35B007C51597BF56000CE409 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E93074E00A5C2F1200470842 /* AvroKeyboardController.h */,
+				E93074E10A5C2F1200470842 /* AvroKeyboardController.m */,
 				35B007C91597BF9A000CE409 /* PreferencesController.h */,
 				35B007CA1597BF9A000CE409 /* PreferencesController.m */,
-				35DBC8691597A15B00B9772E /* MainMenuController.h */,
-				35DBC86A1597A15B00B9772E /* MainMenuController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -174,6 +172,8 @@
 		35B007CC1597BFC3000CE409 /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				35DBC8691597A15B00B9772E /* MainMenuAppDelegate.h */,
+				35DBC86A1597A15B00B9772E /* MainMenuAppDelegate.m */,
 				35895BEE1597639A00F2A3ED /* AutoCorrect.h */,
 				35895BEF1597639A00F2A3ED /* AutoCorrect.m */,
 				35F4DE7D1594096B001EAC81 /* AvroParser.h */,
@@ -264,7 +264,7 @@
 				359C1C70159286750080E2FD /* Candidates.m in Sources */,
 				35F4DE7F1594096B001EAC81 /* AvroParser.m in Sources */,
 				35895BF01597639A00F2A3ED /* AutoCorrect.m in Sources */,
-				35DBC86B1597A15B00B9772E /* MainMenuController.m in Sources */,
+				35DBC86B1597A15B00B9772E /* MainMenuAppDelegate.m in Sources */,
 				35B007C81597BF89000CE409 /* AutoCorrectModel.m in Sources */,
 				35B007CB1597BF9A000CE409 /* PreferencesController.m in Sources */,
 			);
@@ -308,7 +308,6 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "\"$(LOCAL_LIBRARY_DIR)/Input Methods/\"";
 				PRODUCT_NAME = "Avro Keyboard";
@@ -323,7 +322,6 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = "Avro Keyboard";
