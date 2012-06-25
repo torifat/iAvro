@@ -37,7 +37,6 @@
         // Sort the array after reading
         NSArray* tempArray = [autoCorrectEntries sortedArrayUsingSelector:@selector(compare:)];
         autoCorrectEntries = [[NSMutableArray alloc] initWithArray:tempArray];
-        [tempArray release];
     }
     
 	return self;

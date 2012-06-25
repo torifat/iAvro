@@ -9,24 +9,11 @@
 
 @implementation PreferencesController
 
-@synthesize window, autoCorrectItems;
-
-- (id)init {
-    self = [super init];
-    if (self) {
-        autoCorrectItems = [[NSMutableArray alloc] init];
-    }
-    return self;
-}
-
-- (void)dealloc {
-    [autoCorrectItems release];
-    [super dealloc];
-}
+@synthesize window;
 
 -(void)awakeFromNib {
-	[[self window] setContentSize:[autoCorrectView frame].size];
-    [[[self window] contentView] addSubview:autoCorrectView];
+	[[self window] setContentSize:[_autoCorrectView frame].size];
+    [[[self window] contentView] addSubview:_autoCorrectView];
     [[[self window] contentView] setWantsLayer:YES];
 }
 
