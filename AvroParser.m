@@ -205,7 +205,7 @@ static AvroParser* sharedInstance = nil;
     }
     
     NSString* ret = [[output copy] autorelease];
-    [output release];
+    //[output release];
     
     return ret;
 }
