@@ -6,8 +6,6 @@
 //
 
 #import "PreferencesController.h"
-#import "AutoCorrect.h"
-#import "AutoCorrectModel.h"
 
 @implementation PreferencesController
 
@@ -17,17 +15,6 @@
     self = [super init];
     if (self) {
         autoCorrectItems = [[NSMutableArray alloc] init];
-        AutoCorrect* autoCorrect = [AutoCorrect sharedInstance];
-        int i;
-        AutoCorrectModel* acm = nil;
-        for (i = 0; i < [[autoCorrect keys] count]; ++i) {
-            // Will implement method initWith key andVaule
-            acm = [[AutoCorrectModel alloc] init];
-            [acm setKey:[[autoCorrect keys] objectAtIndex:i]];
-            [acm setValue:[[autoCorrect values] objectAtIndex:i]];
-            [autoCorrectItems addObject:acm];
-        }
-        [acm release];
     }
     return self;
 }
