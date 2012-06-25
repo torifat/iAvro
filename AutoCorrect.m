@@ -6,10 +6,11 @@
 //
 
 #import "AutoCorrect.h"
+#import "AutoCorrectModel.h"
 
 @implementation AutoCorrect
 
-@synthesize keys, values;
+@synthesize autoCorrectEntries;
 
 - (id)init {
     
@@ -23,19 +24,27 @@
         
         // Read from the file
         char keyBuffer[512], valueBuffer[512];
-        keys = [[NSMutableArray alloc] init];
-        values = [[NSMutableArray alloc] init];
+        autoCorrectEntries = [[NSMutableArray alloc] init];
         while(fscanf(file, "%s %[^\n]\n", keyBuffer, valueBuffer) == 2) {
-            [keys addObject:[NSString stringWithFormat:@"%s", keyBuffer]];
-            [values addObject:[NSString stringWithFormat:@"%s", valueBuffer]];
+            AutoCorrectModel* acm = [[AutoCorrectModel alloc] init];
+            [acm setReplace:[NSString stringWithFormat:@"%s", keyBuffer]];
+            [acm setWith:[NSString stringWithFormat:@"%s", valueBuffer]];
+            [autoCorrectEntries addObject:acm];
+            [acm release];
         }
         fclose(file);
+        
+        // Sort the array after reading
+        NSArray* tempArray = [autoCorrectEntries sortedArrayUsingSelector:@selector(compare:)];
+        autoCorrectEntries = [[NSMutableArray alloc] initWithArray:tempArray];
+        [tempArray release];
     }
     
 	return self;
 }
 
 - (void)dealloc {
+    [autoCorrectEntries release];
 	[super dealloc];
 }
 
@@ -55,22 +64,21 @@ static AutoCorrect* sharedInstance = nil;
 
 // Instance Methods
 
-- (NSString*)find:(NSString*)key {
-    int keyCount = [keys count];
-    
-    NSString* result = nil;
-    
+- (NSString*)find:(NSString*)term {
     // Binary Search
-    CFIndex stringIndex = CFArrayBSearchValues((CFArrayRef)keys, CFRangeMake(0, keyCount), key, (CFComparatorFunction)CFStringCompare, NULL);
-    if ((stringIndex < 0) || (stringIndex >= keyCount)) {
-        // NSLog(@"Something went wrong");
-    } else if ([key isEqualToString:[keys objectAtIndex:stringIndex]] == NO) {
-        // NSLog(@"Not Found");
-    } else {
-        result = [values objectAtIndex:stringIndex];
+    int left = 0, right = [autoCorrectEntries count] -1, mid;
+    while (right >= left) {
+        mid = (left + right) / 2;
+        NSComparisonResult comp = [term compare:[[autoCorrectEntries objectAtIndex:mid] replace]];
+        if (comp == NSOrderedDescending) {
+            left = mid + 1;
+        } else if (comp == NSOrderedAscending) {
+            right = mid - 1;
+        } else {
+            return [[autoCorrectEntries objectAtIndex:mid] with];
+        }
     }
-    
-    return result;
+    return nil;
 }
 
 @end

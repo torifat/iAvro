@@ -8,17 +8,15 @@
 #import <Foundation/Foundation.h>
 
 @interface AutoCorrect : NSObject {
-    NSMutableArray* keys;
-    NSMutableArray* values;
+    NSMutableArray* autoCorrectEntries;
 }
 
-@property (copy) NSMutableArray* keys;
-@property (copy) NSMutableArray* values;
+@property (copy) NSMutableArray* autoCorrectEntries;
 
 + (void)allocateSharedInstance;
 + (void)deallocateSharedInstance;
 + (AutoCorrect *)sharedInstance;
 
-- (NSString*)find:(NSString*)key;
+- (NSString*)find:(NSString*)term;
 
 @end
