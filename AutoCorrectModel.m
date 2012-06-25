@@ -9,6 +9,10 @@
 
 @implementation AutoCorrectModel
 
-@synthesize key, value;
+@synthesize replace, with;
+
+- (NSComparisonResult)compare:(AutoCorrectModel *)otherObject {
+    return [self.replace compare:otherObject.replace];
+}
 
 @end

@@ -8,12 +8,10 @@
 #import <Cocoa/Cocoa.h>
 
 @interface PreferencesController : NSObject <NSApplicationDelegate> {
-    NSMutableArray*         autoCorrectItems;
-    IBOutlet NSView*        autoCorrectView;
+    IBOutlet NSView*        _autoCorrectView;
     IBOutlet NSWindow*      window;
 }
 
-@property (copy) NSMutableArray* autoCorrectItems;
 @property (assign) NSWindow* window;
 
 @end

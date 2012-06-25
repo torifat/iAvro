@@ -84,7 +84,7 @@ static AvroParser* sharedInstance = nil;
     len = [fixed length];
     int cur;
     for(cur = 0; cur < len; ++cur) {
-        int start = cur, end = cur + 1, prev = start - 1;
+        int start = cur, end;
         BOOL matched = FALSE;
         
         for(NSDictionary *pattern in _patterns) {
@@ -95,7 +95,6 @@ static AvroParser* sharedInstance = nil;
             if(end <= len && diff == findLen) {
                 NSString* chunk = [fixed substringWithRange:NSMakeRange(start, diff)];
                 if(chunk && [chunk length] && [chunk isEqualToString:find]) {
-                    prev = start - 1;
                     NSArray* rules = [pattern objectForKey:@"rules"];
                     for(NSDictionary* rule in rules) {
                         
@@ -113,7 +112,7 @@ static AvroParser* sharedInstance = nil;
                             } 
                             // Prefix
                             else {
-                                chk = prev;
+                                chk = start - 1;
                             }
                             
                             // Beginning
@@ -204,7 +203,11 @@ static AvroParser* sharedInstance = nil;
         }
         // NSLog(@"cur: %s, start: %s, end: %s, prev: %s\n", cur, start, end, prev);
     }
-    return (NSString *)output;
+    
+    NSString* ret = [[output copy] autorelease];
+    [output release];
+    
+    return ret;
 }
 
 - (BOOL)isVowel:(unichar)c {
