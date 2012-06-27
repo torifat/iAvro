@@ -34,7 +34,12 @@
         _currentCandidates = [[NSMutableArray alloc] init];
         NSString* autoCorrectResult = [[AutoCorrect sharedInstance] find:_composedBuffer];
         if(autoCorrectResult) {
-            [_currentCandidates addObject:[[AvroParser sharedInstance] parse:autoCorrectResult]];
+            if([autoCorrectResult isEqualToString:_composedBuffer]) {
+                [_currentCandidates addObject:autoCorrectResult];
+            } 
+            else {
+                [_currentCandidates addObject:[[AvroParser sharedInstance] parse:autoCorrectResult]];
+            }
         }
         [_currentCandidates addObject:[[AvroParser sharedInstance] parse:_composedBuffer]];
     }

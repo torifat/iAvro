@@ -8,11 +8,11 @@
 #import <Foundation/Foundation.h>
 
 @interface AutoCorrectModel : NSObject {
-    NSString* key;
-    NSString* value;
+    NSString* replace;
+    NSString* with;
 }
 
-@property (copy) NSString* key;
-@property (copy) NSString* value;
+@property (copy) NSString* replace;
+@property (copy) NSString* with;
 
 @end

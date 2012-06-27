@@ -6,41 +6,65 @@
 //
 
 #import "PreferencesController.h"
-#import "AutoCorrect.h"
-#import "AutoCorrectModel.h"
 
 @implementation PreferencesController
 
-@synthesize window, autoCorrectItems;
+- (NSRect)newFrameForNewContentView:(NSView*)view {
+    NSWindow* window = [self window];
+    NSRect newFrameRect = [window frameRectForContentRect:[view frame]];
+    NSRect oldFrameRect = [window frame];
+    NSSize newSize = newFrameRect.size;
+    NSSize oldSize = oldFrameRect.size;
+    
+    NSRect frame = [window frame];
+    frame.size = newSize;
+    frame.origin.y -= (newSize.height - oldSize.height);
+    
+    return frame;
+}
 
-- (id)init {
-    self = [super init];
-    if (self) {
-        autoCorrectItems = [[NSMutableArray alloc] init];
-        AutoCorrect* autoCorrect = [AutoCorrect sharedInstance];
-        int i;
-        AutoCorrectModel* acm = nil;
-        for (i = 0; i < [[autoCorrect keys] count]; ++i) {
-            // Will implement method initWith key andVaule
-            acm = [[AutoCorrectModel alloc] init];
-            [acm setKey:[[autoCorrect keys] objectAtIndex:i]];
-            [acm setValue:[[autoCorrect values] objectAtIndex:i]];
-            [autoCorrectItems addObject:acm];
-        }
-        [acm release];
+- (NSView*)viewForTag:(int)tag {
+    NSView* view = nil;
+    switch (tag) {
+        case 0:
+            view = _generalView;
+            break;
+        case 2: default:
+            view = _autoCorrectView;
+            break;
     }
-    return self;
+    return view;
 }
 
-- (void)dealloc {
-    [autoCorrectItems release];
-    [super dealloc];
+- (BOOL)validateToolbarItem:(NSToolbarItem *)item {
+    if ([item tag] == _currentViewTag) {
+        return NO;
+    }
+    return YES;
 }
 
--(void)awakeFromNib {
-	[[self window] setContentSize:[autoCorrectView frame].size];
-    [[[self window] contentView] addSubview:autoCorrectView];
+- (void)awakeFromNib {
+	[[self window] setContentSize:[_generalView frame].size];
+    [[[self window] contentView] addSubview:_generalView];
     [[[self window] contentView] setWantsLayer:YES];
 }
 
+- (IBAction)switchView:(id)sender {
+    int tag = [sender tag];
+    NSView* view = [self viewForTag:tag];
+    NSView* previousView = [self viewForTag:_currentViewTag];
+    _currentViewTag = tag;
+    NSRect newFrame = [self newFrameForNewContentView:view];
+    
+    [NSAnimationContext beginGrouping];
+    
+    if ([[NSApp currentEvent] modifierFlags] & NSShiftKeyMask) {
+        [[NSAnimationContext currentContext] setDuration:1.0];
+    }
+    
+    [[[[self window] contentView] animator] replaceSubview:previousView with:view];
+    [[[self window] animator] setFrame:newFrame display:YES];
+    
+    [NSAnimationContext endGrouping];
+}
 @end

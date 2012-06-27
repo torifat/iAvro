@@ -7,7 +7,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface MainMenuController : NSObject <NSApplicationDelegate> {
+@interface MainMenuAppDelegate : NSObject <NSApplicationDelegate> {
 	IBOutlet NSMenu* _menu;
 }
 
