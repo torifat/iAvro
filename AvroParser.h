@@ -11,7 +11,8 @@
 	NSString*       _vowel;
     NSString*       _consonant;
     NSString*       _casesensitive;
-    NSDictionary*   _patterns;
+    NSArray*        _patterns;
+    int _maxPatternLength;
 }
 
 + (void)allocateSharedInstance;
