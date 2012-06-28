@@ -6,7 +6,7 @@
 //
 
 #import "AutoCorrect.h"
-#import "AutoCorrectModel.h"
+#import "AvroParser.h"
 
 @implementation AutoCorrect
 
@@ -23,20 +23,21 @@
         FILE *file = fopen(fn, "r");
         
         // Read from the file
-        char keyBuffer[512], valueBuffer[512];
+        char replaceBuffer[512], withBuffer[512];
         autoCorrectEntries = [[NSMutableArray alloc] init];
-        while(fscanf(file, "%s %[^\n]\n", keyBuffer, valueBuffer) == 2) {
-            AutoCorrectModel* acm = [[AutoCorrectModel alloc] init];
-            [acm setReplace:[NSString stringWithFormat:@"%s", keyBuffer]];
-            [acm setWith:[NSString stringWithFormat:@"%s", valueBuffer]];
-            [autoCorrectEntries addObject:acm];
-            [acm release];
+        while(fscanf(file, "%s %[^\n]\n", replaceBuffer, withBuffer) == 2) {
+            NSString* replace = [NSString stringWithFormat:@"%s", replaceBuffer];
+            NSString* with = [NSString stringWithFormat:@"%s", withBuffer];
+            
+            if ([replace isEqualToString:with] == NO) {
+                with = [[AvroParser sharedInstance] parse:with];
+            }
+            
+            NSMutableDictionary* item = [[NSMutableDictionary alloc] initWithObjectsAndKeys:replace, @"replace", with, @"with", nil];
+            [autoCorrectEntries addObject:item];
+            [item release];
         }
         fclose(file);
-        
-        // Sort the array after reading
-        NSArray* tempArray = [autoCorrectEntries sortedArrayUsingSelector:@selector(compare:)];
-        autoCorrectEntries = [[NSMutableArray alloc] initWithArray:tempArray];
     }
     
 	return self;
@@ -58,23 +59,23 @@ static AutoCorrect* sharedInstance = nil;
 }
 
 + (AutoCorrect *)sharedInstance {
-	return sharedInstance;
+    return sharedInstance;
 }
 
 // Instance Methods
-
 - (NSString*)find:(NSString*)term {
     // Binary Search
     int left = 0, right = [autoCorrectEntries count] -1, mid;
     while (right >= left) {
         mid = (left + right) / 2;
-        NSComparisonResult comp = [term compare:[[autoCorrectEntries objectAtIndex:mid] replace]];
+        NSDictionary* item = [autoCorrectEntries objectAtIndex:mid];
+        NSComparisonResult comp = [term compare:[item objectForKey:@"replace"]];
         if (comp == NSOrderedDescending) {
             left = mid + 1;
         } else if (comp == NSOrderedAscending) {
             right = mid - 1;
         } else {
-            return [[autoCorrectEntries objectAtIndex:mid] with];
+            return [item objectForKey:@"with"];
         }
     }
     return nil;

@@ -11,7 +11,7 @@
     NSMutableArray* autoCorrectEntries;
 }
 
-@property (copy) NSMutableArray* autoCorrectEntries;
+@property (retain) NSMutableArray* autoCorrectEntries;
 
 + (void)allocateSharedInstance;
 + (void)deallocateSharedInstance;
