@@ -61,7 +61,7 @@ static AvroParser* sharedInstance = nil;
 }
 
 + (AvroParser *)sharedInstance {
-	return sharedInstance;
+    return sharedInstance;
 }
 
 - (NSString*)parse:(NSString *)string {
@@ -218,10 +218,9 @@ static AvroParser* sharedInstance = nil;
         // NSLog(@"cur: %s, start: %s, end: %s, prev: %s\n", cur, start, end, prev);
     }
     
-    NSString* ret = [[output copy] autorelease];
-    [output release];
+    [output autorelease];
     
-    return ret;
+    return output;
 }
 
 - (BOOL)isVowel:(unichar)c {

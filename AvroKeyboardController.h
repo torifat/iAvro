@@ -10,14 +10,9 @@
 
 
 @interface AvroKeyboardController : IMKInputController {
-    
-    //_composedBuffer contains text that the input method has converted
-    NSMutableString*				_composedBuffer;
-    
-    //the current active client.
-    id								_currentClient;
-    
-    NSMutableArray*                 _currentCandidates;
+    NSMutableString*	_composedBuffer;        // _composedBuffer contains text that the input method has converted
+    id					_currentClient;         // the current active client.
+    NSArray*            _currentCandidates;
 }
 
 //These are simple methods for managing our composition and original buffers

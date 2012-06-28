@@ -24,12 +24,12 @@
             
             if (!jsonArray) {
                 @throw error;
-                // @throw [NSException exceptionWithName:@"AvroParser init" reason:@"Error parsing JSON" userInfo:nil];
             } else {
                 _vowel = [jsonArray objectForKey:@"vowel"];
                 _consonant = [jsonArray objectForKey:@"consonant"];
                 _casesensitive = [jsonArray objectForKey:@"casesensitive"];
                 _patterns = [jsonArray objectForKey:@"patterns"];
+                _maxPatternLength = [[[_patterns objectAtIndex:0] objectForKey:@"find"] length];
             }
             
         } else {
@@ -69,11 +69,11 @@ static RegexParser* sharedInstance = nil;
     int len = [string length];
     unichar *fixedArray = calloc(len, sizeof(unichar));
     [string getCharacters:fixedArray];
-    int i;
-    for (i = 0; i < len; ++i) {
+    int i, j;
+    for (i = 0, j = 0; i < len; ++i) {
         unichar c = [string characterAtIndex:i];
         if(![self isCaseSensitive:c]) {
-            fixedArray[i] = [self smallCap:c];
+            fixedArray[j++] = [self smallCap:c];
         }
     }
     NSString* fixed = [NSString stringWithCharacters:fixedArray length:len];
@@ -87,121 +87,141 @@ static RegexParser* sharedInstance = nil;
         int start = cur, end;
         BOOL matched = FALSE;
         
-        for(NSDictionary *pattern in _patterns) {
-            NSString* find = [pattern objectForKey:@"find"];
-            int findLen = [find length];
-            end = cur + findLen;
-            int diff = (end - start);
-            if(end <= len && diff == findLen) {
-                NSString* chunk = [fixed substringWithRange:NSMakeRange(start, diff)];
-                if(chunk && [chunk length] && [chunk isEqualToString:find]) {
-                    NSArray* rules = [pattern objectForKey:@"rules"];
-                    for(NSDictionary* rule in rules) {
-                        
-                        BOOL replace = TRUE;
-                        int chk = 0;
-                        NSArray* matches = [rule objectForKey:@"matches"];
-                        for(NSDictionary* match in matches) {
-                            NSString* value = [match objectForKey:@"value"];
-                            NSString* type = [match objectForKey:@"type"];
-                            NSString* scope = [match objectForKey:@"scope"];
-                            BOOL isNegative = [[match objectForKey:@"negative"] boolValue];
+        int chunkLen;
+        for(chunkLen = _maxPatternLength; chunkLen > 0; --chunkLen) {
+            end = start + chunkLen;
+            if(end <= len) {
+                NSString* chunk = [fixed substringWithRange:NSMakeRange(start, chunkLen)];
+                
+                // Binary Search
+                int left = 0, right = [_patterns count] - 1, mid;
+                while(right >= left) {
+                    mid = (right + left) / 2;
+                    NSDictionary* pattern = [_patterns objectAtIndex:mid];
+                    NSString* find = [pattern objectForKey:@"find"];
+                    if([find isEqualToString:chunk]) {
+                        NSArray* rules = [pattern objectForKey:@"rules"];
+                        for(NSDictionary* rule in rules) {
                             
-                            if([type isEqualToString:@"suffix"]) {
-                                chk = end;
-                            } 
-                            // Prefix
-                            else {
-                                chk = start - 1;
-                            }
-                            
-                            // Beginning
-                            if([scope isEqualToString:@"punctuation"]) {
-                                if(
-                                   ! (
-                                      (chk < 0 && [type isEqualToString:@"prefix"]) || 
-                                      (chk >= len && [type isEqualToString:@"suffix"]) || 
-                                      [self isPunctuation:[fixed characterAtIndex:chk]]
-                                      ) ^ isNegative
-                                   ) {
-                                    replace = FALSE;
-                                    break;
-                                }
-                            }
-                            // Vowel
-                            else if([scope isEqualToString:@"vowel"]) {
-                                if(
-                                   ! (
-                                      (
-                                       (chk >= 0 && [type isEqualToString:@"prefix"]) || 
-                                       (chk < len && [type isEqualToString:@"suffix"])
-                                       ) && 
-                                      [self isVowel:[fixed characterAtIndex:chk]]
-                                      ) ^ isNegative
-                                   ) {
-                                    replace = FALSE;
-                                    break;
-                                }
-                            }
-                            // Consonant
-                            else if([scope isEqualToString:@"consonant"]) {
-                                if(
-                                   ! (
-                                      (
-                                       (chk >= 0 && [type isEqualToString:@"prefix"]) || 
-                                       (chk < len && [type isEqualToString:@"suffix"])
-                                       ) && 
-                                      [self isConsonant:[fixed characterAtIndex:chk]]
-                                      ) ^ isNegative
-                                   ) {
-                                    replace = FALSE;
-                                    break;
-                                }
-                            }
-                            // Exact
-                            else if([scope isEqualToString:@"exact"]) {
-                                int s, e;
+                            BOOL replace = TRUE;
+                            int chk = 0;
+                            NSArray* matches = [rule objectForKey:@"matches"];
+                            for(NSDictionary* match in matches) {
+                                NSString* value = [match objectForKey:@"value"];
+                                NSString* type = [match objectForKey:@"type"];
+                                NSString* scope = [match objectForKey:@"scope"];
+                                BOOL isNegative = [[match objectForKey:@"negative"] boolValue];
+                                
                                 if([type isEqualToString:@"suffix"]) {
-                                    s = end;
-                                    e = end + [value length];
+                                    chk = end;
                                 } 
                                 // Prefix
                                 else {
-                                    s = start - [value length];
-                                    e = start;
+                                    chk = start - 1;
                                 }
-                                if(![self isExact:value heystack:fixed start:s end:e not:isNegative]) {
-                                    replace = FALSE;
-                                    break;
+                                
+                                // Beginning
+                                if([scope isEqualToString:@"punctuation"]) {
+                                    if(
+                                       ! (
+                                          (chk < 0 && [type isEqualToString:@"prefix"]) || 
+                                          (chk >= len && [type isEqualToString:@"suffix"]) || 
+                                          [self isPunctuation:[fixed characterAtIndex:chk]]
+                                          ) ^ isNegative
+                                       ) {
+                                        replace = FALSE;
+                                        break;
+                                    }
+                                }
+                                // Vowel
+                                else if([scope isEqualToString:@"vowel"]) {
+                                    if(
+                                       ! (
+                                          (
+                                           (chk >= 0 && [type isEqualToString:@"prefix"]) || 
+                                           (chk < len && [type isEqualToString:@"suffix"])
+                                           ) && 
+                                          [self isVowel:[fixed characterAtIndex:chk]]
+                                          ) ^ isNegative
+                                       ) {
+                                        replace = FALSE;
+                                        break;
+                                    }
+                                }
+                                // Consonant
+                                else if([scope isEqualToString:@"consonant"]) {
+                                    if(
+                                       ! (
+                                          (
+                                           (chk >= 0 && [type isEqualToString:@"prefix"]) || 
+                                           (chk < len && [type isEqualToString:@"suffix"])
+                                           ) && 
+                                          [self isConsonant:[fixed characterAtIndex:chk]]
+                                          ) ^ isNegative
+                                       ) {
+                                        replace = FALSE;
+                                        break;
+                                    }
+                                }
+                                // Exact
+                                else if([scope isEqualToString:@"exact"]) {
+                                    int s, e;
+                                    if([type isEqualToString:@"suffix"]) {
+                                        s = end;
+                                        e = end + [value length];
+                                    } 
+                                    // Prefix
+                                    else {
+                                        s = start - [value length];
+                                        e = start;
+                                    }
+                                    if(![self isExact:value heystack:fixed start:s end:e not:isNegative]) {
+                                        replace = FALSE;
+                                        break;
+                                    }
                                 }
                             }
+                            
+                            if(replace) {
+                                [output appendString:[rule objectForKey:@"replace"]];
+                                [output appendString:@"(্[যবম])?(্?)([ঃঁ]?)"];
+                                cur = end - 1;
+                                matched = TRUE;
+                                break;
+                            }
+                            
                         }
                         
-                        if(replace) {
-                            [output appendString:[rule objectForKey:@"replace"]];
-                            cur = end - 1;
-                            matched = TRUE;
-                            break;
-                        }
+                        if(matched == TRUE) break;
                         
+                        // Default
+                        [output appendString:[pattern objectForKey:@"replace"]];
+                        [output appendString:@"(্[যবম])?(্?)([ঃঁ]?)"];
+                        cur = end - 1;
+                        matched = TRUE;
+                        break;
                     }
-                    
-                    if(matched == true) break;
-                    
-                    // Default
-                    [output appendString:[pattern objectForKey:@"replace"]];
-                    cur = end - 1;
-                    matched = TRUE;
-                    break;
+                    else if ([find length] > [chunk length] || 
+                             ([find length] == [chunk length] && [find compare:chunk] == NSOrderedAscending)) {
+                        left = mid + 1;
+                    } else {
+                        right = mid - 1;
+                    }
                 }
+                if(matched == TRUE) break;                
             }
         }
+        
+        if(!matched) {
+            unichar oldChar = [fixed characterAtIndex:cur];
+            [output appendString:[NSString stringWithCharacters:&oldChar length:1]];
+        }
+        // NSLog(@"cur: %s, start: %s, end: %s, prev: %s\n", cur, start, end, prev);
     }
     
-    NSString* ret = [[output copy] autorelease];
-    [output release];
+    [output autorelease];
     
-    return ret;
+    return output;
 }
 
 - (BOOL)isVowel:(unichar)c {
@@ -246,7 +266,6 @@ static RegexParser* sharedInstance = nil;
 }
 
 - (BOOL)isExact:(NSString*) needle heystack:(NSString*)heystack start:(int)start end:(int)end not:(BOOL)not {
-    // NSLog(@"Cut: %@", [heystack substringWithRange:NSMakeRange(start, end)]);
     int len = end - start;
     return ((start >=0 && end < [heystack length] && [[heystack substringWithRange:NSMakeRange(start, len)] isEqualToString:needle]) ^ not);
 }

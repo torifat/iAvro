@@ -10,7 +10,7 @@
 @interface AvroParser : NSObject {
 	NSString*       _vowel;
     NSString*       _consonant;
-    NSString*       _casesensitive;
+    NSMutableString*       _casesensitive;
     NSArray*        _patterns;
     int _maxPatternLength;
 }

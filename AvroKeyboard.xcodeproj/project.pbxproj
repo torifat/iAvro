@@ -14,12 +14,15 @@
 		350CECE9159C45790009F0FE /* regex.json in Resources */ = {isa = PBXBuildFile; fileRef = 350CECE0159C45790009F0FE /* regex.json */; };
 		350CECEA159C45790009F0FE /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 350CECE2159C45790009F0FE /* RegexKitLite.m */; };
 		350CECEB159C45790009F0FE /* RegexParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 350CECE4159C45790009F0FE /* RegexParser.m */; };
+		350CECF2159C5BEF0009F0FE /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 350CECF1159C5BEF0009F0FE /* libicucore.dylib */; };
+		350CECF6159C5C5F0009F0FE /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 350CECF5159C5C5F0009F0FE /* libsqlite3.dylib */; };
+		350CED1B159CF3300009F0FE /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 350CED18159CF3300009F0FE /* Database.m */; };
+		350CED1C159CF3300009F0FE /* Suggestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 350CED1A159CF3300009F0FE /* Suggestion.m */; };
 		3512ED5A159785400085E81E /* preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3512ED581597853F0085E81E /* preferences.nib */; };
 		35895BF01597639A00F2A3ED /* AutoCorrect.m in Sources */ = {isa = PBXBuildFile; fileRef = 35895BEF1597639A00F2A3ED /* AutoCorrect.m */; };
 		35895BF3159763A300F2A3ED /* autodict.dct in Resources */ = {isa = PBXBuildFile; fileRef = 35895BF2159763A300F2A3ED /* autodict.dct */; };
 		35895BFE1597706800F2A3ED /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 35895BFA1597706800F2A3ED /* MainMenu.nib */; };
 		359C1C70159286750080E2FD /* Candidates.m in Sources */ = {isa = PBXBuildFile; fileRef = 359C1C6F159286750080E2FD /* Candidates.m */; };
-		35B007C81597BF89000CE409 /* AutoCorrectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B007C71597BF89000CE409 /* AutoCorrectModel.m */; };
 		35B007CB1597BF9A000CE409 /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B007CA1597BF9A000CE409 /* PreferencesController.m */; };
 		35B47478159A668D00C69C7D /* avro.icns in Resources */ = {isa = PBXBuildFile; fileRef = 35B47477159A668D00C69C7D /* avro.icns */; };
 		35DBC86B1597A15B00B9772E /* MainMenuAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 35DBC86A1597A15B00B9772E /* MainMenuAppDelegate.m */; };
@@ -51,6 +54,12 @@
 		350CECE2159C45790009F0FE /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		350CECE3159C45790009F0FE /* RegexParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexParser.h; sourceTree = "<group>"; };
 		350CECE4159C45790009F0FE /* RegexParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexParser.m; sourceTree = "<group>"; };
+		350CECF1159C5BEF0009F0FE /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = /usr/lib/libicucore.dylib; sourceTree = "<absolute>"; };
+		350CECF5159C5C5F0009F0FE /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = /usr/lib/libsqlite3.dylib; sourceTree = "<absolute>"; };
+		350CED17159CF3300009F0FE /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Database.h; sourceTree = "<group>"; };
+		350CED18159CF3300009F0FE /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Database.m; sourceTree = "<group>"; };
+		350CED19159CF3300009F0FE /* Suggestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Suggestion.h; sourceTree = "<group>"; };
+		350CED1A159CF3300009F0FE /* Suggestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Suggestion.m; sourceTree = "<group>"; };
 		3512ED591597853F0085E81E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/preferences.nib; sourceTree = "<group>"; };
 		35895BEE1597639A00F2A3ED /* AutoCorrect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoCorrect.h; sourceTree = "<group>"; };
 		35895BEF1597639A00F2A3ED /* AutoCorrect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoCorrect.m; sourceTree = "<group>"; };
@@ -58,8 +67,6 @@
 		35895BFB1597706800F2A3ED /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		359C1C6E159286750080E2FD /* Candidates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Candidates.h; sourceTree = "<group>"; };
 		359C1C6F159286750080E2FD /* Candidates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Candidates.m; sourceTree = "<group>"; };
-		35B007C61597BF89000CE409 /* AutoCorrectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoCorrectModel.h; sourceTree = "<group>"; };
-		35B007C71597BF89000CE409 /* AutoCorrectModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoCorrectModel.m; sourceTree = "<group>"; };
 		35B007C91597BF9A000CE409 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
 		35B007CA1597BF9A000CE409 /* PreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesController.m; sourceTree = "<group>"; };
 		35B47477159A668D00C69C7D /* avro.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = avro.icns; sourceTree = "<group>"; };
@@ -82,6 +89,8 @@
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				E93074B70A5C264700470842 /* InputMethodKit.framework in Frameworks */,
+				350CECF6159C5C5F0009F0FE /* libsqlite3.dylib in Frameworks */,
+				350CECF2159C5BEF0009F0FE /* libicucore.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,7 +101,6 @@
 			isa = PBXGroup;
 			children = (
 				35B007C51597BF56000CE409 /* Controllers */,
-				35B007C31597BF4C000CE409 /* Models */,
 				350CECED159C45870009F0FE /* FMDatabase */,
 				350CECEE159C45C50009F0FE /* RegexKit */,
 				35B007CC1597BFC3000CE409 /* Others */,
@@ -170,6 +178,8 @@
 			children = (
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+				350CECF5159C5C5F0009F0FE /* libsqlite3.dylib */,
+				350CECF1159C5BEF0009F0FE /* libicucore.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -196,15 +206,6 @@
 			name = RegexKit;
 			sourceTree = "<group>";
 		};
-		35B007C31597BF4C000CE409 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				35B007C61597BF89000CE409 /* AutoCorrectModel.h */,
-				35B007C71597BF89000CE409 /* AutoCorrectModel.m */,
-			);
-			name = Models;
-			sourceTree = "<group>";
-		};
 		35B007C51597BF56000CE409 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -225,6 +226,10 @@
 				35F4DE7E1594096B001EAC81 /* AvroParser.m */,
 				350CECE3159C45790009F0FE /* RegexParser.h */,
 				350CECE4159C45790009F0FE /* RegexParser.m */,
+				350CED17159CF3300009F0FE /* Database.h */,
+				350CED18159CF3300009F0FE /* Database.m */,
+				350CED19159CF3300009F0FE /* Suggestion.h */,
+				350CED1A159CF3300009F0FE /* Suggestion.m */,
 				359C1C6E159286750080E2FD /* Candidates.h */,
 				359C1C6F159286750080E2FD /* Candidates.m */,
 			);
@@ -306,13 +311,14 @@
 				35F4DE7F1594096B001EAC81 /* AvroParser.m in Sources */,
 				35895BF01597639A00F2A3ED /* AutoCorrect.m in Sources */,
 				35DBC86B1597A15B00B9772E /* MainMenuAppDelegate.m in Sources */,
-				35B007C81597BF89000CE409 /* AutoCorrectModel.m in Sources */,
 				35B007CB1597BF9A000CE409 /* PreferencesController.m in Sources */,
 				350CECE6159C45790009F0FE /* FMDatabase.m in Sources */,
 				350CECE7159C45790009F0FE /* FMDatabasePool.m in Sources */,
 				350CECE8159C45790009F0FE /* FMResultSet.m in Sources */,
 				350CECEA159C45790009F0FE /* RegexKitLite.m in Sources */,
 				350CECEB159C45790009F0FE /* RegexParser.m in Sources */,
+				350CED1B159CF3300009F0FE /* Database.m in Sources */,
+				350CED1C159CF3300009F0FE /* Suggestion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,8 +6,7 @@
 //
 
 #import "AvroKeyboardController.h"
-#import "AvroParser.h"
-#import "AutoCorrect.h"
+#import "Suggestion.h"
 #import "Candidates.h"
 
 @implementation AvroKeyboardController
@@ -18,7 +17,7 @@
 	if (self) {
 		_currentClient = inputClient;
 		_composedBuffer = [[NSMutableString alloc] initWithString:@""];
-		_currentCandidates = [[NSMutableArray alloc] init];
+		_currentCandidates = [[NSArray alloc] init];
     }
     
 	return self;
@@ -31,17 +30,7 @@
 
 - (void)findCurrentCandidates {
     if(_composedBuffer) {
-        _currentCandidates = [[NSMutableArray alloc] init];
-        NSString* autoCorrectResult = [[AutoCorrect sharedInstance] find:_composedBuffer];
-        if(autoCorrectResult) {
-            if([autoCorrectResult isEqualToString:_composedBuffer]) {
-                [_currentCandidates addObject:autoCorrectResult];
-            } 
-            else {
-                [_currentCandidates addObject:[[AvroParser sharedInstance] parse:autoCorrectResult]];
-            }
-        }
-        [_currentCandidates addObject:[[AvroParser sharedInstance] parse:_composedBuffer]];
+        _currentCandidates = [[Suggestion sharedInstance] list:_composedBuffer];
     }
     if (_currentCandidates) {
         [_currentCandidates retain];
