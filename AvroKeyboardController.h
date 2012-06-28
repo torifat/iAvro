@@ -13,13 +13,7 @@
     
     //_composedBuffer contains text that the input method has converted
     NSMutableString*				_composedBuffer;
-    //_original buffer contains the text has it was received from user input.
-    NSMutableString*				_originalBuffer;
-    //used to mark where text is being inserted in the _composedBuffer
-    NSInteger						_insertionIndex;
-    //This flag indicates that the original text was converted once in response to a trigger (space key)
-    //the next time the trigger is received the composition will be committed.
-    BOOL							_didConvert;
+    
     //the current active client.
     id								_currentClient;
     
