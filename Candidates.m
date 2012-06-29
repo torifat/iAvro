@@ -12,7 +12,7 @@
 static Candidates *_sharedInstance = nil;
 
 + (void)allocateSharedInstanceWithServer:(IMKServer *)server {
-	_sharedInstance = [[self alloc] initWithServer:server panelType:kIMKSingleRowSteppingCandidatePanel];
+	_sharedInstance = [[self alloc] initWithServer:server panelType:kIMKSingleColumnScrollingCandidatePanel];
 }
 
 + (void)deallocateSharedInstance {

@@ -73,20 +73,14 @@
 	[_currentClient insertText:candidateString replacementRange:NSMakeRange(NSNotFound, 0)];
 	
 	[self clearCompositionBuffer];
-	
-    [_currentCandidates removeAllObjects];
-	//[_currentCandidates release];
-	//_currentCandidates = nil;
+	[_currentCandidates removeAllObjects];
 }
 
 - (void)commitComposition:(id)sender {
 	[sender insertText:_composedBuffer replacementRange:NSMakeRange(NSNotFound, 0)];
 	
 	[self clearCompositionBuffer];
-	
 	[_currentCandidates removeAllObjects];
-	// [_currentCandidates release];
-    //_currentCandidates = nil;
 }
 
 - (id)composedString:(id)sender {
@@ -171,7 +165,7 @@
     }
     else {
         if (_currentCandidates) {
-            [self candidateSelected:[_currentCandidates objectAtIndex:0]];
+            [self candidateSelected:[[Candidates sharedInstance] selectedCandidateString]];
             [_currentClient insertText:string replacementRange:NSMakeRange(NSNotFound, 0)];
         }
         else {
