@@ -17,7 +17,7 @@
 	if (self) {
 		_currentClient = inputClient;
 		_composedBuffer = [[NSMutableString alloc] initWithString:@""];
-		_currentCandidates = [[NSArray alloc] init];
+        _currentCandidates = [[NSMutableArray alloc] initWithCapacity:0];
     }
     
 	return self;
@@ -25,15 +25,14 @@
 
 - (void)dealloc {
 	[_composedBuffer release];
+    [_currentCandidates release];
 	[super dealloc];
 }
 
 - (void)findCurrentCandidates {
     if(_composedBuffer) {
-        _currentCandidates = [[Suggestion sharedInstance] list:_composedBuffer];
-    }
-    if (_currentCandidates) {
-        [_currentCandidates retain];
+        [_currentCandidates removeAllObjects];
+        _currentCandidates = [[[Suggestion sharedInstance] getList:_composedBuffer] retain];
     }
 }
 
@@ -75,8 +74,9 @@
 	
 	[self clearCompositionBuffer];
 	
-	[_currentCandidates release];
-	_currentCandidates = nil;
+    [_currentCandidates removeAllObjects];
+	//[_currentCandidates release];
+	//_currentCandidates = nil;
 }
 
 - (void)commitComposition:(id)sender {
@@ -84,8 +84,9 @@
 	
 	[self clearCompositionBuffer];
 	
-	[_currentCandidates release];
-	_currentCandidates = nil;
+	[_currentCandidates removeAllObjects];
+	// [_currentCandidates release];
+    //_currentCandidates = nil;
 }
 
 - (id)composedString:(id)sender {

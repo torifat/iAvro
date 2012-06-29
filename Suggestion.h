@@ -7,12 +7,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Suggestion : NSObject
+@interface Suggestion : NSObject {
+    NSMutableArray* suggestions;
+}
 
 + (void)allocateSharedInstance;
 + (void)deallocateSharedInstance;
 + (Suggestion *)sharedInstance;
 
-- (NSMutableArray*)list:(NSString*)term;
+- (NSMutableArray*)getList:(NSString*)term;
 
 @end

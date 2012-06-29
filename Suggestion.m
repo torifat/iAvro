@@ -21,6 +21,7 @@
         [AvroParser allocateSharedInstance];
         [AutoCorrect allocateSharedInstance];
         [Database allocateSharedInstance];
+        suggestions = [[NSMutableArray alloc] initWithCapacity:0];
     }
     
 	return self;
@@ -47,29 +48,25 @@ static Suggestion* sharedInstance = nil;
 	return sharedInstance;
 }
 
-- (NSArray*)list:(NSString*)term {
-    NSMutableArray* list = [[NSMutableArray alloc] initWithCapacity:0];
-    
+- (NSMutableArray*)getList:(NSString*)term {
     NSString* autoCorrect = [[AutoCorrect sharedInstance] find:term];
     if (autoCorrect) {
-        [list addObject:autoCorrect];
+        [suggestions addObject:autoCorrect];
     }
     NSArray* dicList = [[Database sharedInstance] find:term];
     if (dicList) {
-        [list addObjectsFromArray:dicList];
+        [suggestions addObjectsFromArray:dicList];
         if (autoCorrect && [dicList containsObject:autoCorrect]) {
-            [list removeObjectIdenticalTo:autoCorrect];
+            [suggestions removeObjectIdenticalTo:autoCorrect];
         }
     }
     
     NSString* paresedString = [[AvroParser sharedInstance] parse:term];
-    if ([list containsObject:paresedString] == NO) {
-        [list addObject:paresedString];
+    if ([suggestions containsObject:paresedString] == NO) {
+        [suggestions addObject:paresedString];
     }
     
-    [list autorelease];
-    
-    return list;
+    return suggestions;
 }
 
 @end
