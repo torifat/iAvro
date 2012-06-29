@@ -18,12 +18,33 @@
 		_currentClient = inputClient;
 		_composedBuffer = [[NSMutableString alloc] initWithString:@""];
         _currentCandidates = [[NSMutableArray alloc] initWithCapacity:0];
+        
+        // Weight PLIST File
+        NSString *path = [self getSharedFolder];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if ([fileManager fileExistsAtPath:path] == NO) {
+            NSError* error = nil;
+            [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error];
+            if (error) {
+                @throw error;
+            }
+        }
+        
+        path = [path stringByAppendingPathComponent:@"weight.plist"];
+        
+        if ([fileManager fileExistsAtPath:path]) {
+            _data = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
+        } else {
+            _data = [[NSMutableDictionary alloc] initWithCapacity:0];
+        }
     }
     
 	return self;
 }
 
 - (void)dealloc {
+    [_data writeToFile:[[self getSharedFolder] stringByAppendingPathComponent:@"weight.plist"] atomically:YES];
+    [_data release];
 	[_composedBuffer release];
     [_currentCandidates release];
 	[super dealloc];
@@ -70,6 +91,7 @@
 }
 
 - (void)candidateSelected:(NSAttributedString*)candidateString {
+    [_data setObject:[candidateString string] forKey:_composedBuffer];
 	[_currentClient insertText:candidateString replacementRange:NSMakeRange(NSNotFound, 0)];
 	
 	[self clearCompositionBuffer];
@@ -122,6 +144,19 @@
         [self findCurrentCandidates];
         [self updateComposition];
         [self updateCandidatesPanel];
+        
+        NSString* prevSelected = [_data objectForKey:_composedBuffer];
+        if (prevSelected) {
+            // candidateStringIdentifier for >= Lion
+            int i;
+            for (i = 0; i < [_currentCandidates count]; ++i) {
+                NSString* item = [_currentCandidates objectAtIndex:i];
+                if ([item isEqualToString:prevSelected] ) {
+                    [[Candidates sharedInstance] selectCandidate:i];
+                }
+            }
+        }
+        
         return YES;
     }
 }
@@ -176,6 +211,13 @@
 
 - (NSMenu*)menu {
     return [[NSApp delegate] menu];
+}
+
+- (NSString*)getSharedFolder {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    return [[[paths objectAtIndex:0] 
+                       stringByAppendingPathComponent:@"OmicronLab"] 
+                      stringByAppendingPathComponent:@"Avro Keyboard"];
 }
 
 @end
