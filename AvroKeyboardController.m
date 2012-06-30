@@ -58,7 +58,7 @@
 }
 
 - (void)updateCandidatesPanel {
-    if (_currentCandidates) {
+    if (_currentCandidates && [_currentCandidates count] > 0) {
         // Need to set font here; setting it in init... doesn't work.		
         // NSUserDefaults *defaultsDictionary = [NSUserDefaults standardUserDefaults];
         
@@ -69,9 +69,10 @@
         // [[Candidates sharedInstance] setAttributes:[NSDictionary dictionaryWithObject:candidateFont forKey:NSFontAttributeName]];
         
         // [[Candidates sharedInstance] setPanelType:[defaultsDictionary integerForKey:@"candidatePanelType"]];		
-        [[Candidates sharedInstance] setPanelType:kIMKSingleColumnScrollingCandidatePanel];
         [[Candidates sharedInstance] updateCandidates];
-        [[Candidates sharedInstance] show:kIMKLocateCandidatesBelowHint];
+        if ([[Candidates sharedInstance] isVisible] == NO) {
+            [[Candidates sharedInstance] show:kIMKLocateCandidatesBelowHint];
+        }
     }
     else {
         [[Candidates sharedInstance] hide];
@@ -104,6 +105,7 @@
 	
 	[self clearCompositionBuffer];
 	[_currentCandidates removeAllObjects];
+    [self updateCandidatesPanel];
 }
 
 - (void)commitComposition:(id)sender {
@@ -111,6 +113,7 @@
 	
 	[self clearCompositionBuffer];
 	[_currentCandidates removeAllObjects];
+    [self updateCandidatesPanel];
 }
 
 - (id)composedString:(id)sender {
@@ -181,6 +184,10 @@
     [self commitText:@"\t"];
 }
 
+- (void)insertNewline:(id)sender {
+    [self commitText:@""];
+}
+
 - (BOOL)didCommandBySelector:(SEL)aSelector client:(id)sender {
     if ([self respondsToSelector:aSelector]) {
 		// The NSResponder methods like insertNewline: or deleteBackward: are
@@ -190,30 +197,25 @@
 		// client application. For that reason we need to test in the case where
 		// we might not handle the command.
 		
-		if ( _composedBuffer && [_composedBuffer length] > 0 ) {
-			if (aSelector == @selector(insertTab:) ||
-				aSelector == @selector(deleteBackward:) ) {
+		if(_composedBuffer && [_composedBuffer length] > 0) {
+            if (aSelector == @selector(insertTab:) 
+                || aSelector == @selector(insertNewline:)
+                || aSelector == @selector(deleteBackward:)) {
                 [self performSelector:aSelector withObject:sender];
-                return YES; 
-			}
-		}
-		
+                return YES;
+            }
+        }
     }
 	return NO;
 }
 
 - (void)commitText:(NSString*)string {
-    if ([_composedBuffer length] == 0) {
+    if (_currentCandidates) {
+        [self candidateSelected:[[Candidates sharedInstance] selectedCandidateString]];
         [_currentClient insertText:string replacementRange:NSMakeRange(NSNotFound, 0)];
     }
     else {
-        if (_currentCandidates) {
-            [self candidateSelected:[[Candidates sharedInstance] selectedCandidateString]];
-            [_currentClient insertText:string replacementRange:NSMakeRange(NSNotFound, 0)];
-        }
-        else {
-            NSBeep();
-        }
+        NSBeep();
     }
 }
 
