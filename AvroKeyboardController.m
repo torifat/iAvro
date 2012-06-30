@@ -91,7 +91,15 @@
 }
 
 - (void)candidateSelected:(NSAttributedString*)candidateString {
-    [_data setObject:[candidateString string] forKey:_composedBuffer];
+    BOOL comp = [[candidateString string] isEqualToString:[_currentCandidates objectAtIndex:0]];
+    if ((comp && !_prevSelected) == NO) {
+        if (comp == YES) {
+            [_data removeObjectForKey:_composedBuffer];
+        }
+        else {
+            [_data setObject:[candidateString string] forKey:_composedBuffer];
+        }
+    }
 	[_currentClient insertText:candidateString replacementRange:NSMakeRange(NSNotFound, 0)];
 	
 	[self clearCompositionBuffer];
@@ -145,13 +153,13 @@
         [self updateComposition];
         [self updateCandidatesPanel];
         
-        NSString* prevSelected = [_data objectForKey:_composedBuffer];
-        if (prevSelected) {
+        _prevSelected = [_data objectForKey:_composedBuffer];
+        if (_prevSelected) {
             // candidateStringIdentifier for >= Lion
             int i;
             for (i = 0; i < [_currentCandidates count]; ++i) {
                 NSString* item = [_currentCandidates objectAtIndex:i];
-                if ([item isEqualToString:prevSelected] ) {
+                if ([item isEqualToString:_prevSelected] ) {
                     [[Candidates sharedInstance] selectCandidate:i];
                 }
             }

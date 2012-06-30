@@ -14,6 +14,7 @@
     id                      _currentClient;         // the current active client.
     NSMutableArray*         _currentCandidates;
     NSMutableDictionary*    _data;
+    NSString*               _prevSelected;
 }
 
 //These are simple methods for managing our composition and original buffers
