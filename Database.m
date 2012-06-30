@@ -22,6 +22,8 @@
         
         _db = [[NSMutableDictionary alloc] initWithCapacity:0];
         
+        NSAutoreleasePool *loopPool = [[NSAutoreleasePool alloc] init];
+        
         NSString* filePath = [[NSBundle mainBundle] pathForResource:@"database" ofType:@"db3"];
         FMDatabase *sqliteDb = [FMDatabase databaseWithPath:filePath];
         [sqliteDb open];
@@ -75,6 +77,8 @@
         [self loadTableWithName:@"Z" fromDatabase:sqliteDb];
         
         [sqliteDb close];
+        
+        [loopPool drain];
     }
     
 	return self;
