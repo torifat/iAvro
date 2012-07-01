@@ -19,6 +19,7 @@
 		350CED1B159CF3300009F0FE /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 350CED18159CF3300009F0FE /* Database.m */; };
 		350CED1C159CF3300009F0FE /* Suggestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 350CED1A159CF3300009F0FE /* Suggestion.m */; };
 		3512ED5A159785400085E81E /* preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3512ED581597853F0085E81E /* preferences.nib */; };
+		3553A33515A0009E00FE8491 /* CacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3553A33415A0009E00FE8491 /* CacheManager.m */; };
 		35895BF01597639A00F2A3ED /* AutoCorrect.m in Sources */ = {isa = PBXBuildFile; fileRef = 35895BEF1597639A00F2A3ED /* AutoCorrect.m */; };
 		35895BF3159763A300F2A3ED /* autodict.dct in Resources */ = {isa = PBXBuildFile; fileRef = 35895BF2159763A300F2A3ED /* autodict.dct */; };
 		35895BFE1597706800F2A3ED /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 35895BFA1597706800F2A3ED /* MainMenu.nib */; };
@@ -61,6 +62,8 @@
 		350CED19159CF3300009F0FE /* Suggestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Suggestion.h; sourceTree = "<group>"; };
 		350CED1A159CF3300009F0FE /* Suggestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Suggestion.m; sourceTree = "<group>"; };
 		3512ED591597853F0085E81E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/preferences.nib; sourceTree = "<group>"; };
+		3553A33315A0009D00FE8491 /* CacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheManager.h; sourceTree = "<group>"; };
+		3553A33415A0009E00FE8491 /* CacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheManager.m; sourceTree = "<group>"; };
 		35895BEE1597639A00F2A3ED /* AutoCorrect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoCorrect.h; sourceTree = "<group>"; };
 		35895BEF1597639A00F2A3ED /* AutoCorrect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoCorrect.m; sourceTree = "<group>"; };
 		35895BF2159763A300F2A3ED /* autodict.dct */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = autodict.dct; sourceTree = "<group>"; };
@@ -230,6 +233,8 @@
 				350CED18159CF3300009F0FE /* Database.m */,
 				350CED19159CF3300009F0FE /* Suggestion.h */,
 				350CED1A159CF3300009F0FE /* Suggestion.m */,
+				3553A33315A0009D00FE8491 /* CacheManager.h */,
+				3553A33415A0009E00FE8491 /* CacheManager.m */,
 				359C1C6E159286750080E2FD /* Candidates.h */,
 				359C1C6F159286750080E2FD /* Candidates.m */,
 			);
@@ -319,6 +324,7 @@
 				350CECEB159C45790009F0FE /* RegexParser.m in Sources */,
 				350CED1B159CF3300009F0FE /* Database.m in Sources */,
 				350CED1C159CF3300009F0FE /* Suggestion.m in Sources */,
+				3553A33515A0009E00FE8491 /* CacheManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

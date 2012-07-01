@@ -13,7 +13,6 @@
     NSMutableString*		_composedBuffer;        // _composedBuffer contains text that the input method has converted
     id                      _currentClient;         // the current active client.
     NSMutableArray*         _currentCandidates;
-    NSMutableDictionary*    _data;
     NSString*               _prevSelected;
 }
 

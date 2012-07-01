@@ -8,6 +8,7 @@
 #import "AvroKeyboardController.h"
 #import "Suggestion.h"
 #import "Candidates.h"
+#import "CacheManager.h"
 
 @implementation AvroKeyboardController
 
@@ -15,37 +16,16 @@
     self = [super initWithServer:server delegate:delegate client:inputClient];
     
 	if (self) {
-		_currentClient = inputClient;
+        _currentClient = inputClient;
 		_composedBuffer = [[NSMutableString alloc] initWithString:@""];
         _currentCandidates = [[NSMutableArray alloc] initWithCapacity:0];
-        
-        // Weight PLIST File
-        NSString *path = [self getSharedFolder];
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        if ([fileManager fileExistsAtPath:path] == NO) {
-            NSError* error = nil;
-            [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error];
-            if (error) {
-                @throw error;
-            }
-        }
-        
-        path = [path stringByAppendingPathComponent:@"weight.plist"];
-        
-        if ([fileManager fileExistsAtPath:path]) {
-            _data = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
-        } else {
-            _data = [[NSMutableDictionary alloc] initWithCapacity:0];
-        }
     }
-    
+
 	return self;
 }
 
 - (void)dealloc {
-    [_data writeToFile:[[self getSharedFolder] stringByAppendingPathComponent:@"weight.plist"] atomically:YES];
-    [_data release];
-	[_composedBuffer release];
+    [_composedBuffer release];
     [_currentCandidates release];
 	[super dealloc];
 }
@@ -95,10 +75,10 @@
     BOOL comp = [[candidateString string] isEqualToString:[_currentCandidates objectAtIndex:0]];
     if ((comp && !_prevSelected) == NO) {
         if (comp == YES) {
-            [_data removeObjectForKey:_composedBuffer];
+            [[[CacheManager sharedInstance] weightData] removeObjectForKey:_composedBuffer];
         }
         else {
-            [_data setObject:[candidateString string] forKey:_composedBuffer];
+            [[[CacheManager sharedInstance] weightData] setObject:[candidateString string] forKey:_composedBuffer];
         }
     }
 	[_currentClient insertText:candidateString replacementRange:NSMakeRange(NSNotFound, 0)];
@@ -156,7 +136,7 @@
         [self updateComposition];
         [self updateCandidatesPanel];
         
-        _prevSelected = [_data objectForKey:_composedBuffer];
+        _prevSelected = [[[CacheManager sharedInstance] weightData] objectForKey:_composedBuffer];
         if (_prevSelected) {
             // candidateStringIdentifier for >= Lion
             int i;
@@ -221,13 +201,6 @@
 
 - (NSMenu*)menu {
     return [[NSApp delegate] menu];
-}
-
-- (NSString*)getSharedFolder {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-    return [[[paths objectAtIndex:0] 
-                       stringByAppendingPathComponent:@"OmicronLab"] 
-                      stringByAppendingPathComponent:@"Avro Keyboard"];
 }
 
 @end
