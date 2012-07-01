@@ -10,6 +10,7 @@
 #import "AutoCorrect.h"
 #import "RegexParser.h"
 #import "Database.h"
+#import "NSString+Levenshtein.h"
 
 @implementation Suggestion
 
@@ -21,7 +22,7 @@
         [AvroParser allocateSharedInstance];
         [AutoCorrect allocateSharedInstance];
         [Database allocateSharedInstance];
-        suggestions = [[NSMutableArray alloc] initWithCapacity:0];
+        _suggestions = [[NSMutableArray alloc] initWithCapacity:0];
     }
     
 	return self;
@@ -52,25 +53,38 @@ static Suggestion* sharedInstance = nil;
     // Suggestion form AutoCorrect
     NSString* autoCorrect = [[AutoCorrect sharedInstance] find:term];
     if (autoCorrect) {
-        [suggestions addObject:autoCorrect];
+        [_suggestions addObject:autoCorrect];
     }
     
     // Suggestion from Dictionary
     NSArray* dicList = [[Database sharedInstance] find:term];
+    // Suggestion from Default Parser
+    NSString* paresedString = [[AvroParser sharedInstance] parse:term];
     if (dicList) {
-        [suggestions addObjectsFromArray:dicList];
+        // Sort dicList based on edit distance
+        NSArray* sortedDicList = [dicList sortedArrayUsingComparator:^NSComparisonResult(id left, id right) {
+            int dist1 = [paresedString computeLevenshteinDistanceWithString:(NSString*)left];
+            int dist2 = [paresedString computeLevenshteinDistanceWithString:(NSString*)right];
+            if (dist1 < dist2) {
+                return NSOrderedAscending;
+            }
+            else if (dist1 > dist2) {
+                return NSOrderedDescending;
+            } else {
+                return NSOrderedSame;
+            }
+        }];
+        [_suggestions addObjectsFromArray:sortedDicList];
         if (autoCorrect && [dicList containsObject:autoCorrect]) {
-            [suggestions removeObjectIdenticalTo:autoCorrect];
+            [_suggestions removeObjectIdenticalTo:autoCorrect];
         }
     }
     
-    // Suggestion from Default Parser
-    NSString* paresedString = [[AvroParser sharedInstance] parse:term];
-    if ([suggestions containsObject:paresedString] == NO) {
-        [suggestions addObject:paresedString];
+    if ([_suggestions containsObject:paresedString] == NO) {
+        [_suggestions addObject:paresedString];
     }
     
-    return suggestions;
+    return _suggestions;
 }
 
 @end

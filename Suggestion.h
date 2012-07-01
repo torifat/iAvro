@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 
 @interface Suggestion : NSObject {
-    NSMutableArray* suggestions;
+    NSMutableArray* _suggestions;
 }
 
 + (void)allocateSharedInstance;

@@ -26,6 +26,7 @@
 		359C1C70159286750080E2FD /* Candidates.m in Sources */ = {isa = PBXBuildFile; fileRef = 359C1C6F159286750080E2FD /* Candidates.m */; };
 		35B007CB1597BF9A000CE409 /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B007CA1597BF9A000CE409 /* PreferencesController.m */; };
 		35B47478159A668D00C69C7D /* avro.icns in Resources */ = {isa = PBXBuildFile; fileRef = 35B47477159A668D00C69C7D /* avro.icns */; };
+		35B6EE6D15A0C4F2004C7C9B /* NSString+Levenshtein.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B6EE6C15A0C4F2004C7C9B /* NSString+Levenshtein.m */; };
 		35DBC86B1597A15B00B9772E /* MainMenuAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 35DBC86A1597A15B00B9772E /* MainMenuAppDelegate.m */; };
 		35F4DE73159404A3001EAC81 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 35F4DE72159404A3001EAC81 /* data.json */; };
 		35F4DE7F1594096B001EAC81 /* AvroParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F4DE7E1594096B001EAC81 /* AvroParser.m */; };
@@ -73,6 +74,8 @@
 		35B007C91597BF9A000CE409 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
 		35B007CA1597BF9A000CE409 /* PreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesController.m; sourceTree = "<group>"; };
 		35B47477159A668D00C69C7D /* avro.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = avro.icns; sourceTree = "<group>"; };
+		35B6EE6B15A0C4F2004C7C9B /* NSString+Levenshtein.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Levenshtein.h"; sourceTree = "<group>"; };
+		35B6EE6C15A0C4F2004C7C9B /* NSString+Levenshtein.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Levenshtein.m"; sourceTree = "<group>"; };
 		35DBC8691597A15B00B9772E /* MainMenuAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuAppDelegate.h; sourceTree = "<group>"; };
 		35DBC86A1597A15B00B9772E /* MainMenuAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuAppDelegate.m; sourceTree = "<group>"; };
 		35F4DE72159404A3001EAC81 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
@@ -104,9 +107,8 @@
 			isa = PBXGroup;
 			children = (
 				35B007C51597BF56000CE409 /* Controllers */,
-				350CECED159C45870009F0FE /* FMDatabase */,
-				350CECEE159C45C50009F0FE /* RegexKit */,
 				35B007CC1597BFC3000CE409 /* Others */,
+				35B6EE6915A0C4AD004C7C9B /* Libraries */,
 				35DBC8691597A15B00B9772E /* MainMenuAppDelegate.h */,
 				35DBC86A1597A15B00B9772E /* MainMenuAppDelegate.m */,
 			);
@@ -223,14 +225,7 @@
 		35B007CC1597BFC3000CE409 /* Others */ = {
 			isa = PBXGroup;
 			children = (
-				35895BEE1597639A00F2A3ED /* AutoCorrect.h */,
-				35895BEF1597639A00F2A3ED /* AutoCorrect.m */,
-				35F4DE7D1594096B001EAC81 /* AvroParser.h */,
-				35F4DE7E1594096B001EAC81 /* AvroParser.m */,
-				350CECE3159C45790009F0FE /* RegexParser.h */,
-				350CECE4159C45790009F0FE /* RegexParser.m */,
-				350CED17159CF3300009F0FE /* Database.h */,
-				350CED18159CF3300009F0FE /* Database.m */,
+				35B6EE6815A0C4A4004C7C9B /* Parsers */,
 				350CED19159CF3300009F0FE /* Suggestion.h */,
 				350CED1A159CF3300009F0FE /* Suggestion.m */,
 				3553A33315A0009D00FE8491 /* CacheManager.h */,
@@ -239,6 +234,32 @@
 				359C1C6F159286750080E2FD /* Candidates.m */,
 			);
 			name = Others;
+			sourceTree = "<group>";
+		};
+		35B6EE6815A0C4A4004C7C9B /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				35895BEE1597639A00F2A3ED /* AutoCorrect.h */,
+				35895BEF1597639A00F2A3ED /* AutoCorrect.m */,
+				35F4DE7D1594096B001EAC81 /* AvroParser.h */,
+				35F4DE7E1594096B001EAC81 /* AvroParser.m */,
+				350CECE3159C45790009F0FE /* RegexParser.h */,
+				350CECE4159C45790009F0FE /* RegexParser.m */,
+				350CED17159CF3300009F0FE /* Database.h */,
+				350CED18159CF3300009F0FE /* Database.m */,
+			);
+			name = Parsers;
+			sourceTree = "<group>";
+		};
+		35B6EE6915A0C4AD004C7C9B /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				350CECED159C45870009F0FE /* FMDatabase */,
+				350CECEE159C45C50009F0FE /* RegexKit */,
+				35B6EE6B15A0C4F2004C7C9B /* NSString+Levenshtein.h */,
+				35B6EE6C15A0C4F2004C7C9B /* NSString+Levenshtein.m */,
+			);
+			name = Libraries;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -325,6 +346,7 @@
 				350CED1B159CF3300009F0FE /* Database.m in Sources */,
 				350CED1C159CF3300009F0FE /* Suggestion.m in Sources */,
 				3553A33515A0009E00FE8491 /* CacheManager.m in Sources */,
+				35B6EE6D15A0C4F2004C7C9B /* NSString+Levenshtein.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
