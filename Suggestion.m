@@ -49,10 +49,13 @@ static Suggestion* sharedInstance = nil;
 }
 
 - (NSMutableArray*)getList:(NSString*)term {
+    // Suggestion form AutoCorrect
     NSString* autoCorrect = [[AutoCorrect sharedInstance] find:term];
     if (autoCorrect) {
         [suggestions addObject:autoCorrect];
     }
+    
+    // Suggestion from Dictionary
     NSArray* dicList = [[Database sharedInstance] find:term];
     if (dicList) {
         [suggestions addObjectsFromArray:dicList];
@@ -61,6 +64,7 @@ static Suggestion* sharedInstance = nil;
         }
     }
     
+    // Suggestion from Default Parser
     NSString* paresedString = [[AvroParser sharedInstance] parse:term];
     if ([suggestions containsObject:paresedString] == NO) {
         [suggestions addObject:paresedString];

@@ -65,19 +65,14 @@ static RegexParser* sharedInstance = nil;
 
 - (NSString*)parse:(NSString *)string {
     
-    // Scary C equivalent code for performance boost ;)
-    int len = [string length];
-    unichar *fixedArray = calloc(len, sizeof(unichar));
-    [string getCharacters:fixedArray];
-    int i, j;
-    for (i = 0, j = 0; i < len; ++i) {
+    NSMutableString* fixed = [[NSMutableString alloc] initWithCapacity:0];
+    int i, len = [string length];
+    for (i = 0; i < len; ++i) {
         unichar c = [string characterAtIndex:i];
-        if(![self isCaseSensitive:c]) {
-            fixedArray[j++] = [self smallCap:c];
+        if (![self isCaseSensitive:c]) {
+            [fixed appendFormat:@"%C", [self smallCap:c]];
         }
     }
-    NSString* fixed = [NSString stringWithCharacters:fixedArray length:len];
-    free(fixedArray);
     
     NSMutableString* output = [[NSMutableString alloc] initWithCapacity:0];
     
@@ -219,6 +214,7 @@ static RegexParser* sharedInstance = nil;
         // NSLog(@"cur: %s, start: %s, end: %s, prev: %s\n", cur, start, end, prev);
     }
     
+    [fixed release];
     [output autorelease];
     
     return output;

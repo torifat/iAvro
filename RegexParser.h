@@ -12,7 +12,7 @@
     NSString*       _consonant;
     NSString*       _casesensitive;
     NSArray*        _patterns;
-    int _maxPatternLength;
+    int             _maxPatternLength;
 }
 
 + (void)allocateSharedInstance;
