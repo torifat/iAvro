@@ -65,7 +65,7 @@ static AutoCorrect* sharedInstance = nil;
 
 // Instance Methods
 - (NSString*)find:(NSString*)term {
-    term = [[RegexParser sharedInstance] clean:term];
+    // term = [[RegexParser sharedInstance] clean:term];
     // Binary Search
     int left = 0, right = [autoCorrectEntries count] -1, mid;
     while (right >= left) {
