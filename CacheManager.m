@@ -14,10 +14,11 @@
 - (id)init {
     self = [super init];
     if (self) {
-        
+        /*
         NSLog(@"-----------------------------------------------------------------");
         NSLog(@"CacheManager Loaded");
         NSLog(@"-----------------------------------------------------------------");
+        */
         
         // Weight PLIST File
         NSString *path = [self getSharedFolder];
@@ -42,10 +43,11 @@
 }
 
 - (void)dealloc {
+    /*
     NSLog(@"-----------------------------------------------------------------");
     NSLog(@"CacheManager Loaded");
     NSLog(@"-----------------------------------------------------------------");
-    
+    */
     [_weightData writeToFile:[[self getSharedFolder] stringByAppendingPathComponent:@"weight.plist"] atomically:YES];
     [_weightData release];
 	[super dealloc];

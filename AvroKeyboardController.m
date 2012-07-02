@@ -127,8 +127,10 @@
     // other words the system will not deliver a key down event to the application.
     // Returning NO means the original key down will be passed on to the client.
     if ([string isEqualToString:@" "]) {
-        [self commitText:string];
-        return YES;
+        if (_currentCandidates && [_currentCandidates count]) {
+            [self candidateSelected:[[Candidates sharedInstance] selectedCandidateString]];
+        }
+        return NO;
     }
     else {
         [_composedBuffer appendString:string];
