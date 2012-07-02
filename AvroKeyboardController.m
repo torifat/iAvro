@@ -9,6 +9,8 @@
 #import "Suggestion.h"
 #import "Candidates.h"
 #import "CacheManager.h"
+#import "RegexKitLite.h"
+#import "AvroParser.h"
 
 @implementation AvroKeyboardController
 
@@ -17,23 +19,47 @@
     
 	if (self) {
         _currentClient = inputClient;
-		_composedBuffer = [[NSMutableString alloc] initWithString:@""];
+        _composedBuffer = [[NSMutableString alloc] initWithString:@""];
         _currentCandidates = [[NSMutableArray alloc] initWithCapacity:0];
+
+        NSString* charList = @"(?::`|\\.`|[-\\]\\\\~!@#&*()_=+\\[{}'\";<>/?|.,])*";
+        _regex = [[NSString alloc] initWithFormat:@"(^%@?(?=(?:,{2,}))|^%@)(.*?(?:,,)*)(%@$)", charList, charList, charList];
+        _term = [[NSString alloc] initWithString:@""];
     }
 
 	return self;
 }
 
 - (void)dealloc {
+    [_regex release];
+    [_term release];
     [_composedBuffer release];
     [_currentCandidates release];
 	[super dealloc];
 }
 
 - (void)findCurrentCandidates {
-    if(_composedBuffer) {
-        [_currentCandidates removeAllObjects];
-        _currentCandidates = [[[Suggestion sharedInstance] getList:_composedBuffer] retain];
+    [_currentCandidates removeAllObjects];
+    if(_composedBuffer && [_composedBuffer length] > 0) {
+        NSArray* items = [_composedBuffer captureComponentsMatchedByRegex:_regex];
+        if (items && [items count] > 0) {
+            _prefix = [[AvroParser sharedInstance] parse:[items objectAtIndex:1]];
+            _suffix = [[AvroParser sharedInstance] parse:[items objectAtIndex:3]];
+            _term = [[items objectAtIndex:2] retain];
+            
+            _currentCandidates = [[[Suggestion sharedInstance] getList:_term] retain];
+            if (_currentCandidates && [_currentCandidates count] > 0) {
+                int i;
+                for (i = 0; i < [_currentCandidates count]; ++i) {
+                    NSString* item = [_currentCandidates objectAtIndex:i];
+                    [_currentCandidates replaceObjectAtIndex:i withObject:
+                     [NSString stringWithFormat:@"%@%@%@", _prefix, item, _suffix]];
+                }
+            }
+            else {
+                [_currentCandidates addObject:_prefix];
+            }
+        }
     }
 }
 
@@ -72,13 +98,15 @@
 }
 
 - (void)candidateSelected:(NSAttributedString*)candidateString {
-    BOOL comp = [[candidateString string] isEqualToString:[_currentCandidates objectAtIndex:0]];
-    if ((comp && !_prevSelected) == NO) {
-        if (comp == YES) {
-            [[[CacheManager sharedInstance] weightData] removeObjectForKey:_composedBuffer];
-        }
-        else {
-            [[[CacheManager sharedInstance] weightData] setObject:[candidateString string] forKey:_composedBuffer];
+    if (_term && [_term length] > 0) {
+        BOOL comp = [[candidateString string] isEqualToString:[_currentCandidates objectAtIndex:0]];
+        if ((comp && !_prevSelected) == NO) {
+            if (comp == YES) {
+                [[[CacheManager sharedInstance] weightData] removeObjectForKey:_term];
+            }
+            else {
+                [[[CacheManager sharedInstance] weightData] setObject:[candidateString string] forKey:_term];
+            }
         }
     }
 	[_currentClient insertText:candidateString replacementRange:NSMakeRange(NSNotFound, 0)];
@@ -138,14 +166,17 @@
         [self updateComposition];
         [self updateCandidatesPanel];
         
-        _prevSelected = [[[CacheManager sharedInstance] weightData] objectForKey:_composedBuffer];
-        if (_prevSelected) {
-            // candidateStringIdentifier for >= Lion
-            int i;
-            for (i = 0; i < [_currentCandidates count]; ++i) {
-                NSString* item = [_currentCandidates objectAtIndex:i];
-                if ([item isEqualToString:_prevSelected] ) {
-                    [[Candidates sharedInstance] selectCandidate:i];
+        if (_term && [_term length] > 0) {
+            _prevSelected = [[[CacheManager sharedInstance] weightData] objectForKey:_term];
+            if (_prevSelected) {
+                // candidateStringIdentifier for >= Lion
+                int i;
+                for (i = 0; i < [_currentCandidates count]; ++i) {
+                    NSString* item = [_currentCandidates objectAtIndex:i];
+                    if ([item isEqualToString:_prevSelected] ) {
+                        [[Candidates sharedInstance] selectCandidate:i];
+                        break;
+                    }
                 }
             }
         }

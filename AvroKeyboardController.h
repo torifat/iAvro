@@ -14,6 +14,10 @@
     NSMutableString*		_composedBuffer;        // _composedBuffer contains text that the input method has converted
     NSMutableArray*         _currentCandidates;
     NSString*               _prevSelected;
+    NSString*               _prefix;                // Converted Prefix
+    NSString*               _term;                  // Original Non-Converted Term
+    NSString*               _suffix;                // Converted Suffix
+    NSString*               _regex;
 }
 
 //These are simple methods for managing our composition and original buffers

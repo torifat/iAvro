@@ -64,6 +64,9 @@ static RegexParser* sharedInstance = nil;
 }
 
 - (NSString*)parse:(NSString *)string {
+    if (!string || [string length] == 0) {
+        return string;
+    }
     NSString* fixed = [self clean:string];
     NSMutableString* output = [[NSMutableString alloc] initWithCapacity:0];
     

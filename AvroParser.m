@@ -65,7 +65,9 @@ static AvroParser* sharedInstance = nil;
 }
 
 - (NSString*)parse:(NSString *)string {
-    
+    if (!string || [string length] == 0) {
+        return string;
+    }
     NSMutableString* fixed = [[NSMutableString alloc] initWithCapacity:0];
     int i, len = [string length];
     for (i = 0; i < len; ++i) {
