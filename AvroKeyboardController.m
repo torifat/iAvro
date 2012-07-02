@@ -9,6 +9,8 @@
 #import "Suggestion.h"
 #import "Candidates.h"
 #import "CacheManager.h"
+#import "RegexKitLite.h"
+#import "AvroParser.h"
 
 @implementation AvroKeyboardController
 
@@ -17,23 +19,58 @@
     
 	if (self) {
         _currentClient = inputClient;
-		_composedBuffer = [[NSMutableString alloc] initWithString:@""];
+        _composedBuffer = [[NSMutableString alloc] initWithString:@""];
         _currentCandidates = [[NSMutableArray alloc] initWithCapacity:0];
+        _prevSelected = -1;
+
+        NSString* charList = @"(?::`|\\.`|[-\\]\\\\~!@#&*()_=+\\[{}'\";<>/?|.,])*";
+        _regex = [[NSString alloc] initWithFormat:@"(^%@?(?=(?:,{2,}))|^%@)(.*?(?:,,)*)(%@$)", charList, charList, charList];
+        _term = [[NSString alloc] initWithString:@""];
+        _prefix = [[NSString alloc] initWithString:@""];
+        _suffix = [[NSString alloc] initWithString:@""];
+        
     }
 
 	return self;
 }
 
 - (void)dealloc {
+    [_regex release];
+    [_term release];
+    [_prefix release];
+    [_suffix release];
     [_composedBuffer release];
     [_currentCandidates release];
 	[super dealloc];
 }
 
 - (void)findCurrentCandidates {
-    if(_composedBuffer) {
-        [_currentCandidates removeAllObjects];
-        _currentCandidates = [[[Suggestion sharedInstance] getList:_composedBuffer] retain];
+    [_currentCandidates removeAllObjects];
+    if(_composedBuffer && [_composedBuffer length] > 0) {
+        NSArray* items = [_composedBuffer captureComponentsMatchedByRegex:_regex];
+        if (items && [items count] > 0) {
+            _prefix = [[[AvroParser sharedInstance] parse:[items objectAtIndex:1]] retain];
+            _suffix = [[[AvroParser sharedInstance] parse:[items objectAtIndex:3]] retain];
+            _term = [[items objectAtIndex:2] retain];
+            
+            _currentCandidates = [[[Suggestion sharedInstance] getList:_term] retain];
+            if (_currentCandidates && [_currentCandidates count] > 0) {
+                _prevSelected = -1;
+                NSString* prevString = [[CacheManager sharedInstance] objectForKey:_term];
+                int i;
+                for (i = 0; i < [_currentCandidates count]; ++i) {
+                    NSString* item = [_currentCandidates objectAtIndex:i];
+                    if (_prevSelected && [item isEqualToString:prevString] ) {
+                        _prevSelected = i;
+                    }
+                    [_currentCandidates replaceObjectAtIndex:i withObject:
+                     [NSString stringWithFormat:@"%@%@%@", _prefix, item, _suffix]];
+                }
+            }
+            else {
+                [_currentCandidates addObject:_prefix];
+            }
+        }
     }
 }
 
@@ -50,8 +87,9 @@
         
         // [[Candidates sharedInstance] setPanelType:[defaultsDictionary integerForKey:@"candidatePanelType"]];		
         [[Candidates sharedInstance] updateCandidates];
-        if ([[Candidates sharedInstance] isVisible] == NO) {
-            [[Candidates sharedInstance] show:kIMKLocateCandidatesBelowHint];
+        [[Candidates sharedInstance] show:kIMKLocateCandidatesBelowHint];
+        if (_prevSelected > -1) {
+            [[Candidates sharedInstance] selectCandidate:_prevSelected];
         }
     }
     else {
@@ -72,13 +110,16 @@
 }
 
 - (void)candidateSelected:(NSAttributedString*)candidateString {
-    BOOL comp = [[candidateString string] isEqualToString:[_currentCandidates objectAtIndex:0]];
-    if ((comp && !_prevSelected) == NO) {
-        if (comp == YES) {
-            [[[CacheManager sharedInstance] weightData] removeObjectForKey:_composedBuffer];
-        }
-        else {
-            [[[CacheManager sharedInstance] weightData] setObject:[candidateString string] forKey:_composedBuffer];
+    if (_term && [_term length] > 0) {
+        BOOL comp = [[candidateString string] isEqualToString:[_currentCandidates objectAtIndex:0]];
+        if ((comp && _prevSelected!=-1) == NO) {
+            if (comp == YES) {
+                [[CacheManager sharedInstance] removeObjectForKey:_term];
+            }
+            else {
+                NSRange range = NSMakeRange([_prefix length], [candidateString length] - ([_prefix length] + [_suffix length]));
+                [[CacheManager sharedInstance] setObject:[[candidateString string] substringWithRange:range] forKey:_term];
+            }
         }
     }
 	[_currentClient insertText:candidateString replacementRange:NSMakeRange(NSNotFound, 0)];
@@ -127,27 +168,16 @@
     // other words the system will not deliver a key down event to the application.
     // Returning NO means the original key down will be passed on to the client.
     if ([string isEqualToString:@" "]) {
-        [self commitText:string];
-        return YES;
+        if (_currentCandidates && [_currentCandidates count]) {
+            [self candidateSelected:[[Candidates sharedInstance] selectedCandidateString]];
+        }
+        return NO;
     }
     else {
         [_composedBuffer appendString:string];
         [self findCurrentCandidates];
         [self updateComposition];
         [self updateCandidatesPanel];
-        
-        _prevSelected = [[[CacheManager sharedInstance] weightData] objectForKey:_composedBuffer];
-        if (_prevSelected) {
-            // candidateStringIdentifier for >= Lion
-            int i;
-            for (i = 0; i < [_currentCandidates count]; ++i) {
-                NSString* item = [_currentCandidates objectAtIndex:i];
-                if ([item isEqualToString:_prevSelected] ) {
-                    [[Candidates sharedInstance] selectCandidate:i];
-                }
-            }
-        }
-        
         return YES;
     }
 }

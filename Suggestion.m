@@ -50,6 +50,10 @@ static Suggestion* sharedInstance = nil;
 }
 
 - (NSMutableArray*)getList:(NSString*)term {
+    if (term && [term length] == 0) {
+        return _suggestions;
+    }
+    
     // Suggestion form AutoCorrect
     NSString* autoCorrect = [[AutoCorrect sharedInstance] find:term];
     if (autoCorrect) {

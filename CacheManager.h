@@ -11,10 +11,12 @@
     NSMutableDictionary*    _weightData;
 }
 
-@property (retain) NSMutableDictionary* weightData;
-
 + (void)allocateSharedInstance;
 + (void)deallocateSharedInstance;
 + (CacheManager *)sharedInstance;
+
+- (NSString*)objectForKey:(NSString*)aKey;
+- (void)removeObjectForKey:(NSString*)aKey;
+- (void)setObject:(NSString*)anObject forKey:(NSString*)aKey;
 
 @end

@@ -65,7 +65,9 @@ static AvroParser* sharedInstance = nil;
 }
 
 - (NSString*)parse:(NSString *)string {
-    
+    if (!string || [string length] == 0) {
+        return string;
+    }
     NSMutableString* fixed = [[NSMutableString alloc] initWithCapacity:0];
     int i, len = [string length];
     for (i = 0; i < len; ++i) {
@@ -270,7 +272,7 @@ static AvroParser* sharedInstance = nil;
              && [[heystack substringWithRange:NSMakeRange(start, len)] isEqualToString:needle]) ^ not);
 }
 
-- (unichar) smallCap:(unichar) letter {
+- (unichar)smallCap:(unichar) letter {
     if(letter >= 'A' && letter <= 'Z') {
         letter = letter - 'A' + 'a';
     }
