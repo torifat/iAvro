@@ -270,7 +270,7 @@ static AvroParser* sharedInstance = nil;
              && [[heystack substringWithRange:NSMakeRange(start, len)] isEqualToString:needle]) ^ not);
 }
 
-- (unichar) smallCap:(unichar) letter {
+- (unichar)smallCap:(unichar) letter {
     if(letter >= 'A' && letter <= 'Z') {
         letter = letter - 'A' + 'a';
     }

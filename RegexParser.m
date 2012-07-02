@@ -64,19 +64,10 @@ static RegexParser* sharedInstance = nil;
 }
 
 - (NSString*)parse:(NSString *)string {
-    
-    NSMutableString* fixed = [[NSMutableString alloc] initWithCapacity:0];
-    int i, len = [string length];
-    for (i = 0; i < len; ++i) {
-        unichar c = [string characterAtIndex:i];
-        if (![self isCaseSensitive:c]) {
-            [fixed appendFormat:@"%C", [self smallCap:c]];
-        }
-    }
-    
+    NSString* fixed = [self clean:string];
     NSMutableString* output = [[NSMutableString alloc] initWithCapacity:0];
     
-    len = [fixed length];
+    int len = [fixed length];
     int cur;
     for(cur = 0; cur < len; ++cur) {
         int start = cur, end;
@@ -214,7 +205,6 @@ static RegexParser* sharedInstance = nil;
         // NSLog(@"cur: %s, start: %s, end: %s, prev: %s\n", cur, start, end, prev);
     }
     
-    [fixed release];
     [output autorelease];
     
     return output;
@@ -266,11 +256,24 @@ static RegexParser* sharedInstance = nil;
     return ((start >=0 && end < [heystack length] && [[heystack substringWithRange:NSMakeRange(start, len)] isEqualToString:needle]) ^ not);
 }
 
-- (unichar) smallCap:(unichar) letter {
+- (unichar)smallCap:(unichar) letter {
     if(letter >= 'A' && letter <= 'Z') {
         letter = letter - 'A' + 'a';
     }
     return letter;
+}
+
+- (NSString*)clean:(NSString *)string {
+    NSMutableString* fixed = [[NSMutableString alloc] initWithCapacity:0];
+    int i, len = [string length];
+    for (i = 0; i < len; ++i) {
+        unichar c = [string characterAtIndex:i];
+        if (![self isCaseSensitive:c]) {
+            [fixed appendFormat:@"%C", [self smallCap:c]];
+        }
+    }
+    [fixed autorelease];
+    return fixed;
 }
 
 @end
