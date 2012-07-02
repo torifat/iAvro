@@ -9,16 +9,12 @@
 
 @implementation CacheManager
 
-@synthesize weightData = _weightData;
-
 - (id)init {
     self = [super init];
     if (self) {
-        /*
         NSLog(@"-----------------------------------------------------------------");
         NSLog(@"CacheManager Loaded");
         NSLog(@"-----------------------------------------------------------------");
-        */
         
         // Weight PLIST File
         NSString *path = [self getSharedFolder];
@@ -43,11 +39,9 @@
 }
 
 - (void)dealloc {
-    /*
     NSLog(@"-----------------------------------------------------------------");
-    NSLog(@"CacheManager Loaded");
+    NSLog(@"CacheManager Unloaded");
     NSLog(@"-----------------------------------------------------------------");
-    */
     [_weightData writeToFile:[[self getSharedFolder] stringByAppendingPathComponent:@"weight.plist"] atomically:YES];
     [_weightData release];
 	[super dealloc];
@@ -58,6 +52,17 @@
     return [[[paths objectAtIndex:0] 
              stringByAppendingPathComponent:@"OmicronLab"] 
             stringByAppendingPathComponent:@"Avro Keyboard"];
+}
+
+- (NSString*)objectForKey:(NSString*)aKey {
+    return [_weightData objectForKey:aKey];
+}
+
+- (void)removeObjectForKey:(NSString*)aKey {
+    [_weightData removeObjectForKey:aKey];
+}
+- (void)setObject:(NSString*)anObject forKey:(NSString*)aKey {
+    [_weightData setObject:anObject forKey:aKey];
 }
 
 static CacheManager* sharedInstance = nil;

@@ -11,9 +11,9 @@
 
 @interface AvroKeyboardController : IMKInputController {
     id                      _currentClient;         // the current active client.
+    int                     _prevSelected;
     NSMutableString*		_composedBuffer;        // _composedBuffer contains text that the input method has converted
     NSMutableArray*         _currentCandidates;
-    NSString*               _prevSelected;
     NSString*               _prefix;                // Converted Prefix
     NSString*               _term;                  // Original Non-Converted Term
     NSString*               _suffix;                // Converted Suffix
