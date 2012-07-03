@@ -31,6 +31,7 @@
 }
 
 - (void)dealloc {
+    [_suggestions release];
     [super dealloc];
 }
 

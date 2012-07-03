@@ -78,7 +78,7 @@
         
         [sqliteDb close];
         
-        [loopPool drain];
+        [loopPool release];
     }
     
 	return self;

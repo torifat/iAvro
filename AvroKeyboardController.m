@@ -14,7 +14,10 @@
 
 @implementation AvroKeyboardController
 
+@synthesize prefix = _prefix, term = _term, suffix = _suffix;
+
 - (id)initWithServer:(IMKServer*)server delegate:(id)delegate client:(id)inputClient {
+    
     self = [super initWithServer:server delegate:delegate client:inputClient];
     
 	if (self) {
@@ -22,41 +25,35 @@
         _composedBuffer = [[NSMutableString alloc] initWithString:@""];
         _currentCandidates = [[NSMutableArray alloc] initWithCapacity:0];
         _prevSelected = -1;
-
-        NSString* charList = @"(?::`|\\.`|[-\\]\\\\~!@#&*()_=+\\[{}'\";<>/?|.,])*";
-        _regex = [[NSString alloc] initWithFormat:@"(^%@?(?=(?:,{2,}))|^%@)(.*?(?:,,)*)(%@$)", charList, charList, charList];
-        _term = [[NSString alloc] initWithString:@""];
-        _prefix = [[NSString alloc] initWithString:@""];
-        _suffix = [[NSString alloc] initWithString:@""];
-        
     }
 
 	return self;
 }
 
 - (void)dealloc {
-    [_regex release];
-    [_term release];
     [_prefix release];
+    [_term release];
     [_suffix release];
-    [_composedBuffer release];
     [_currentCandidates release];
+    [_composedBuffer release];
 	[super dealloc];
 }
 
 - (void)findCurrentCandidates {
     [_currentCandidates removeAllObjects];
     if (_composedBuffer && [_composedBuffer length] > 0) {
-           NSArray* items = [[_composedBuffer retain] captureComponentsMatchedByRegex:_regex];
+        NSString* regex = @"(^(?::`|\\.`|[-\\]\\\\~!@#&*()_=+\\[{}'\";<>/?|.,])*?(?=(?:,{2,}))|^(?::`|\\.`|[-\\]\\\\~!@#&*()_=+\\[{}'\";<>/?|.,])*)(.*?(?:,,)*)((?::`|\\.`|[-\\]\\\\~!@#&*()_=+\\[{}'\";<>/?|.,])*$)";
+        NSArray* items = [_composedBuffer captureComponentsMatchedByRegex:regex];
         if (items && [items count] > 0) {
-            _prefix = [[[AvroParser sharedInstance] parse:[items objectAtIndex:1]] retain];
-            _suffix = [[[AvroParser sharedInstance] parse:[items objectAtIndex:3]] retain];
-            _term = [[items objectAtIndex:2] retain];
             
-            _currentCandidates = [[[Suggestion sharedInstance] getList:_term] retain];
+            [self setPrefix:[[AvroParser sharedInstance] parse:[items objectAtIndex:1]]];
+            [self setTerm:[items objectAtIndex:2]];
+            [self setSuffix:[[AvroParser sharedInstance] parse:[items objectAtIndex:3]]];
+            
+            _currentCandidates = [[[Suggestion sharedInstance] getList:[self term]] retain];
             if (_currentCandidates && [_currentCandidates count] > 0) {
                 _prevSelected = -1;
-                NSString* prevString = [[CacheManager sharedInstance] stringForKey:_term];
+                NSString* prevString = [[CacheManager sharedInstance] stringForKey:[self term]];
                 int i;
                 for (i = 0; i < [_currentCandidates count]; ++i) {
                     NSString* item = [_currentCandidates objectAtIndex:i];
@@ -64,11 +61,11 @@
                         _prevSelected = i;
                     }
                     [_currentCandidates replaceObjectAtIndex:i withObject:
-                     [NSString stringWithFormat:@"%@%@%@", _prefix, item, _suffix]];
+                     [NSString stringWithFormat:@"%@%@%@", [self prefix], item, [self suffix]]];
                 }
             }
             else {
-                [_currentCandidates addObject:_prefix];
+                [_currentCandidates addObject:[self prefix]];
             }
         }
     }
@@ -110,15 +107,16 @@
 }
 
 - (void)candidateSelected:(NSAttributedString*)candidateString {
-    if (_term && [_term length] > 0) {
+    if ([self term] && [[self term] length] > 0) {
         BOOL comp = [[candidateString string] isEqualToString:[_currentCandidates objectAtIndex:0]];
         if ((comp && _prevSelected!=-1) == NO) {
             if (comp == YES) {
-                [[CacheManager sharedInstance] removeStringForKey:_term];
+                [[CacheManager sharedInstance] removeStringForKey:[self term]];
             }
             else {
-                NSRange range = NSMakeRange([_prefix length], [candidateString length] - ([_prefix length] + [_suffix length]));
-                [[CacheManager sharedInstance] setString:[[candidateString string] substringWithRange:range] forKey:_term];
+                NSRange range = NSMakeRange([[self prefix] length], 
+                                            [candidateString length] - ([[self prefix] length] + [[self suffix] length]));
+                [[CacheManager sharedInstance] setString:[[candidateString string] substringWithRange:range] forKey:[self term]];
             }
         }
     }

@@ -66,7 +66,7 @@ static AvroParser* sharedInstance = nil;
 
 - (NSString*)parse:(NSString *)string {
     if (!string || [string length] == 0) {
-        return string;
+        return @"";
     }
     
     NSString * fixed = [self fix:string];
@@ -207,7 +207,6 @@ static AvroParser* sharedInstance = nil;
         // NSLog(@"cur: %s, start: %s, end: %s, prev: %s\n", cur, start, end, prev);
     }
     
-    [fixed release];
     [output autorelease];
     
     return output;
