@@ -58,7 +58,7 @@ static Suggestion* sharedInstance = nil;
     }
     
     [_suggestions addObjectsFromArray:[[CacheManager sharedInstance] arrayForKey:term]];
-    if ([_suggestions count] > 0) {
+    if (_suggestions && [_suggestions count] > 0) {
         return _suggestions;
     }
     
@@ -96,7 +96,7 @@ static Suggestion* sharedInstance = nil;
         [_suggestions addObject:paresedString];
     }
     
-    [[CacheManager sharedInstance] setArray:[_suggestions copy] forKey:term];
+    [[CacheManager sharedInstance] setArray:[[_suggestions copy] autorelease] forKey:term];
     
     return _suggestions;
 }
