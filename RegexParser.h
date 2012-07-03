@@ -20,7 +20,6 @@
 + (RegexParser *)sharedInstance;
 
 - (NSString*)parse:(NSString*)string;
-- (NSString*)clean:(NSString*)string;
 - (BOOL)isVowel:(unichar)c;
 - (BOOL)isConsonant:(unichar)c;
 - (BOOL)isPunctuation:(unichar)c;

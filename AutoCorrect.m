@@ -7,8 +7,6 @@
 
 #import "AutoCorrect.h"
 #import "AvroParser.h"
-#import "RegexParser.h"
-
 @implementation AutoCorrect
 
 @synthesize autoCorrectEntries;
@@ -65,7 +63,7 @@ static AutoCorrect* sharedInstance = nil;
 
 // Instance Methods
 - (NSString*)find:(NSString*)term {
-    // term = [[RegexParser sharedInstance] clean:term];
+    term = [[AvroParser sharedInstance] fix:term];
     // Binary Search
     int left = 0, right = [autoCorrectEntries count] -1, mid;
     while (right >= left) {

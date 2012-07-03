@@ -67,11 +67,11 @@ static RegexParser* sharedInstance = nil;
     if (!string || [string length] == 0) {
         return string;
     }
+    
     NSString* fixed = [self clean:string];
     NSMutableString* output = [[NSMutableString alloc] initWithCapacity:0];
     
-    int len = [fixed length];
-    int cur;
+    int len = [fixed length], cur;
     for(cur = 0; cur < len; ++cur) {
         int start = cur, end;
         BOOL matched = FALSE;

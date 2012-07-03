@@ -68,22 +68,11 @@ static AvroParser* sharedInstance = nil;
     if (!string || [string length] == 0) {
         return string;
     }
-    NSMutableString* fixed = [[NSMutableString alloc] initWithCapacity:0];
-    int i, len = [string length];
-    for (i = 0; i < len; ++i) {
-        unichar c = [string characterAtIndex:i];
-        if (![self isCaseSensitive:c]) {
-            [fixed appendFormat:@"%C", [self smallCap:c]];
-        }
-        else {
-            [fixed appendFormat:@"%C", c];
-        }
-    }
     
+    NSString * fixed = [self fix:string];
     NSMutableString* output = [[NSMutableString alloc] initWithCapacity:0];
     
-    len = [fixed length];
-    int cur;
+    int len = [fixed length], cur;
     for(cur = 0; cur < len; ++cur) {
         int start = cur, end;
         BOOL matched = FALSE;
@@ -278,5 +267,22 @@ static AvroParser* sharedInstance = nil;
     }
     return letter;
 }
+
+- (NSString*)fix:(NSString *)string {
+    NSMutableString* fixed = [[NSMutableString alloc] initWithCapacity:0];
+    int i, len = [string length];
+    for (i = 0; i < len; ++i) {
+        unichar c = [string characterAtIndex:i];
+        if (![self isCaseSensitive:c]) {
+            [fixed appendFormat:@"%C", [self smallCap:c]];
+        }
+        else {
+            [fixed appendFormat:@"%C", c];
+        }
+    }
+    [fixed autorelease];
+    return fixed;
+}
+
 
 @end
