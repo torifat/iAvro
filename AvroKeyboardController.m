@@ -47,7 +47,7 @@
 - (void)findCurrentCandidates {
     [_currentCandidates removeAllObjects];
     if (_composedBuffer && [_composedBuffer length] > 0) {
-        NSArray* items = [_composedBuffer captureComponentsMatchedByRegex:_regex];
+           NSArray* items = [[_composedBuffer retain] captureComponentsMatchedByRegex:_regex];
         if (items && [items count] > 0) {
             _prefix = [[[AvroParser sharedInstance] parse:[items objectAtIndex:1]] retain];
             _suffix = [[[AvroParser sharedInstance] parse:[items objectAtIndex:3]] retain];
@@ -56,7 +56,7 @@
             _currentCandidates = [[[Suggestion sharedInstance] getList:_term] retain];
             if (_currentCandidates && [_currentCandidates count] > 0) {
                 _prevSelected = -1;
-                NSString* prevString = [[CacheManager sharedInstance] objectForKey:_term];
+                NSString* prevString = [[CacheManager sharedInstance] stringForKey:_term];
                 int i;
                 for (i = 0; i < [_currentCandidates count]; ++i) {
                     NSString* item = [_currentCandidates objectAtIndex:i];
@@ -114,11 +114,11 @@
         BOOL comp = [[candidateString string] isEqualToString:[_currentCandidates objectAtIndex:0]];
         if ((comp && _prevSelected!=-1) == NO) {
             if (comp == YES) {
-                [[CacheManager sharedInstance] removeObjectForKey:_term];
+                [[CacheManager sharedInstance] removeStringForKey:_term];
             }
             else {
                 NSRange range = NSMakeRange([_prefix length], [candidateString length] - ([_prefix length] + [_suffix length]));
-                [[CacheManager sharedInstance] setObject:[[candidateString string] substringWithRange:range] forKey:_term];
+                [[CacheManager sharedInstance] setString:[[candidateString string] substringWithRange:range] forKey:_term];
             }
         }
     }

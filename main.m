@@ -25,7 +25,6 @@ int main(int argc, char *argv[]) {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
 	[Suggestion allocateSharedInstance];
-    [CacheManager allocateSharedInstance];
     //find the bundle identifier and then initialize the input method server
     identifier = [[NSBundle mainBundle] bundleIdentifier];
     server = [[IMKServer alloc] initWithName:(NSString*)kConnectionName bundleIdentifier:identifier];
@@ -37,7 +36,6 @@ int main(int argc, char *argv[]) {
 	//finally run everything
 	[[NSApplication sharedApplication] run];
 	
-    [CacheManager deallocateSharedInstance];
     [Suggestion deallocateSharedInstance];
     [Candidates deallocateSharedInstance];
     [server release];

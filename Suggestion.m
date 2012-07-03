@@ -11,6 +11,7 @@
 #import "RegexParser.h"
 #import "Database.h"
 #import "NSString+Levenshtein.h"
+#import "CacheManager.h"
 
 @implementation Suggestion
 
@@ -21,6 +22,7 @@
 	if (self) {
         [AvroParser allocateSharedInstance];
         [AutoCorrect allocateSharedInstance];
+        [CacheManager allocateSharedInstance];
         [Database allocateSharedInstance];
         _suggestions = [[NSMutableArray alloc] initWithCapacity:0];
     }
@@ -41,6 +43,7 @@ static Suggestion* sharedInstance = nil;
 + (void)deallocateSharedInstance {
     [AvroParser deallocateSharedInstance];
     [AutoCorrect deallocateSharedInstance];
+    [CacheManager deallocateSharedInstance];
     [Database deallocateSharedInstance];
 	[sharedInstance release];
 }
@@ -51,6 +54,11 @@ static Suggestion* sharedInstance = nil;
 
 - (NSMutableArray*)getList:(NSString*)term {
     if (term && [term length] == 0) {
+        return _suggestions;
+    }
+    
+    [_suggestions addObjectsFromArray:[[CacheManager sharedInstance] arrayForKey:term]];
+    if ([_suggestions count] > 0) {
         return _suggestions;
     }
     
@@ -87,6 +95,8 @@ static Suggestion* sharedInstance = nil;
     if ([_suggestions containsObject:paresedString] == NO) {
         [_suggestions addObject:paresedString];
     }
+    
+    [[CacheManager sharedInstance] setArray:[_suggestions copy] forKey:term];
     
     return _suggestions;
 }

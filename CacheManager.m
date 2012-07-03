@@ -30,10 +30,11 @@
         path = [path stringByAppendingPathComponent:@"weight.plist"];
         
         if ([fileManager fileExistsAtPath:path]) {
-            _weightData = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
+            _weightCache = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
         } else {
-            _weightData = [[NSMutableDictionary alloc] initWithCapacity:0];
+            _weightCache = [[NSMutableDictionary alloc] initWithCapacity:0];
         }
+        _phoneticCache = [[NSMutableDictionary alloc] initWithCapacity:0];
     }
     return self;
 }
@@ -42,8 +43,8 @@
     NSLog(@"-----------------------------------------------------------------");
     NSLog(@"CacheManager Unloaded");
     NSLog(@"-----------------------------------------------------------------");
-    [_weightData writeToFile:[[self getSharedFolder] stringByAppendingPathComponent:@"weight.plist"] atomically:YES];
-    [_weightData release];
+    [_weightCache writeToFile:[[self getSharedFolder] stringByAppendingPathComponent:@"weight.plist"] atomically:YES];
+    [_weightCache release];
 	[super dealloc];
 }
 
@@ -54,15 +55,26 @@
             stringByAppendingPathComponent:@"Avro Keyboard"];
 }
 
-- (NSString*)objectForKey:(NSString*)aKey {
-    return [_weightData objectForKey:aKey];
+// Weight Cache
+- (NSString*)stringForKey:(NSString*)aKey {
+    return [_weightCache objectForKey:aKey];
 }
 
-- (void)removeObjectForKey:(NSString*)aKey {
-    [_weightData removeObjectForKey:aKey];
+- (void)removeStringForKey:(NSString*)aKey {
+    [_weightCache removeObjectForKey:aKey];
 }
-- (void)setObject:(NSString*)anObject forKey:(NSString*)aKey {
-    [_weightData setObject:anObject forKey:aKey];
+
+- (void)setString:(NSString*)aString forKey:(NSString*)aKey {
+    [_weightCache setObject:aString forKey:aKey];
+}
+
+// Phonetic Cache
+- (NSArray*)arrayForKey:(NSString*)aKey {
+    return [_phoneticCache objectForKey:aKey];
+}
+
+- (void)setArray:(NSArray*)anArray forKey:(NSString*)aKey {
+    [_phoneticCache setObject:anArray forKey:aKey];
 }
 
 static CacheManager* sharedInstance = nil;
