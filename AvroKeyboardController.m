@@ -46,7 +46,7 @@
 
 - (void)findCurrentCandidates {
     [_currentCandidates removeAllObjects];
-    if(_composedBuffer && [_composedBuffer length] > 0) {
+    if (_composedBuffer && [_composedBuffer length] > 0) {
         NSArray* items = [_composedBuffer captureComponentsMatchedByRegex:_regex];
         if (items && [items count] > 0) {
             _prefix = [[[AvroParser sharedInstance] parse:[items objectAtIndex:1]] retain];
@@ -207,7 +207,7 @@
 		// client application. For that reason we need to test in the case where
 		// we might not handle the command.
 		
-		if(_composedBuffer && [_composedBuffer length] > 0) {
+		if (_composedBuffer && [_composedBuffer length] > 0) {
             if (aSelector == @selector(insertTab:) 
                 || aSelector == @selector(insertNewline:)
                 || aSelector == @selector(deleteBackward:)) {

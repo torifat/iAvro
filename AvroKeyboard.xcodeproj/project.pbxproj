@@ -20,6 +20,7 @@
 		350CED1C159CF3300009F0FE /* Suggestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 350CED1A159CF3300009F0FE /* Suggestion.m */; };
 		3512ED5A159785400085E81E /* preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3512ED581597853F0085E81E /* preferences.nib */; };
 		3553A33515A0009E00FE8491 /* CacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3553A33415A0009E00FE8491 /* CacheManager.m */; };
+		3578E8FD15A26EC100C1FB8E /* Credits.rtfd in Resources */ = {isa = PBXBuildFile; fileRef = 3578E8FC15A26EC100C1FB8E /* Credits.rtfd */; };
 		35895BF01597639A00F2A3ED /* AutoCorrect.m in Sources */ = {isa = PBXBuildFile; fileRef = 35895BEF1597639A00F2A3ED /* AutoCorrect.m */; };
 		35895BF3159763A300F2A3ED /* autodict.dct in Resources */ = {isa = PBXBuildFile; fileRef = 35895BF2159763A300F2A3ED /* autodict.dct */; };
 		35895BFE1597706800F2A3ED /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 35895BFA1597706800F2A3ED /* MainMenu.nib */; };
@@ -65,6 +66,7 @@
 		3512ED591597853F0085E81E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/preferences.nib; sourceTree = "<group>"; };
 		3553A33315A0009D00FE8491 /* CacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheManager.h; sourceTree = "<group>"; };
 		3553A33415A0009E00FE8491 /* CacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheManager.m; sourceTree = "<group>"; };
+		3578E8FC15A26EC100C1FB8E /* Credits.rtfd */ = {isa = PBXFileReference; lastKnownFileType = wrapper.rtfd; path = Credits.rtfd; sourceTree = "<group>"; };
 		35895BEE1597639A00F2A3ED /* AutoCorrect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoCorrect.h; sourceTree = "<group>"; };
 		35895BEF1597639A00F2A3ED /* AutoCorrect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoCorrect.m; sourceTree = "<group>"; };
 		35895BF2159763A300F2A3ED /* autodict.dct */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = autodict.dct; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				3512ED581597853F0085E81E /* preferences.nib */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				3578E8FC15A26EC100C1FB8E /* Credits.rtfd */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 				35B47478159A668D00C69C7D /* avro.icns in Resources */,
 				350CECE5159C45790009F0FE /* database.db3 in Resources */,
 				350CECE9159C45790009F0FE /* regex.json in Resources */,
+				3578E8FD15A26EC100C1FB8E /* Credits.rtfd in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
