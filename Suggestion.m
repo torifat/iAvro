@@ -12,6 +12,7 @@
 #import "Database.h"
 #import "NSString+Levenshtein.h"
 #import "CacheManager.h"
+#import "RegexKitLite.h"
 
 @implementation Suggestion
 
@@ -116,7 +117,28 @@ static Suggestion* sharedInstance = nil;
                     if ([base isEqualToString:item]) {
                         continue;
                     }
-                    NSString* word = [NSString stringWithFormat:@"%@%@", item, suffix];
+                    NSString* word;
+                    // Again saving humanity cause I'm Superman, no I'm not drunk or on weed :D 
+                    int cutPos = [item length] - 1;
+                    
+                    NSString* itemRMC = [item substringFromIndex:cutPos];   // RMC is Right Most Character
+                    NSString* suffixLMC = [item substringToIndex:1];        // LMC is Left Most Character
+                    // BEGIN :: This part was taken from http://d.pr/zTmF
+                    if ([self isVowel:itemRMC] && [self isKar:suffixLMC]) {
+                        word = [NSString stringWithFormat:@"%@\u09df%@", item ,suffix];
+                    }
+                    else {
+                        if ([itemRMC isEqualToString:@"\u09ce"]) {
+                            word = [NSString stringWithFormat:@"%@\u09a4%@", [item substringToIndex:cutPos], suffix];
+                        }
+                        else if ([itemRMC isEqualToString:@"\u0982"]) {
+                            word = [NSString stringWithFormat:@"%@\u0999%@", [item substringToIndex:cutPos], suffix];
+                        } else {
+                            word = [NSString stringWithFormat:@"%@%@", item, suffix];
+                        }
+                    }
+                    // END
+                    
                     // Check that the WORD is not already in the list
                     if (![_suggestions containsObject:word]) {
                         // Intelligent Selection
@@ -138,6 +160,14 @@ static Suggestion* sharedInstance = nil;
     [[CacheManager sharedInstance] setArray:[[_suggestions copy] autorelease] forKey:term];
     
     return _suggestions;
+}
+
+- (BOOL)isKar:(NSString*)letter {
+    return [letter isMatchedByRegex:@"^[\u09be\u09bf\u09c0\u09c1\u09c2\u09c3\u09c7\u09c8\u09cb\u09cc\u09c4]$"];
+}
+
+- (BOOL)isVowel:(NSString*)letter {
+    return [letter isMatchedByRegex:@"^[\u0985\u0986\u0987\u0988\u0989\u098a\u098b\u098f\u0990\u0993\u0994\u098c\u09e1\u09be\u09bf\u09c0\u09c1\u09c2\u09c3\u09c7\u09c8\u09cb\u09cc]$"];
 }
 
 @end
