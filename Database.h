@@ -9,6 +9,7 @@
 
 @interface Database : NSObject {
     NSMutableDictionary* _db;
+    NSMutableDictionary* _suffix;
 }
 
 + (void)allocateSharedInstance;
@@ -16,5 +17,6 @@
 + (Database *)sharedInstance;
 
 - (NSArray*)find:(NSString*)term;
+- (NSString*)banglaForSuffix:(NSString*)suffix;
 
 @end

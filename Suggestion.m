@@ -58,20 +58,21 @@ static Suggestion* sharedInstance = nil;
         return _suggestions;
     }
     
+    // Saving humanity by reducing a few CPU cycles
     [_suggestions addObjectsFromArray:[[CacheManager sharedInstance] arrayForKey:term]];
     if (_suggestions && [_suggestions count] > 0) {
         return _suggestions;
     }
     
-    // Suggestion form AutoCorrect
+    // Suggestions form AutoCorrect
     NSString* autoCorrect = [[AutoCorrect sharedInstance] find:term];
     if (autoCorrect) {
         [_suggestions addObject:autoCorrect];
     }
     
-    // Suggestion from Dictionary
+    // Suggestions from Dictionary
     NSArray* dicList = [[Database sharedInstance] find:term];
-    // Suggestion from Default Parser
+    // Suggestions from Default Parser
     NSString* paresedString = [[AvroParser sharedInstance] parse:term];
     if (dicList) {
         // Sort dicList based on edit distance
@@ -90,6 +91,30 @@ static Suggestion* sharedInstance = nil;
         [_suggestions addObjectsFromArray:sortedDicList];
         if (autoCorrect && [dicList containsObject:autoCorrect]) {
             [_suggestions removeObjectIdenticalTo:autoCorrect];
+        }
+    }
+    
+    // Suggestions with Suffix
+    int i;
+    for (i = [term length]-1; i > 0; --i) {
+        NSLog(@"Suffix English: %@", [[term substringFromIndex:i] lowercaseString]);
+        NSString* suffix = [[Database sharedInstance] banglaForSuffix:[[term substringFromIndex:i] lowercaseString]];
+        NSLog(@"Suffix Bangla: %@", suffix);
+        if (suffix) {
+            NSString* base = [term substringToIndex:i];
+            NSLog(@"Suffix: %@", base);
+            NSArray* cached = [[CacheManager sharedInstance] arrayForKey:base];
+            // This should always exist, so it's just a safety check
+            if (cached) {
+                for (NSString *item in cached) {
+                    NSLog(@"Item: %@", item);
+                    // Skip AutoCorrect English Entry
+                    if ([base isEqualToString:item]) {
+                        continue;
+                    }
+                    [_suggestions addObject:[NSString stringWithFormat:@"%@%@", item, suffix]];
+                }
+            }
         }
     }
     

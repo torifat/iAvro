@@ -21,6 +21,7 @@
         [RegexParser allocateSharedInstance];
         
         _db = [[NSMutableDictionary alloc] initWithCapacity:0];
+        _suffix = [[NSMutableDictionary alloc] initWithCapacity:0];
         
         NSAutoreleasePool *loopPool = [[NSAutoreleasePool alloc] init];
         
@@ -76,6 +77,8 @@
         [self loadTableWithName:@"Y" fromDatabase:sqliteDb];
         [self loadTableWithName:@"Z" fromDatabase:sqliteDb];
         
+        [self loadSuffixTableFromDatabase:sqliteDb];
+        
         [sqliteDb close];
         
         [loopPool release];
@@ -86,6 +89,7 @@
 
 - (void)dealloc {
     [_db release];
+    [_suffix release];
     [super dealloc];
 }
 
@@ -108,11 +112,8 @@ static Database* sharedInstance = nil;
     NSMutableArray* items = [[NSMutableArray alloc] init];
     
     FMResultSet *results = [sqliteDb executeQuery:[NSString stringWithFormat:@"SELECT * FROM %@", name]];
-    int count = 0;
     while([results next]) {
-        NSString* val = [results stringForColumnIndex:0];
-        [items addObject:val];
-        count++;
+        [items addObject:[results stringForColumn:@"Words"]];
     }
     
     /*
@@ -125,6 +126,14 @@ static Database* sharedInstance = nil;
     
     [results close];
     [items release];
+}
+
+- (void)loadSuffixTableFromDatabase:(FMDatabase*)sqliteDb {
+    FMResultSet *results = [sqliteDb executeQuery:[NSString stringWithFormat:@"SELECT * FROM Suffix"]];
+    while([results next]) {
+        [_suffix setObject:[results stringForColumn:@"Bangla"] forKey:[results stringForColumn:@"English"]];
+    }
+    [results close];
 }
 
 - (NSArray*)find:(NSString*)term {
@@ -257,6 +266,10 @@ static Database* sharedInstance = nil;
     [suggestions autorelease];
     
     return [suggestions allObjects];
+}
+
+- (NSString*)banglaForSuffix:(NSString*)suffix {
+    return [_suffix objectForKey:suffix];
 }
 
 @end
