@@ -96,23 +96,31 @@ static Suggestion* sharedInstance = nil;
     
     // Suggestions with Suffix
     int i;
+    BOOL alreadySelected = FALSE;
     for (i = [term length]-1; i > 0; --i) {
-        NSLog(@"Suffix English: %@", [[term substringFromIndex:i] lowercaseString]);
         NSString* suffix = [[Database sharedInstance] banglaForSuffix:[[term substringFromIndex:i] lowercaseString]];
-        NSLog(@"Suffix Bangla: %@", suffix);
         if (suffix) {
             NSString* base = [term substringToIndex:i];
-            NSLog(@"Suffix: %@", base);
             NSArray* cached = [[CacheManager sharedInstance] arrayForKey:base];
+            NSString* selected;
+            if (!alreadySelected) {
+                // Base user selection
+                selected = [[CacheManager sharedInstance] stringForKey:base];
+            }
             // This should always exist, so it's just a safety check
             if (cached) {
                 for (NSString *item in cached) {
-                    NSLog(@"Item: %@", item);
                     // Skip AutoCorrect English Entry
                     if ([base isEqualToString:item]) {
                         continue;
                     }
-                    [_suggestions addObject:[NSString stringWithFormat:@"%@%@", item, suffix]];
+                    NSString* word = [NSString stringWithFormat:@"%@%@", item, suffix];
+                    // Intelligent Selection
+                    if (!alreadySelected && selected && [item isEqualToString:selected]) {
+                        [[CacheManager sharedInstance] setString:word forKey:term];
+                        alreadySelected = TRUE;
+                    }
+                    [_suggestions addObject:word];
                 }
             }
         }
