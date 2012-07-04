@@ -109,6 +109,8 @@
 - (void)candidateSelected:(NSAttributedString*)candidateString {
     if ([self term] && [[self term] length] > 0) {
         BOOL comp = [[candidateString string] isEqualToString:[_currentCandidates objectAtIndex:0]];
+        // Removed in favor of intelligent suffix selection
+        /*
         if ((comp && _prevSelected!=-1) == NO) {
             if (comp == YES) {
                 [[CacheManager sharedInstance] removeStringForKey:[self term]];
@@ -118,6 +120,12 @@
                                             [candidateString length] - ([[self prefix] length] + [[self suffix] length]));
                 [[CacheManager sharedInstance] setString:[[candidateString string] substringWithRange:range] forKey:[self term]];
             }
+        }
+        */
+        if ((comp && _prevSelected == -1) == NO) {
+            NSRange range = NSMakeRange([[self prefix] length], 
+                                        [candidateString length] - ([[self prefix] length] + [[self suffix] length]));
+            [[CacheManager sharedInstance] setString:[[candidateString string] substringWithRange:range] forKey:[self term]];
         }
     }
 	[_currentClient insertText:candidateString replacementRange:NSMakeRange(NSNotFound, 0)];

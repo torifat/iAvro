@@ -143,7 +143,9 @@ static Suggestion* sharedInstance = nil;
                     if (![_suggestions containsObject:word]) {
                         // Intelligent Selection
                         if (!alreadySelected && selected && [item isEqualToString:selected]) {
-                            [[CacheManager sharedInstance] setString:word forKey:term];
+                            if (![[CacheManager sharedInstance] stringForKey:term]) {
+                                [[CacheManager sharedInstance] setString:word forKey:term];
+                            }
                             alreadySelected = TRUE;
                         }
                         [_suggestions addObject:word];
