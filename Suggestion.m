@@ -75,6 +75,11 @@ static Suggestion* sharedInstance = nil;
     // Suggestions from Default Parser
     NSString* paresedString = [[AvroParser sharedInstance] parse:term];
     if (dicList) {
+        // Remove autoCorrect if it is already in the dictionary
+        // PROPOSAL: don't add the autoCorrect, which matches with the dictionary entry
+        if (autoCorrect && [dicList containsObject:autoCorrect]) {
+            [_suggestions removeObjectIdenticalTo:autoCorrect];
+        }
         // Sort dicList based on edit distance
         NSArray* sortedDicList = [dicList sortedArrayUsingComparator:^NSComparisonResult(id left, id right) {
             int dist1 = [paresedString computeLevenshteinDistanceWithString:(NSString*)left];
@@ -89,9 +94,6 @@ static Suggestion* sharedInstance = nil;
             }
         }];
         [_suggestions addObjectsFromArray:sortedDicList];
-        if (autoCorrect && [dicList containsObject:autoCorrect]) {
-            [_suggestions removeObjectIdenticalTo:autoCorrect];
-        }
     }
     
     // Suggestions with Suffix
@@ -115,12 +117,15 @@ static Suggestion* sharedInstance = nil;
                         continue;
                     }
                     NSString* word = [NSString stringWithFormat:@"%@%@", item, suffix];
-                    // Intelligent Selection
-                    if (!alreadySelected && selected && [item isEqualToString:selected]) {
-                        [[CacheManager sharedInstance] setString:word forKey:term];
-                        alreadySelected = TRUE;
+                    // Check that the WORD is not already in the list
+                    if (![_suggestions containsObject:word]) {
+                        // Intelligent Selection
+                        if (!alreadySelected && selected && [item isEqualToString:selected]) {
+                            [[CacheManager sharedInstance] setString:word forKey:term];
+                            alreadySelected = TRUE;
+                        }
+                        [_suggestions addObject:word];
                     }
-                    [_suggestions addObject:word];
                 }
             }
         }
