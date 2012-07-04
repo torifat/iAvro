@@ -59,42 +59,43 @@ static Suggestion* sharedInstance = nil;
         return _suggestions;
     }
     
-    // Saving humanity by reducing a few CPU cycles
-    [_suggestions addObjectsFromArray:[[CacheManager sharedInstance] arrayForKey:term]];
-    if (_suggestions && [_suggestions count] > 0) {
-        return _suggestions;
-    }
-    
-    // Suggestions form AutoCorrect
-    NSString* autoCorrect = [[AutoCorrect sharedInstance] find:term];
-    if (autoCorrect) {
-        [_suggestions addObject:autoCorrect];
-    }
-    
-    // Suggestions from Dictionary
-    NSArray* dicList = [[Database sharedInstance] find:term];
     // Suggestions from Default Parser
     NSString* paresedString = [[AvroParser sharedInstance] parse:term];
-    if (dicList) {
-        // Remove autoCorrect if it is already in the dictionary
-        // PROPOSAL: don't add the autoCorrect, which matches with the dictionary entry
-        if (autoCorrect && [dicList containsObject:autoCorrect]) {
-            [_suggestions removeObjectIdenticalTo:autoCorrect];
+    
+    // Saving humanity by reducing a few CPU cycles
+    [_suggestions addObjectsFromArray:[[CacheManager sharedInstance] arrayForKey:term]];
+    if (_suggestions && [_suggestions count] == 0) {
+        // Suggestions form AutoCorrect
+        NSString* autoCorrect = [[AutoCorrect sharedInstance] find:term];
+        if (autoCorrect) {
+            [_suggestions addObject:autoCorrect];
         }
-        // Sort dicList based on edit distance
-        NSArray* sortedDicList = [dicList sortedArrayUsingComparator:^NSComparisonResult(id left, id right) {
-            int dist1 = [paresedString computeLevenshteinDistanceWithString:(NSString*)left];
-            int dist2 = [paresedString computeLevenshteinDistanceWithString:(NSString*)right];
-            if (dist1 < dist2) {
-                return NSOrderedAscending;
+        
+        // Suggestions from Dictionary
+        NSArray* dicList = [[Database sharedInstance] find:term];
+        if (dicList) {
+            // Remove autoCorrect if it is already in the dictionary
+            // PROPOSAL: don't add the autoCorrect, which matches with the dictionary entry
+            if (autoCorrect && [dicList containsObject:autoCorrect]) {
+                [_suggestions removeObjectIdenticalTo:autoCorrect];
             }
-            else if (dist1 > dist2) {
-                return NSOrderedDescending;
-            } else {
-                return NSOrderedSame;
-            }
-        }];
-        [_suggestions addObjectsFromArray:sortedDicList];
+            // Sort dicList based on edit distance
+            NSArray* sortedDicList = [dicList sortedArrayUsingComparator:^NSComparisonResult(id left, id right) {
+                int dist1 = [paresedString computeLevenshteinDistanceWithString:(NSString*)left];
+                int dist2 = [paresedString computeLevenshteinDistanceWithString:(NSString*)right];
+                if (dist1 < dist2) {
+                    return NSOrderedAscending;
+                }
+                else if (dist1 > dist2) {
+                    return NSOrderedDescending;
+                } else {
+                    return NSOrderedSame;
+                }
+            }];
+            [_suggestions addObjectsFromArray:sortedDicList];
+        }
+        
+        [[CacheManager sharedInstance] setArray:[[_suggestions copy] autorelease] forKey:term];
     }
     
     // Suggestions with Suffix
@@ -158,8 +159,6 @@ static Suggestion* sharedInstance = nil;
     if ([_suggestions containsObject:paresedString] == NO) {
         [_suggestions addObject:paresedString];
     }
-    
-    [[CacheManager sharedInstance] setArray:[[_suggestions copy] autorelease] forKey:term];
     
     return _suggestions;
 }
