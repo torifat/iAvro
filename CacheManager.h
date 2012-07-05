@@ -17,6 +17,8 @@
 + (void)deallocateSharedInstance;
 + (CacheManager *)sharedInstance;
 
+- (void)persist;
+
 // TODO - Rewrite the CacheManager with meaningful methods
 
 // Weight Cache (default for String)
