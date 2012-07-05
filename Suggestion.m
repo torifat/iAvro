@@ -101,6 +101,7 @@ static Suggestion* sharedInstance = nil;
     // Suggestions with Suffix
     int i;
     BOOL alreadySelected = FALSE;
+    [[CacheManager sharedInstance] removeAllBase];
     for (i = [term length]-1; i > 0; --i) {
         NSString* suffix = [[Database sharedInstance] banglaForSuffix:[[term substringFromIndex:i] lowercaseString]];
         if (suffix) {
@@ -139,6 +140,9 @@ static Suggestion* sharedInstance = nil;
                         }
                     }
                     // END
+                    
+                    // Reverse Suffix Caching 
+                    [[CacheManager sharedInstance] setBase:[NSArray arrayWithObjects:base, item, nil] forKey:word];
                     
                     // Check that the WORD is not already in the list
                     if (![_suggestions containsObject:word]) {

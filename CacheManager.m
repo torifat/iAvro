@@ -35,17 +35,24 @@
             _weightCache = [[NSMutableDictionary alloc] initWithCapacity:0];
         }
         _phoneticCache = [[NSMutableDictionary alloc] initWithCapacity:0];
+        _recentBaseCache = [[NSMutableDictionary alloc] initWithCapacity:0];
     }
     return self;
 }
 
 - (void)dealloc {
+    [self persist];
+    [_phoneticCache release];
+    [_recentBaseCache release];
+    [_weightCache release];
+	[super dealloc];
+}
+
+- (void)persist {
     NSLog(@"-----------------------------------------------------------------");
     NSLog(@"CacheManager Unloaded");
     NSLog(@"-----------------------------------------------------------------");
     [_weightCache writeToFile:[[self getSharedFolder] stringByAppendingPathComponent:@"weight.plist"] atomically:YES];
-    [_weightCache release];
-	[super dealloc];
 }
 
 - (NSString*)getSharedFolder {
@@ -75,6 +82,20 @@
 
 - (void)setArray:(NSArray*)anArray forKey:(NSString*)aKey {
     [_phoneticCache setObject:anArray forKey:aKey];
+}
+
+// Base Cache
+
+- (void)removeAllBase {
+    [_recentBaseCache removeAllObjects];
+}
+
+- (NSArray*)baseForKey:(NSString*)aKey {
+    return [_recentBaseCache objectForKey:aKey];
+}
+
+- (void)setBase:(NSArray*)aBase forKey:(NSString*)aKey {
+    [_recentBaseCache setObject:aBase forKey:aKey];
 }
 
 static CacheManager* sharedInstance = nil;

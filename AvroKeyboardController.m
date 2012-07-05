@@ -126,6 +126,12 @@
             NSRange range = NSMakeRange([[self prefix] length], 
                                         [candidateString length] - ([[self prefix] length] + [[self suffix] length]));
             [[CacheManager sharedInstance] setString:[[candidateString string] substringWithRange:range] forKey:[self term]];
+            
+            // Reverse Suffix Caching
+            NSArray* tmpArray = [[CacheManager sharedInstance] baseForKey:[candidateString string]];
+            if (tmpArray && [tmpArray count] > 0) {
+                [[CacheManager sharedInstance] setString:[tmpArray objectAtIndex:1] forKey:[tmpArray objectAtIndex:0]];
+            }
         }
     }
 	[_currentClient insertText:candidateString replacementRange:NSMakeRange(NSNotFound, 0)];
