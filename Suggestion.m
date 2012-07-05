@@ -123,7 +123,7 @@ static Suggestion* sharedInstance = nil;
                     int cutPos = [item length] - 1;
                     
                     NSString* itemRMC = [item substringFromIndex:cutPos];   // RMC is Right Most Character
-                    NSString* suffixLMC = [item substringToIndex:1];        // LMC is Left Most Character
+                    NSString* suffixLMC = [suffix substringToIndex:1];      // LMC is Left Most Character
                     // BEGIN :: This part was taken from http://d.pr/zTmF
                     if ([self isVowel:itemRMC] && [self isKar:suffixLMC]) {
                         word = [NSString stringWithFormat:@"%@\u09df%@", item ,suffix];
