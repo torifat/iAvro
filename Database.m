@@ -147,107 +147,147 @@ static Database* sharedInstance = nil;
     switch (lmc) {
         case 'a':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"a", @"aa", @"e", @"oi", @"o", @"nya", @"y", nil]];
+             [NSArray arrayWithObjects:@"a", @"aa", @"e", @"oi", @"o", @"nya", @"y", nil]];
             break;
         case 'b':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"b", @"bh", nil]];
+             [NSArray arrayWithObjects:@"b", @"bh", nil]];
             break;
         case 'c':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"c", @"ch", @"k", nil]];
+             [NSArray arrayWithObjects:@"c", @"ch", @"k", nil]];
             break;
         case 'd':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"d", @"dh", @"dd", @"ddh", nil]];
+             [NSArray arrayWithObjects:@"d", @"dh", @"dd", @"ddh", nil]];
             break;
         case 'e':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"i", @"ii", @"e", @"y", nil]];
+             [NSArray arrayWithObjects:@"i", @"ii", @"e", @"y", nil]];
             break;
         case 'f':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"ph", @"e", nil]];
+             [NSArray arrayWithObjects:@"ph", nil]];
             break;
         case 'g':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"g", @"gh", @"j", nil]];
+             [NSArray arrayWithObjects:@"g", @"gh", @"j", nil]];
             break;
         case 'h':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"h", @"e", nil]];
+             [NSArray arrayWithObjects:@"h", nil]];
             break;
         case 'i':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"aa", @"i", @"ii", @"y", nil]];
+             [NSArray arrayWithObjects:@"i", @"ii", @"y", nil]];
             break;
         case 'j':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"j", @"jh", @"z", nil]];
+             [NSArray arrayWithObjects:@"j", @"jh", @"z", nil]];
             break;
         case 'k':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"k", @"kh", nil]];
+             [NSArray arrayWithObjects:@"k", @"kh", nil]];
             break;
         case 'l':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"l", @"e", nil]];
+             [NSArray arrayWithObjects:@"l", nil]];
             break;
         case 'm':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"e", @"h", @"m", nil]];
+             [NSArray arrayWithObjects:@"h", @"m", nil]];
             break;
         case 'n':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"e", @"n", @"nya", @"nga", @"nn", nil]];
+             [NSArray arrayWithObjects:@"n", @"nya", @"nga", @"nn", nil]];
             break;
         case 'o':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"a", @"u", @"uu", @"oi", @"o", @"ou", @"y", nil]];
+             [NSArray arrayWithObjects:@"a", @"u", @"uu", @"oi", @"o", @"ou", @"y", nil]];
             break;
         case 'p':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"p", @"ph", nil]];
+             [NSArray arrayWithObjects:@"p", @"ph", nil]];
             break;
         case 'q':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"k", nil]];
+             [NSArray arrayWithObjects:@"k", nil]];
             break;
         case 'r':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"aa", @"rri", @"h", @"r", @"rr", @"rrh", nil]];
+             [NSArray arrayWithObjects:@"rri", @"h", @"r", @"rr", @"rrh", nil]];
             break;
         case 's':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"e", @"s", @"sh", @"ss", nil]];
+             [NSArray arrayWithObjects:@"s", @"sh", @"ss", nil]];
             break;
         case 't':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"t", @"th", @"tt", @"tth", @"khandatta", nil]];
+             [NSArray arrayWithObjects:@"t", @"th", @"tt", @"tth", @"khandatta", nil]];
             break;
         case 'u':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"i", @"u", @"uu", @"y", nil]];
+             [NSArray arrayWithObjects:@"u", @"uu", @"y", nil]];
             break;
         case 'v':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"bh", nil]];
+             [NSArray arrayWithObjects:@"bh", nil]];
             break;
         case 'w':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"o", @"dd", nil]];
+             [NSArray arrayWithObjects:@"o", nil]];
             break;
         case 'x':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"e", @"k", nil]];
+             [NSArray arrayWithObjects:@"e", @"k", nil]];
             break;
         case 'y':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"i", @"o", @"y", nil]];
+             [NSArray arrayWithObjects:@"i", @"y", nil]];
             break;
         case 'z':
             [tableList addObjectsFromArray:
-                [NSArray arrayWithObjects:@"h", @"j", @"jh", @"z", nil]];
+             [NSArray arrayWithObjects:@"h", @"j", @"jh", @"z", nil]];
+            break;
+        case '1':
+            [tableList addObjectsFromArray:
+             [NSArray arrayWithObjects:@"e", nil]];
+            break;
+        case '2':
+            [tableList addObjectsFromArray:
+             [NSArray arrayWithObjects:@"d", nil]];
+            break;
+        case '3':
+            [tableList addObjectsFromArray:
+             [NSArray arrayWithObjects:@"t", nil]];
+            break;
+        case '4':
+            [tableList addObjectsFromArray:
+             [NSArray arrayWithObjects:@"c", nil]];
+            break;
+        case '5':
+            [tableList addObjectsFromArray:
+             [NSArray arrayWithObjects:@"p", nil]];
+            break;
+        case '6':
+            [tableList addObjectsFromArray:
+             [NSArray arrayWithObjects:@"ch", nil]];
+            break;
+        case '7':
+            [tableList addObjectsFromArray:
+             [NSArray arrayWithObjects:@"s", nil]];
+            break;
+        case '8':
+            [tableList addObjectsFromArray:
+             [NSArray arrayWithObjects:@"aa", nil]];
+            break;
+        case '9':
+            [tableList addObjectsFromArray:
+             [NSArray arrayWithObjects:@"n", nil]];
+            break;
+        case '0':
+            [tableList addObjectsFromArray:
+             [NSArray arrayWithObjects:@"sh", nil]];
             break;
         default:
             break;

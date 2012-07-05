@@ -12,10 +12,6 @@
 - (id)init {
     self = [super init];
     if (self) {
-        NSLog(@"-----------------------------------------------------------------");
-        NSLog(@"CacheManager Loaded");
-        NSLog(@"-----------------------------------------------------------------");
-        
         // Weight PLIST File
         NSString *path = [self getSharedFolder];
         NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -49,9 +45,6 @@
 }
 
 - (void)persist {
-    NSLog(@"-----------------------------------------------------------------");
-    NSLog(@"CacheManager Unloaded");
-    NSLog(@"-----------------------------------------------------------------");
     [_weightCache writeToFile:[[self getSharedFolder] stringByAppendingPathComponent:@"weight.plist"] atomically:YES];
 }
 
