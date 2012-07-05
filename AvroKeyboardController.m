@@ -99,29 +99,8 @@
 }
 
 - (void)candidateSelectionChanged:(NSAttributedString*)candidateString {
-	// Intentionally blank.
-}
-
-- (void)clearCompositionBuffer {
-	[_composedBuffer deleteCharactersInRange:NSMakeRange(0, [_composedBuffer length])];	
-}
-
-- (void)candidateSelected:(NSAttributedString*)candidateString {
-    if ([self term] && [[self term] length] > 0) {
+	if ([self term] && [[self term] length] > 0) {
         BOOL comp = [[candidateString string] isEqualToString:[_currentCandidates objectAtIndex:0]];
-        // Removed in favor of intelligent suffix selection
-        /*
-        if ((comp && _prevSelected!=-1) == NO) {
-            if (comp == YES) {
-                [[CacheManager sharedInstance] removeStringForKey:[self term]];
-            }
-            else {
-                NSRange range = NSMakeRange([[self prefix] length], 
-                                            [candidateString length] - ([[self prefix] length] + [[self suffix] length]));
-                [[CacheManager sharedInstance] setString:[[candidateString string] substringWithRange:range] forKey:[self term]];
-            }
-        }
-        */
         if ((comp && _prevSelected == -1) == NO) {
             NSRange range = NSMakeRange([[self prefix] length], 
                                         [candidateString length] - ([[self prefix] length] + [[self suffix] length]));
@@ -134,7 +113,10 @@
             }
         }
     }
-	[_currentClient insertText:candidateString replacementRange:NSMakeRange(NSNotFound, 0)];
+}
+
+- (void)candidateSelected:(NSAttributedString*)candidateString {
+    [_currentClient insertText:candidateString replacementRange:NSMakeRange(NSNotFound, 0)];
 	
 	[self clearCompositionBuffer];
 	[_currentCandidates removeAllObjects];
@@ -151,6 +133,10 @@
 
 - (id)composedString:(id)sender {
 	return [[[NSAttributedString alloc] initWithString:_composedBuffer] autorelease];
+}
+
+- (void)clearCompositionBuffer {
+	[_composedBuffer deleteCharactersInRange:NSMakeRange(0, [_composedBuffer length])];	
 }
 
 /*
