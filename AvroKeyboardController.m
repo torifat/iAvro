@@ -31,7 +31,6 @@
 }
 
 - (void)dealloc {
-    [[CacheManager sharedInstance] persist];
     [_prefix release];
     [_term release];
     [_suffix release];
