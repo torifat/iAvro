@@ -11,6 +11,7 @@
 #import "CacheManager.h"
 #import "RegexKitLite.h"
 #import "AvroParser.h"
+#import "AutoCorrect.h"
 
 @implementation AvroKeyboardController
 
@@ -45,7 +46,7 @@
         NSString* regex = @"(^(?::`|\\.`|[-\\]\\\\~!@#&*()_=+\\[{}'\";<>/?|.,])*?(?=(?:,{2,}))|^(?::`|\\.`|[-\\]\\\\~!@#&*()_=+\\[{}'\";<>/?|.,])*)(.*?(?:,,)*)((?::`|\\.`|[-\\]\\\\~!@#&*()_=+\\[{}'\";<>/?|.,])*$)";
         NSArray* items = [_composedBuffer captureComponentsMatchedByRegex:regex];
         if (items && [items count] > 0) {
-            
+            // Split Prefix, Term & Suffix
             [self setPrefix:[[AvroParser sharedInstance] parse:[items objectAtIndex:1]]];
             [self setTerm:[items objectAtIndex:2]];
             [self setSuffix:[[AvroParser sharedInstance] parse:[items objectAtIndex:3]]];
@@ -66,6 +67,14 @@
                     }
                     [_currentCandidates replaceObjectAtIndex:i withObject:
                      [NSString stringWithFormat:@"%@%@%@", [self prefix], item, [self suffix]]];
+                }
+                // Emoticons                
+                if ([_composedBuffer isEqualToString:[self term]] == NO && 
+                    [[NSUserDefaults standardUserDefaults] boolForKey:@"IncludeDictionary"]) {
+                    NSString* smily = [[AutoCorrect sharedInstance] find:_composedBuffer];
+                    if (smily) {
+                        [_currentCandidates insertObject:smily atIndex:0];
+                    }
                 }
             }
             else {

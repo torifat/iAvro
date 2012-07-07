@@ -786,7 +786,7 @@
 				<int key="NSViewLayerContentsRedrawPolicy">2</int>
 				<string key="NSClassName">NSView</string>
 			</object>
-			<object class="NSArrayController" id="245747728">
+			<object class="NSArrayController" id="220907238">
 				<array class="NSMutableArray" key="NSDeclaredKeys">
 					<string>replace</string>
 					<string>with</string>
@@ -834,10 +834,10 @@
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: arrangedObjects.replace</string>
 						<reference key="source" ref="589403959"/>
-						<reference key="destination" ref="245747728"/>
+						<reference key="destination" ref="220907238"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="589403959"/>
-							<reference key="NSDestination" ref="245747728"/>
+							<reference key="NSDestination" ref="220907238"/>
 							<string key="NSLabel">value: arrangedObjects.replace</string>
 							<string key="NSBinding">value</string>
 							<string key="NSKeyPath">arrangedObjects.replace</string>
@@ -854,10 +854,10 @@
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: arrangedObjects.with</string>
 						<reference key="source" ref="148531860"/>
-						<reference key="destination" ref="245747728"/>
+						<reference key="destination" ref="220907238"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="148531860"/>
-							<reference key="NSDestination" ref="245747728"/>
+							<reference key="NSDestination" ref="220907238"/>
 							<string key="NSLabel">value: arrangedObjects.with</string>
 							<string key="NSBinding">value</string>
 							<string key="NSKeyPath">arrangedObjects.with</string>
@@ -938,10 +938,10 @@
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">displayPatternValue1: arrangedObjects.@count</string>
 						<reference key="source" ref="920985714"/>
-						<reference key="destination" ref="245747728"/>
+						<reference key="destination" ref="220907238"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="920985714"/>
-							<reference key="NSDestination" ref="245747728"/>
+							<reference key="NSDestination" ref="220907238"/>
 							<string key="NSLabel">displayPatternValue1: arrangedObjects.@count</string>
 							<string key="NSBinding">displayPatternValue1</string>
 							<string key="NSKeyPath">arrangedObjects.@count</string>
@@ -1005,7 +1005,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">add:</string>
-						<reference key="source" ref="245747728"/>
+						<reference key="source" ref="220907238"/>
 						<reference key="destination" ref="290829310"/>
 					</object>
 					<int key="connectionID">326</int>
@@ -1013,7 +1013,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">remove:</string>
-						<reference key="source" ref="245747728"/>
+						<reference key="source" ref="220907238"/>
 						<reference key="destination" ref="634408965"/>
 					</object>
 					<int key="connectionID">327</int>
@@ -1021,10 +1021,10 @@
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">contentArray: autoCorrectEntries</string>
-						<reference key="source" ref="245747728"/>
+						<reference key="source" ref="220907238"/>
 						<reference key="destination" ref="409248860"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="245747728"/>
+							<reference key="NSSource" ref="220907238"/>
 							<reference key="NSDestination" ref="409248860"/>
 							<string key="NSLabel">contentArray: autoCorrectEntries</string>
 							<string key="NSBinding">contentArray</string>
@@ -1367,7 +1367,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">325</int>
-						<reference key="object" ref="245747728"/>
+						<reference key="object" ref="220907238"/>
 						<reference key="parent" ref="0"/>
 					</object>
 				</array>
