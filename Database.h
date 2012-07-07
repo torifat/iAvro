@@ -12,8 +12,6 @@
     NSMutableDictionary* _suffix;
 }
 
-+ (void)allocateSharedInstance;
-+ (void)deallocateSharedInstance;
 + (Database *)sharedInstance;
 
 - (NSArray*)find:(NSString*)term;

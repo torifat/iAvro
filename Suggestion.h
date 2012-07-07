@@ -11,8 +11,6 @@
     NSMutableArray* _suggestions;
 }
 
-+ (void)allocateSharedInstance;
-+ (void)deallocateSharedInstance;
 + (Suggestion *)sharedInstance;
 
 - (NSMutableArray*)getList:(NSString*)term;

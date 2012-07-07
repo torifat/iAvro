@@ -15,8 +15,6 @@
     int             _maxPatternLength;
 }
 
-+ (void)allocateSharedInstance;
-+ (void)deallocateSharedInstance;
 + (RegexParser *)sharedInstance;
 
 - (NSString*)parse:(NSString*)string;

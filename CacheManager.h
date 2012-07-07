@@ -13,8 +13,6 @@
     NSMutableDictionary* _recentBaseCache;
 }
 
-+ (void)allocateSharedInstance;
-+ (void)deallocateSharedInstance;
 + (CacheManager *)sharedInstance;
 
 - (void)persist;

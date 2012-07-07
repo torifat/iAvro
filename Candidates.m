@@ -7,9 +7,9 @@
 
 #import "Candidates.h"
 
-@implementation Candidates
-
 static Candidates *_sharedInstance = nil;
+
+@implementation Candidates
 
 + (void)allocateSharedInstanceWithServer:(IMKServer *)server {
 	_sharedInstance = [[self alloc] initWithServer:server panelType:kIMKSingleColumnScrollingCandidatePanel];

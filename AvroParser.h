@@ -10,13 +10,11 @@
 @interface AvroParser : NSObject {
 	NSString*           _vowel;
     NSString*           _consonant;
-    NSMutableString*    _casesensitive;
+    NSString*           _casesensitive;
     NSArray*            _patterns;
     int                 _maxPatternLength;
 }
 
-+ (void)allocateSharedInstance;
-+ (void)deallocateSharedInstance;
 + (AvroParser *)sharedInstance;
 
 - (NSString*)parse:(NSString*)string;

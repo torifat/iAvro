@@ -8,9 +8,9 @@
 #import <Cocoa/Cocoa.h>
 #import <InputMethodKit/InputMethodKit.h>
 
+#import "AvroParser.h"
 #import "Suggestion.h"
 #import "Candidates.h"
-#import "CacheManager.h"
 
 //Each input method needs a unique connection name. 
 //Note that periods and spaces are not allowed in the connection name.
@@ -24,8 +24,10 @@ int main(int argc, char *argv[]) {
     NSString* identifier;
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
-	[Suggestion allocateSharedInstance];
-    //find the bundle identifier and then initialize the input method server
+    [AvroParser sharedInstance];
+    [Suggestion sharedInstance];
+    
+	//find the bundle identifier and then initialize the input method server
     identifier = [[NSBundle mainBundle] bundleIdentifier];
     server = [[IMKServer alloc] initWithName:(NSString*)kConnectionName bundleIdentifier:identifier];
 	[Candidates allocateSharedInstanceWithServer:server];
@@ -36,7 +38,6 @@ int main(int argc, char *argv[]) {
 	//finally run everything
 	[[NSApplication sharedApplication] run];
 	
-    [Suggestion deallocateSharedInstance];
     [Candidates deallocateSharedInstance];
     [server release];
     [pool release];

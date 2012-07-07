@@ -53,12 +53,16 @@
             
             _currentCandidates = [[[Suggestion sharedInstance] getList:[self term]] retain];
             if (_currentCandidates && [_currentCandidates count] > 0) {
-                _prevSelected = -1;
-                NSString* prevString = [[CacheManager sharedInstance] stringForKey:[self term]];
+                NSString* prevString = nil;
+                if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IncludeDictionary"]) {
+                    _prevSelected = -1;
+                    prevString = [[CacheManager sharedInstance] stringForKey:[self term]];
+                }
                 int i;
                 for (i = 0; i < [_currentCandidates count]; ++i) {
                     NSString* item = [_currentCandidates objectAtIndex:i];
-                    if (_prevSelected && [item isEqualToString:prevString] ) {
+                    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IncludeDictionary"] && 
+                        _prevSelected && [item isEqualToString:prevString] ) {
                         _prevSelected = i;
                     }
                     [_currentCandidates replaceObjectAtIndex:i withObject:
@@ -74,8 +78,7 @@
 
 - (void)updateCandidatesPanel {
     if (_currentCandidates && [_currentCandidates count] > 0) {
-        // Need to set font here; setting it in init... doesn't work.		
-        // NSUserDefaults *defaultsDictionary = [NSUserDefaults standardUserDefaults];
+        NSUserDefaults *defaultsDictionary = [NSUserDefaults standardUserDefaults];
         
         // NSString *candidateFontName = [defaultsDictionary objectForKey:@"candidateFontName"];
         // float candidateFontSize = [[defaultsDictionary objectForKey:@"candidateFontSize"] floatValue];
@@ -83,7 +86,7 @@
         // NSFont *candidateFont = [NSFont fontWithName:candidateFontName size:candidateFontSize];
         // [[Candidates sharedInstance] setAttributes:[NSDictionary dictionaryWithObject:candidateFont forKey:NSFontAttributeName]];
         
-        // [[Candidates sharedInstance] setPanelType:[defaultsDictionary integerForKey:@"candidatePanelType"]];		
+        [[Candidates sharedInstance] setPanelType:[defaultsDictionary integerForKey:@"CandidatePanelType"]];
         [[Candidates sharedInstance] updateCandidates];
         [[Candidates sharedInstance] show:kIMKLocateCandidatesBelowHint];
         if (_prevSelected > -1) {
@@ -100,17 +103,19 @@
 }
 
 - (void)candidateSelectionChanged:(NSAttributedString*)candidateString {
-	if ([self term] && [[self term] length] > 0) {
-        BOOL comp = [[candidateString string] isEqualToString:[_currentCandidates objectAtIndex:0]];
-        if ((comp && _prevSelected == -1) == NO) {
-            NSRange range = NSMakeRange([[self prefix] length], 
-                                        [candidateString length] - ([[self prefix] length] + [[self suffix] length]));
-            [[CacheManager sharedInstance] setString:[[candidateString string] substringWithRange:range] forKey:[self term]];
-            
-            // Reverse Suffix Caching
-            NSArray* tmpArray = [[CacheManager sharedInstance] baseForKey:[candidateString string]];
-            if (tmpArray && [tmpArray count] > 0) {
-                [[CacheManager sharedInstance] setString:[tmpArray objectAtIndex:1] forKey:[tmpArray objectAtIndex:0]];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IncludeDictionary"]) {
+        if ([self term] && [[self term] length] > 0) {
+            BOOL comp = [[candidateString string] isEqualToString:[_currentCandidates objectAtIndex:0]];
+            if ((comp && _prevSelected == -1) == NO) {
+                NSRange range = NSMakeRange([[self prefix] length], 
+                                            [candidateString length] - ([[self prefix] length] + [[self suffix] length]));
+                [[CacheManager sharedInstance] setString:[[candidateString string] substringWithRange:range] forKey:[self term]];
+                
+                // Reverse Suffix Caching
+                NSArray* tmpArray = [[CacheManager sharedInstance] baseForKey:[candidateString string]];
+                if (tmpArray && [tmpArray count] > 0) {
+                    [[CacheManager sharedInstance] setString:[tmpArray objectAtIndex:1] forKey:[tmpArray objectAtIndex:0]];
+                }
             }
         }
     }
@@ -194,7 +199,12 @@
 }
 
 - (void)insertNewline:(id)sender {
-    [self commitText:@""];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"CommitNewLineOnEnter"]) {
+        [self commitText:@"\n"];
+    }
+    else {
+        [self commitText:@""];
+    }
 }
 
 - (BOOL)didCommandBySelector:(SEL)aSelector client:(id)sender {
