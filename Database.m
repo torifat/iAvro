@@ -249,46 +249,6 @@ static Database* sharedInstance = nil;
             [tableList addObjectsFromArray:
              [NSArray arrayWithObjects:@"h", @"j", @"jh", @"z", nil]];
             break;
-        case '1':
-            [tableList addObjectsFromArray:
-             [NSArray arrayWithObjects:@"e", nil]];
-            break;
-        case '2':
-            [tableList addObjectsFromArray:
-             [NSArray arrayWithObjects:@"d", nil]];
-            break;
-        case '3':
-            [tableList addObjectsFromArray:
-             [NSArray arrayWithObjects:@"t", nil]];
-            break;
-        case '4':
-            [tableList addObjectsFromArray:
-             [NSArray arrayWithObjects:@"c", nil]];
-            break;
-        case '5':
-            [tableList addObjectsFromArray:
-             [NSArray arrayWithObjects:@"p", nil]];
-            break;
-        case '6':
-            [tableList addObjectsFromArray:
-             [NSArray arrayWithObjects:@"ch", nil]];
-            break;
-        case '7':
-            [tableList addObjectsFromArray:
-             [NSArray arrayWithObjects:@"s", nil]];
-            break;
-        case '8':
-            [tableList addObjectsFromArray:
-             [NSArray arrayWithObjects:@"aa", nil]];
-            break;
-        case '9':
-            [tableList addObjectsFromArray:
-             [NSArray arrayWithObjects:@"n", nil]];
-            break;
-        case '0':
-            [tableList addObjectsFromArray:
-             [NSArray arrayWithObjects:@"sh", nil]];
-            break;
         default:
             break;
     }
