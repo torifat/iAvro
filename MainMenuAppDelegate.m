@@ -30,10 +30,10 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IncludeDictionary"]) {
         NSLog(@"Loading Dictionary...");
         [Database sharedInstance];
-        [AutoCorrect sharedInstance];
         [RegexParser sharedInstance];
         [CacheManager sharedInstance];
     }
+    [AutoCorrect sharedInstance];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
