@@ -32,7 +32,7 @@
         case 1:
             view = _autoCorrectView;
             break;
-        case 2: default:
+        default:
             view = _aboutView;
             break;
     }

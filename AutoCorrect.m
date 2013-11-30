@@ -10,7 +10,9 @@
 
 static AutoCorrect* sharedInstance = nil;
 
-@implementation AutoCorrect
+@implementation AutoCorrect {
+    NSString* fileName;
+}
 
 @synthesize autoCorrectEntries = _autoCorrectEntries;
 
@@ -53,13 +55,13 @@ static AutoCorrect* sharedInstance = nil;
     self = [super init];
     if (self) {
         // Open the file
-        NSString *fileName = [[NSBundle mainBundle] pathForResource:@"autodict" ofType:@"dct"];
+        fileName = [[NSBundle mainBundle] pathForResource:@"autodict" ofType:@"dct"];
         const char *fn = [fileName UTF8String];
         FILE *file = fopen(fn, "r");
         
         // Read from the file
-        char replaceBuffer[512], withBuffer[512];
-        _autoCorrectEntries = [[NSMutableArray alloc] init];
+        char replaceBuffer[1024], withBuffer[512];
+        _autoCorrectEntries = [[NSMapTable alloc] init];
         while(fscanf(file, "%s %[^\n]\n", replaceBuffer, withBuffer) == 2) {
             NSString* replace = [NSString stringWithFormat:@"%s", replaceBuffer];
             NSString* with = [NSString stringWithFormat:@"%s", withBuffer];
@@ -68,9 +70,7 @@ static AutoCorrect* sharedInstance = nil;
                 with = [[AvroParser sharedInstance] parse:with];
             }
             
-            NSMutableDictionary* item = [[NSMutableDictionary alloc] initWithObjectsAndKeys:replace, @"replace", with, @"with", nil];
-            [_autoCorrectEntries addObject:item];
-            [item release];
+            [_autoCorrectEntries setObject:with forKey:replace];
         }
         fclose(file);
     }
@@ -85,21 +85,7 @@ static AutoCorrect* sharedInstance = nil;
 // Instance Methods
 - (NSString*)find:(NSString*)term {
     term = [[AvroParser sharedInstance] fix:term];
-    // Binary Search
-    int left = 0, right = [_autoCorrectEntries count] -1, mid;
-    while (right >= left) {
-        mid = (left + right) / 2;
-        NSDictionary* item = [_autoCorrectEntries objectAtIndex:mid];
-        NSComparisonResult comp = [term compare:[item objectForKey:@"replace"]];
-        if (comp == NSOrderedDescending) {
-            left = mid + 1;
-        } else if (comp == NSOrderedAscending) {
-            right = mid - 1;
-        } else {
-            return [item objectForKey:@"with"];
-        }
-    }
-    return nil;
+    return [_autoCorrectEntries objectForKey:term];
 }
 
 @end
