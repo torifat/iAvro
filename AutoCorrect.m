@@ -10,9 +10,7 @@
 
 static AutoCorrect* sharedInstance = nil;
 
-@implementation AutoCorrect {
-    NSString* fileName;
-}
+@implementation AutoCorrect
 
 @synthesize autoCorrectEntries = _autoCorrectEntries;
 
@@ -55,24 +53,13 @@ static AutoCorrect* sharedInstance = nil;
     self = [super init];
     if (self) {
         // Open the file
-        fileName = [[NSBundle mainBundle] pathForResource:@"autodict" ofType:@"dct"];
-        const char *fn = [fileName UTF8String];
-        FILE *file = fopen(fn, "r");
-        
-        // Read from the file
-        char replaceBuffer[1024], withBuffer[512];
-        _autoCorrectEntries = [[NSMapTable alloc] init];
-        while(fscanf(file, "%s %[^\n]\n", replaceBuffer, withBuffer) == 2) {
-            NSString* replace = [NSString stringWithFormat:@"%s", replaceBuffer];
-            NSString* with = [NSString stringWithFormat:@"%s", withBuffer];
-            
-            if ([replace isEqualToString:with] == NO) {
-                with = [[AvroParser sharedInstance] parse:with];
-            }
-            
-            [_autoCorrectEntries setObject:with forKey:replace];
+        NSString *fileName = [[NSBundle mainBundle] pathForResource:@"autodict" ofType:@"plist"];
+        // Check if the file exist and load from it, otherwise start with a empty dictionary
+        if ([[NSFileManager defaultManager] fileExistsAtPath:fileName]) {
+            _autoCorrectEntries = [[NSMutableDictionary alloc] initWithContentsOfFile:fileName];
+        } else {
+            _autoCorrectEntries = [[NSMutableDictionary alloc] init];
         }
-        fclose(file);
     }
     return self;
 }
@@ -85,7 +72,7 @@ static AutoCorrect* sharedInstance = nil;
 // Instance Methods
 - (NSString*)find:(NSString*)term {
     term = [[AvroParser sharedInstance] fix:term];
-    return [_autoCorrectEntries objectForKey:term];
+    return _autoCorrectEntries[term];
 }
 
 @end

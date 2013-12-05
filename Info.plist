@@ -30,11 +30,15 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSSupportsSuddenTermination</key>
+	<true/>
+	<key>TISIntendedLanguage</key>
+	<string>bn</string>
 	<key>tsInputMethodCharacterRepertoireKey</key>
 	<array>
-		<string>Latn</string>
+		<string>Beng</string>
 	</array>
 	<key>tsInputMethodIconFileKey</key>
-	<string>avro.icns</string>
+	<string>AppIcon</string>
 </dict>
 </plist>

@@ -15,6 +15,7 @@
 		350CED1B159CF3300009F0FE /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 350CED18159CF3300009F0FE /* Database.m */; };
 		350CED1C159CF3300009F0FE /* Suggestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 350CED1A159CF3300009F0FE /* Suggestion.m */; };
 		3512ED5A159785400085E81E /* preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3512ED581597853F0085E81E /* preferences.nib */; };
+		3515102D184B99AE00D5059A /* autodict.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3515102C184B99AE00D5059A /* autodict.plist */; };
 		3553A33515A0009E00FE8491 /* CacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3553A33415A0009E00FE8491 /* CacheManager.m */; };
 		356B186915A445DA00091215 /* AutoCorrect.png in Resources */ = {isa = PBXBuildFile; fileRef = 356B186815A445DA00091215 /* AutoCorrect.png */; };
 		356B186D15A4499B00091215 /* Credits.png in Resources */ = {isa = PBXBuildFile; fileRef = 356B186B15A4499B00091215 /* Credits.png */; };
@@ -22,7 +23,6 @@
 		3578E8FD15A26EC100C1FB8E /* Credits.rtfd in Resources */ = {isa = PBXBuildFile; fileRef = 3578E8FC15A26EC100C1FB8E /* Credits.rtfd */; };
 		3587CCD815A7C5E50074BFF1 /* preferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3587CCD715A7C5E50074BFF1 /* preferences.plist */; };
 		35895BF01597639A00F2A3ED /* AutoCorrect.m in Sources */ = {isa = PBXBuildFile; fileRef = 35895BEF1597639A00F2A3ED /* AutoCorrect.m */; };
-		35895BF3159763A300F2A3ED /* autodict.dct in Resources */ = {isa = PBXBuildFile; fileRef = 35895BF2159763A300F2A3ED /* autodict.dct */; };
 		35895BFE1597706800F2A3ED /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 35895BFA1597706800F2A3ED /* MainMenu.nib */; };
 		359C1C70159286750080E2FD /* Candidates.m in Sources */ = {isa = PBXBuildFile; fileRef = 359C1C6F159286750080E2FD /* Candidates.m */; };
 		35A273011847E28900689B17 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35A273001847E28900689B17 /* Images.xcassets */; };
@@ -59,6 +59,7 @@
 		350CED19159CF3300009F0FE /* Suggestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Suggestion.h; sourceTree = "<group>"; };
 		350CED1A159CF3300009F0FE /* Suggestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Suggestion.m; sourceTree = "<group>"; };
 		3512ED591597853F0085E81E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/preferences.nib; sourceTree = "<group>"; };
+		3515102C184B99AE00D5059A /* autodict.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = autodict.plist; sourceTree = "<group>"; };
 		3553A33315A0009D00FE8491 /* CacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheManager.h; sourceTree = "<group>"; };
 		3553A33415A0009E00FE8491 /* CacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheManager.m; sourceTree = "<group>"; };
 		356B186815A445DA00091215 /* AutoCorrect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AutoCorrect.png; path = Icons/AutoCorrect.png; sourceTree = "<group>"; };
@@ -68,7 +69,6 @@
 		3587CCD715A7C5E50074BFF1 /* preferences.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = preferences.plist; sourceTree = "<group>"; };
 		35895BEE1597639A00F2A3ED /* AutoCorrect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoCorrect.h; sourceTree = "<group>"; };
 		35895BEF1597639A00F2A3ED /* AutoCorrect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoCorrect.m; sourceTree = "<group>"; };
-		35895BF2159763A300F2A3ED /* autodict.dct */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = autodict.dct; sourceTree = "<group>"; };
 		35895BFB1597706800F2A3ED /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		359C1C6E159286750080E2FD /* Candidates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Candidates.h; sourceTree = "<group>"; };
 		359C1C6F159286750080E2FD /* Candidates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Candidates.m; sourceTree = "<group>"; };
@@ -173,7 +173,7 @@
 				35A273001847E28900689B17 /* Images.xcassets */,
 				356B186115A4434D00091215 /* Icons */,
 				35B47477159A668D00C69C7D /* avro.icns */,
-				35895BF2159763A300F2A3ED /* autodict.dct */,
+				3515102C184B99AE00D5059A /* autodict.plist */,
 				35F4DE72159404A3001EAC81 /* data.json */,
 				350CECE0159C45790009F0FE /* regex.json */,
 				350CECD9159C45790009F0FE /* database.db3 */,
@@ -318,10 +318,10 @@
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				35F4DE73159404A3001EAC81 /* data.json in Resources */,
-				35895BF3159763A300F2A3ED /* autodict.dct in Resources */,
 				35895BFE1597706800F2A3ED /* MainMenu.nib in Resources */,
 				3512ED5A159785400085E81E /* preferences.nib in Resources */,
 				35B47478159A668D00C69C7D /* avro.icns in Resources */,
+				3515102D184B99AE00D5059A /* autodict.plist in Resources */,
 				350CECE5159C45790009F0FE /* database.db3 in Resources */,
 				350CECE9159C45790009F0FE /* regex.json in Resources */,
 				3578E8FD15A26EC100C1FB8E /* Credits.rtfd in Resources */,
@@ -432,7 +432,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "\"$(LOCAL_LIBRARY_DIR)/Input Methods/\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "Avro Keyboard";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
@@ -451,7 +451,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "Avro Keyboard";
 				WRAPPER_EXTENSION = app;
 			};

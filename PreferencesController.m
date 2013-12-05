@@ -7,7 +7,21 @@
 
 #import "PreferencesController.h"
 
-@implementation PreferencesController
+@implementation PreferencesController {
+    NSPredicate* _searchPredicate;
+}
+
+- (void)awakeFromNib {
+	[[self window] setContentSize:[_generalView frame].size];
+    [[[self window] contentView] addSubview:_generalView];
+    [[[self window] contentView] setWantsLayer:YES];
+    
+    _searchPredicate = [NSPredicate predicateWithFormat:@"(key CONTAINS[c] $searchTerm) OR (value CONTAINS $searchTerm)"];
+    
+    // Load Credits
+    [_aboutContent readRTFDFromFile:[[NSBundle mainBundle] pathForResource:@"Credits" ofType:@"rtfd"]];
+    [_aboutContent scrollToBeginningOfDocument:_aboutContent];
+}
 
 - (NSRect)newFrameForNewContentView:(NSView*)view {
     NSWindow* window = [self window];
@@ -46,16 +60,6 @@
     return YES;
 }
 
-- (void)awakeFromNib {
-	[[self window] setContentSize:[_generalView frame].size];
-    [[[self window] contentView] addSubview:_generalView];
-    [[[self window] contentView] setWantsLayer:YES];
-    
-    // Load Credits
-    [_aboutContent readRTFDFromFile:[[NSBundle mainBundle] pathForResource:@"Credits" ofType:@"rtfd"]];
-    [_aboutContent scrollToBeginningOfDocument:_aboutContent];
-}
-
 - (IBAction)switchView:(id)sender {
     int tag = [sender tag];
     NSView* view = [self viewForTag:tag];
@@ -74,4 +78,15 @@
     
     [NSAnimationContext endGrouping];
 }
+
+- (IBAction)changePredicate:(id)sender {
+    NSString *searchTerm = [[sender stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSPredicate *predicate = nil;
+    if ([searchTerm length]) {
+        NSDictionary* dictionary = @{@"searchTerm" : searchTerm};
+        predicate = [_searchPredicate predicateWithSubstitutionVariables:dictionary];
+    }
+    [_autoCorrectController setFilterPredicate:predicate];
+}
+
 @end

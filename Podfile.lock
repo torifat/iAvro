@@ -11,7 +11,7 @@ DEPENDENCIES:
   - RegexKitLite (~> 4.0)
 
 SPEC CHECKSUMS:
-  FMDB: 8e5b7e0c644a13a70be0ec5dbffc6b30e524ab5d
+  FMDB: 3fd5aaf632ca4ed39e3f101e0398504e6d5b0918
   RegexKitLite: f7af7b4d2b675cd2ec9a4abab6aad6ae1f6499c0
 
 COCOAPODS: 0.26.2
