@@ -6,52 +6,87 @@
 //
 
 #import "AvroKeyboardController.h"
+#import "Suggestion.h"
+#import "Candidates.h"
+#import "CacheManager.h"
+#import "RegexKitLite.h"
 #import "AvroParser.h"
 #import "AutoCorrect.h"
-#import "Candidates.h"
 
 @implementation AvroKeyboardController
 
+@synthesize prefix = _prefix, term = _term, suffix = _suffix;
+
 - (id)initWithServer:(IMKServer*)server delegate:(id)delegate client:(id)inputClient {
+    
     self = [super initWithServer:server delegate:delegate client:inputClient];
     
 	if (self) {
-		_currentClient = inputClient;
-		_composedBuffer = [[NSMutableString alloc] initWithString:@""];
-		_currentCandidates = [[NSMutableArray alloc] init];
+        _currentClient = inputClient;
+        _composedBuffer = [[NSMutableString alloc] initWithString:@""];
+        _currentCandidates = [[NSMutableArray alloc] initWithCapacity:0];
+        _prevSelected = -1;
     }
-    
+
 	return self;
 }
 
 - (void)dealloc {
-	[_composedBuffer release];
+    [_prefix release];
+    [_term release];
+    [_suffix release];
+    [_currentCandidates release];
+    [_composedBuffer release];
 	[super dealloc];
 }
 
 - (void)findCurrentCandidates {
-    if(_composedBuffer) {
-        _currentCandidates = [[NSMutableArray alloc] init];
-        NSString* autoCorrectResult = [[AutoCorrect sharedInstance] find:_composedBuffer];
-        if(autoCorrectResult) {
-            if([autoCorrectResult isEqualToString:_composedBuffer]) {
-                [_currentCandidates addObject:autoCorrectResult];
-            } 
+    [_currentCandidates removeAllObjects];
+    if (_composedBuffer && [_composedBuffer length] > 0) {
+        NSString* regex = @"(^(?::`|\\.`|[-\\]\\\\~!@#&*()_=+\\[{}'\";<>/?|.,])*?(?=(?:,{2,}))|^(?::`|\\.`|[-\\]\\\\~!@#&*()_=+\\[{}'\";<>/?|.,])*)(.*?(?:,,)*)((?::`|\\.`|[-\\]\\\\~!@#&*()_=+\\[{}'\";<>/?|.,])*$)";
+        NSArray* items = [_composedBuffer captureComponentsMatchedByRegex:regex];
+        if (items && [items count] > 0) {
+            // Split Prefix, Term & Suffix
+            [self setPrefix:[[AvroParser sharedInstance] parse:[items objectAtIndex:1]]];
+            [self setTerm:[items objectAtIndex:2]];
+            [self setSuffix:[[AvroParser sharedInstance] parse:[items objectAtIndex:3]]];
+            
+            _currentCandidates = [[[Suggestion sharedInstance] getList:[self term]] retain];
+            if (_currentCandidates && [_currentCandidates count] > 0) {
+                NSString* prevString = nil;
+                if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IncludeDictionary"]) {
+                    _prevSelected = -1;
+                    prevString = [[CacheManager sharedInstance] stringForKey:[self term]];
+                }
+                int i;
+                for (i = 0; i < [_currentCandidates count]; ++i) {
+                    NSString* item = [_currentCandidates objectAtIndex:i];
+                    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IncludeDictionary"] && 
+                        _prevSelected && [item isEqualToString:prevString] ) {
+                        _prevSelected = i;
+                    }
+                    [_currentCandidates replaceObjectAtIndex:i withObject:
+                     [NSString stringWithFormat:@"%@%@%@", [self prefix], item, [self suffix]]];
+                }
+                // Emoticons                
+                if ([_composedBuffer isEqualToString:[self term]] == NO && 
+                    [[NSUserDefaults standardUserDefaults] boolForKey:@"IncludeDictionary"]) {
+                    NSString* smily = [[AutoCorrect sharedInstance] find:_composedBuffer];
+                    if (smily) {
+                        [_currentCandidates insertObject:smily atIndex:0];
+                    }
+                }
+            }
             else {
-                [_currentCandidates addObject:[[AvroParser sharedInstance] parse:autoCorrectResult]];
+                [_currentCandidates addObject:[self prefix]];
             }
         }
-        [_currentCandidates addObject:[[AvroParser sharedInstance] parse:_composedBuffer]];
-    }
-    if (_currentCandidates) {
-        [_currentCandidates retain];
     }
 }
 
 - (void)updateCandidatesPanel {
-    if (_currentCandidates) {
-        // Need to set font here; setting it in init... doesn't work.		
-        // NSUserDefaults *defaultsDictionary = [NSUserDefaults standardUserDefaults];
+    if (_currentCandidates && [_currentCandidates count] > 0) {
+        NSUserDefaults *defaultsDictionary = [NSUserDefaults standardUserDefaults];
         
         // NSString *candidateFontName = [defaultsDictionary objectForKey:@"candidateFontName"];
         // float candidateFontSize = [[defaultsDictionary objectForKey:@"candidateFontSize"] floatValue];
@@ -59,10 +94,12 @@
         // NSFont *candidateFont = [NSFont fontWithName:candidateFontName size:candidateFontSize];
         // [[Candidates sharedInstance] setAttributes:[NSDictionary dictionaryWithObject:candidateFont forKey:NSFontAttributeName]];
         
-        // [[Candidates sharedInstance] setPanelType:[defaultsDictionary integerForKey:@"candidatePanelType"]];		
-        [[Candidates sharedInstance] setPanelType:kIMKSingleColumnScrollingCandidatePanel];
+        [[Candidates sharedInstance] setPanelType:[defaultsDictionary integerForKey:@"CandidatePanelType"]];
         [[Candidates sharedInstance] updateCandidates];
         [[Candidates sharedInstance] show:kIMKLocateCandidatesBelowHint];
+        if (_prevSelected > -1) {
+            [[Candidates sharedInstance] selectCandidate:_prevSelected];
+        }
     }
     else {
         [[Candidates sharedInstance] hide];
@@ -74,33 +111,46 @@
 }
 
 - (void)candidateSelectionChanged:(NSAttributedString*)candidateString {
-	// Intentionally blank.
-}
-
-- (void)clearCompositionBuffer {
-	[_composedBuffer deleteCharactersInRange:NSMakeRange(0, [_composedBuffer length])];	
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IncludeDictionary"]) {
+        if ([self term] && [[self term] length] > 0) {
+            BOOL comp = [[candidateString string] isEqualToString:[_currentCandidates objectAtIndex:0]];
+            if ((comp && _prevSelected == -1) == NO) {
+                NSRange range = NSMakeRange([[self prefix] length], 
+                                            [candidateString length] - ([[self prefix] length] + [[self suffix] length]));
+                [[CacheManager sharedInstance] setString:[[candidateString string] substringWithRange:range] forKey:[self term]];
+                
+                // Reverse Suffix Caching
+                NSArray* tmpArray = [[CacheManager sharedInstance] baseForKey:[candidateString string]];
+                if (tmpArray && [tmpArray count] > 0) {
+                    [[CacheManager sharedInstance] setString:[tmpArray objectAtIndex:1] forKey:[tmpArray objectAtIndex:0]];
+                }
+            }
+        }
+    }
 }
 
 - (void)candidateSelected:(NSAttributedString*)candidateString {
-	[_currentClient insertText:candidateString replacementRange:NSMakeRange(NSNotFound, 0)];
+    [_currentClient insertText:candidateString replacementRange:NSMakeRange(NSNotFound, 0)];
 	
 	[self clearCompositionBuffer];
-	
-	[_currentCandidates release];
-	_currentCandidates = nil;
+	[_currentCandidates removeAllObjects];
+    [self updateCandidatesPanel];
 }
 
 - (void)commitComposition:(id)sender {
 	[sender insertText:_composedBuffer replacementRange:NSMakeRange(NSNotFound, 0)];
 	
 	[self clearCompositionBuffer];
-	
-	[_currentCandidates release];
-	_currentCandidates = nil;
+	[_currentCandidates removeAllObjects];
+    [self updateCandidatesPanel];
 }
 
 - (id)composedString:(id)sender {
 	return [[[NSAttributedString alloc] initWithString:_composedBuffer] autorelease];
+}
+
+- (void)clearCompositionBuffer {
+	[_composedBuffer deleteCharactersInRange:NSMakeRange(0, [_composedBuffer length])];	
 }
 
 /*
@@ -130,8 +180,10 @@
     // other words the system will not deliver a key down event to the application.
     // Returning NO means the original key down will be passed on to the client.
     if ([string isEqualToString:@" "]) {
-        [self commitText:string];
-        return YES;
+        if (_currentCandidates && [_currentCandidates count]) {
+            [self candidateSelected:[[Candidates sharedInstance] selectedCandidateString]];
+        }
+        return NO;
     }
     else {
         [_composedBuffer appendString:string];
@@ -154,6 +206,15 @@
     [self commitText:@"\t"];
 }
 
+- (void)insertNewline:(id)sender {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"CommitNewLineOnEnter"]) {
+        [self commitText:@"\n"];
+    }
+    else {
+        [self commitText:@""];
+    }
+}
+
 - (BOOL)didCommandBySelector:(SEL)aSelector client:(id)sender {
     if ([self respondsToSelector:aSelector]) {
 		// The NSResponder methods like insertNewline: or deleteBackward: are
@@ -163,30 +224,25 @@
 		// client application. For that reason we need to test in the case where
 		// we might not handle the command.
 		
-		if ( _composedBuffer && [_composedBuffer length] > 0 ) {
-			if (aSelector == @selector(insertTab:) ||
-				aSelector == @selector(deleteBackward:) ) {
+		if (_composedBuffer && [_composedBuffer length] > 0) {
+            if (aSelector == @selector(insertTab:) 
+                || aSelector == @selector(insertNewline:)
+                || aSelector == @selector(deleteBackward:)) {
                 [self performSelector:aSelector withObject:sender];
-                return YES; 
-			}
-		}
-		
+                return YES;
+            }
+        }
     }
 	return NO;
 }
 
 - (void)commitText:(NSString*)string {
-    if ([_composedBuffer length] == 0) {
+    if (_currentCandidates) {
+        [self candidateSelected:[[Candidates sharedInstance] selectedCandidateString]];
         [_currentClient insertText:string replacementRange:NSMakeRange(NSNotFound, 0)];
     }
     else {
-        if (_currentCandidates) {
-            [self candidateSelected:[_currentCandidates objectAtIndex:0]];
-            [_currentClient insertText:string replacementRange:NSMakeRange(NSNotFound, 0)];
-        }
-        else {
-            NSBeep();
-        }
+        NSBeep();
     }
 }
 

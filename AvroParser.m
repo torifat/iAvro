@@ -7,13 +7,48 @@
 
 #import "AvroParser.h"
 
+static AvroParser* sharedInstance = nil;
+
 @implementation AvroParser
 
++ (AvroParser *)sharedInstance  {
+	if (sharedInstance == nil) {
+        [[self alloc] init]; // assignment not done here, see allocWithZone
+    }
+	return sharedInstance;
+}
+
++ (id)allocWithZone:(NSZone *)zone {
+    if (sharedInstance == nil) {
+        sharedInstance = [super allocWithZone:zone];
+        return sharedInstance;  // assignment and return on first allocation
+    }
+    return nil; //on subsequent allocation attempts return nil
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    return self;
+}
+
+- (id)retain {
+    return self;
+}
+
+- (oneway void)release {
+    //do nothing
+}
+
+- (id)autorelease {
+    return self;
+}
+
+- (NSUInteger)retainCount {
+    return NSUIntegerMax;  // This is sooo not zero
+}
+
 - (id)init {
-    
     self = [super init];
-    
-	if (self) {
+    if (self) {
         NSError *error = nil;
         NSString *filePath = [[NSBundle mainBundle] pathForResource:@"data" ofType:@"json"];
         NSData *jsonData = [NSData dataWithContentsOfFile:filePath options:NSDataReadingUncached error: &error];
@@ -26,174 +61,162 @@
                 @throw error;
                 // @throw [NSException exceptionWithName:@"AvroParser init" reason:@"Error parsing JSON" userInfo:nil];
             } else {
-                _vowel = [jsonArray objectForKey:@"vowel"];
-                _consonant = [jsonArray objectForKey:@"consonant"];
-                _casesensitive = [jsonArray objectForKey:@"casesensitive"];
-                _patterns = [jsonArray objectForKey:@"patterns"];
+                _vowel = [[NSString alloc] initWithString:[jsonArray objectForKey:@"vowel"]];
+                _consonant = [[NSString alloc] initWithString:[jsonArray objectForKey:@"consonant"]];
+                _casesensitive = [[NSString alloc] initWithString:[jsonArray objectForKey:@"casesensitive"]];
+                _patterns = [[NSArray alloc] initWithArray:[jsonArray objectForKey:@"patterns"]];
+                _maxPatternLength = [[[_patterns objectAtIndex:0] objectForKey:@"find"] length];
             }
             
         } else {
             @throw error;
         }
     }
-    
-	return self;
+    return self;
 }
 
 - (void)dealloc {
-	[_vowel release];
-	[_consonant release];
-	[_casesensitive release];
-	[_patterns release];
-	
-	[super dealloc];
-}
-
-static AvroParser* sharedInstance = nil;
-
-+ (void)allocateSharedInstance {
-	sharedInstance = [[self alloc] init];
-}
-
-+ (void)deallocateSharedInstance {
-	[sharedInstance release];
-}
-
-+ (AvroParser *)sharedInstance {
-	return sharedInstance;
+    [_vowel release];
+    [_consonant release];
+    [_casesensitive release];
+    [_patterns release];
+    
+    [super dealloc];
 }
 
 - (NSString*)parse:(NSString *)string {
-    
-    // Scary C equivalent code for performance boost ;)
-    int len = [string length];
-    unichar *fixedArray = calloc(len, sizeof(unichar));
-    [string getCharacters:fixedArray];
-    int i;
-    for (i = 0; i < len; ++i) {
-        unichar c = [string characterAtIndex:i];
-        if(![self isCaseSensitive:c]) {
-            fixedArray[i] = [self smallCap:c];
-        }
+    if (!string || [string length] == 0) {
+        return @"";
     }
-    NSString* fixed = [NSString stringWithCharacters:fixedArray length:len];
-    free(fixedArray);
     
+    NSString * fixed = [self fix:string];
     NSMutableString* output = [[NSMutableString alloc] initWithCapacity:0];
     
-    len = [fixed length];
-    int cur;
+    int len = [fixed length], cur;
     for(cur = 0; cur < len; ++cur) {
         int start = cur, end;
         BOOL matched = FALSE;
         
-        for(NSDictionary *pattern in _patterns) {
-            NSString* find = [pattern objectForKey:@"find"];
-            int findLen = [find length];
-            end = cur + findLen;
-            int diff = (end - start);
-            if(end <= len && diff == findLen) {
-                NSString* chunk = [fixed substringWithRange:NSMakeRange(start, diff)];
-                if(chunk && [chunk length] && [chunk isEqualToString:find]) {
-                    NSArray* rules = [pattern objectForKey:@"rules"];
-                    for(NSDictionary* rule in rules) {
-                        
-                        BOOL replace = TRUE;
-                        int chk = 0;
-                        NSArray* matches = [rule objectForKey:@"matches"];
-                        for(NSDictionary* match in matches) {
-                            NSString* value = [match objectForKey:@"value"];
-                            NSString* type = [match objectForKey:@"type"];
-                            NSString* scope = [match objectForKey:@"scope"];
-                            BOOL isNegative = [[match objectForKey:@"negative"] boolValue];
+        int chunkLen;
+        for(chunkLen = _maxPatternLength; chunkLen > 0; --chunkLen) {
+            end = start + chunkLen;
+            if(end <= len) {
+                NSString* chunk = [fixed substringWithRange:NSMakeRange(start, chunkLen)];
+                
+                // Binary Search
+                int left = 0, right = [_patterns count] - 1, mid;
+                while(right >= left) {
+                    mid = (right + left) / 2;
+                    NSDictionary* pattern = [_patterns objectAtIndex:mid];
+                    NSString* find = [pattern objectForKey:@"find"];
+                    if([find isEqualToString:chunk]) {
+                        NSArray* rules = [pattern objectForKey:@"rules"];
+                        for(NSDictionary* rule in rules) {
                             
-                            if([type isEqualToString:@"suffix"]) {
-                                chk = end;
-                            } 
-                            // Prefix
-                            else {
-                                chk = start - 1;
-                            }
-                            
-                            // Beginning
-                            if([scope isEqualToString:@"punctuation"]) {
-                                if(
-                                   ! (
-                                      (chk < 0 && [type isEqualToString:@"prefix"]) || 
-                                      (chk >= len && [type isEqualToString:@"suffix"]) || 
-                                      [self isPunctuation:[fixed characterAtIndex:chk]]
-                                      ) ^ isNegative
-                                   ) {
-                                    replace = FALSE;
-                                    break;
-                                }
-                            }
-                            // Vowel
-                            else if([scope isEqualToString:@"vowel"]) {
-                                if(
-                                   ! (
-                                      (
-                                       (chk >= 0 && [type isEqualToString:@"prefix"]) || 
-                                       (chk < len && [type isEqualToString:@"suffix"])
-                                       ) && 
-                                      [self isVowel:[fixed characterAtIndex:chk]]
-                                      ) ^ isNegative
-                                   ) {
-                                    replace = FALSE;
-                                    break;
-                                }
-                            }
-                            // Consonant
-                            else if([scope isEqualToString:@"consonant"]) {
-                                if(
-                                   ! (
-                                      (
-                                       (chk >= 0 && [type isEqualToString:@"prefix"]) || 
-                                       (chk < len && [type isEqualToString:@"suffix"])
-                                       ) && 
-                                      [self isConsonant:[fixed characterAtIndex:chk]]
-                                      ) ^ isNegative
-                                   ) {
-                                    replace = FALSE;
-                                    break;
-                                }
-                            }
-                            // Exact
-                            else if([scope isEqualToString:@"exact"]) {
-                                int s, e;
+                            BOOL replace = TRUE;
+                            int chk = 0;
+                            NSArray* matches = [rule objectForKey:@"matches"];
+                            for(NSDictionary* match in matches) {
+                                NSString* value = [match objectForKey:@"value"];
+                                NSString* type = [match objectForKey:@"type"];
+                                NSString* scope = [match objectForKey:@"scope"];
+                                BOOL isNegative = [[match objectForKey:@"negative"] boolValue];
+                                
                                 if([type isEqualToString:@"suffix"]) {
-                                    s = end;
-                                    e = end + [value length];
+                                    chk = end;
                                 } 
                                 // Prefix
                                 else {
-                                    s = start - [value length];
-                                    e = start;
+                                    chk = start - 1;
                                 }
-                                if(![self isExact:value heystack:fixed start:s end:e not:isNegative]) {
-                                    replace = FALSE;
-                                    break;
+                                
+                                // Beginning
+                                if([scope isEqualToString:@"punctuation"]) {
+                                    if(
+                                       ! (
+                                          (chk < 0 && [type isEqualToString:@"prefix"]) || 
+                                          (chk >= len && [type isEqualToString:@"suffix"]) || 
+                                          [self isPunctuation:[fixed characterAtIndex:chk]]
+                                          ) ^ isNegative
+                                       ) {
+                                        replace = FALSE;
+                                        break;
+                                    }
+                                }
+                                // Vowel
+                                else if([scope isEqualToString:@"vowel"]) {
+                                    if(
+                                       ! (
+                                          (
+                                           (chk >= 0 && [type isEqualToString:@"prefix"]) || 
+                                           (chk < len && [type isEqualToString:@"suffix"])
+                                           ) && 
+                                          [self isVowel:[fixed characterAtIndex:chk]]
+                                          ) ^ isNegative
+                                       ) {
+                                        replace = FALSE;
+                                        break;
+                                    }
+                                }
+                                // Consonant
+                                else if([scope isEqualToString:@"consonant"]) {
+                                    if(
+                                       ! (
+                                          (
+                                           (chk >= 0 && [type isEqualToString:@"prefix"]) || 
+                                           (chk < len && [type isEqualToString:@"suffix"])
+                                           ) && 
+                                          [self isConsonant:[fixed characterAtIndex:chk]]
+                                          ) ^ isNegative
+                                       ) {
+                                        replace = FALSE;
+                                        break;
+                                    }
+                                }
+                                // Exact
+                                else if([scope isEqualToString:@"exact"]) {
+                                    int s, e;
+                                    if([type isEqualToString:@"suffix"]) {
+                                        s = end;
+                                        e = end + [value length];
+                                    } 
+                                    // Prefix
+                                    else {
+                                        s = start - [value length];
+                                        e = start;
+                                    }
+                                    if(![self isExact:value heystack:fixed start:s end:e not:isNegative]) {
+                                        replace = FALSE;
+                                        break;
+                                    }
                                 }
                             }
+                            
+                            if(replace) {
+                                [output appendString:[rule objectForKey:@"replace"]];
+                                cur = end - 1;
+                                matched = TRUE;
+                                break;
+                            }
+                            
                         }
                         
-                        if(replace) {
-                            [output appendString:[rule objectForKey:@"replace"]];
-                            cur = end - 1;
-                            matched = TRUE;
-                            break;
-                        }
+                        if(matched == TRUE) break;
                         
+                        // Default
+                        [output appendString:[pattern objectForKey:@"replace"]];
+                        cur = end - 1;
+                        matched = TRUE;
+                        break;
                     }
-                    
-                    if(matched == true) break;
-                    
-                    // Default
-                    [output appendString:[pattern objectForKey:@"replace"]];
-                    cur = end - 1;
-                    matched = TRUE;
-                    break;
+                    else if ([find length] > [chunk length] || 
+                             ([find length] == [chunk length] && [find compare:chunk] == NSOrderedAscending)) {
+                        left = mid + 1;
+                    } else {
+                        right = mid - 1;
+                    }
                 }
+                if(matched == TRUE) break;                
             }
         }
         
@@ -204,14 +227,13 @@ static AvroParser* sharedInstance = nil;
         // NSLog(@"cur: %s, start: %s, end: %s, prev: %s\n", cur, start, end, prev);
     }
     
-    NSString* ret = [[output copy] autorelease];
-    [output release];
+    [output autorelease];
     
-    return ret;
+    return output;
 }
 
 - (BOOL)isVowel:(unichar)c {
-	// Making it lowercase for checking
+    // Making it lowercase for checking
     c = [self smallCap:c];
     int i, len = [_vowel length];
     for (i = 0; i < len; ++i) {
@@ -219,11 +241,11 @@ static AvroParser* sharedInstance = nil;
             return TRUE;
         }
     }
-	return FALSE;
+    return FALSE;
 }
 
 - (BOOL)isConsonant:(unichar)c {
-	// Making it lowercase for checking
+    // Making it lowercase for checking
     c = [self smallCap:c];
     int i, len = [_consonant length];
     for (i = 0; i < len; ++i) {
@@ -231,12 +253,12 @@ static AvroParser* sharedInstance = nil;
             return TRUE;
         }
     }
-	return FALSE;
+    return FALSE;
     //return [consonant rangeOfString:c options:NSCaseInsensitiveSearch].location != NSNotFound;
 }
 
 - (BOOL)isPunctuation:(unichar)c {
-	return !([self isVowel:c] || [self isConsonant:c]);
+    return !([self isVowel:c] || [self isConsonant:c]);
 }
 
 - (BOOL)isCaseSensitive:(unichar)c {
@@ -248,20 +270,37 @@ static AvroParser* sharedInstance = nil;
             return TRUE;
         }
     }
-	return FALSE;
+    return FALSE;
 }
 
 - (BOOL)isExact:(NSString*) needle heystack:(NSString*)heystack start:(int)start end:(int)end not:(BOOL)not {
     // NSLog(@"Cut: %@", [heystack substringWithRange:NSMakeRange(start, end)]);
     int len = end - start;
-    return ((start >=0 && end < [heystack length] && [[heystack substringWithRange:NSMakeRange(start, len)] isEqualToString:needle]) ^ not);
+    return ((start >= 0 && end < [heystack length] 
+             && [[heystack substringWithRange:NSMakeRange(start, len)] isEqualToString:needle]) ^ not);
 }
 
-- (unichar) smallCap:(unichar) letter {
+- (unichar)smallCap:(unichar) letter {
     if(letter >= 'A' && letter <= 'Z') {
         letter = letter - 'A' + 'a';
     }
     return letter;
+}
+
+- (NSString*)fix:(NSString *)string {
+    NSMutableString* fixed = [[NSMutableString alloc] initWithCapacity:0];
+    int i, len = [string length];
+    for (i = 0; i < len; ++i) {
+        unichar c = [string characterAtIndex:i];
+        if (![self isCaseSensitive:c]) {
+            [fixed appendFormat:@"%C", [self smallCap:c]];
+        }
+        else {
+            [fixed appendFormat:@"%C", c];
+        }
+    }
+    [fixed autorelease];
+    return fixed;
 }
 
 @end

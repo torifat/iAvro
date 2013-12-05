@@ -7,12 +7,19 @@
 
 #import "Candidates.h"
 
-@implementation Candidates
-
 static Candidates *_sharedInstance = nil;
 
+@implementation Candidates
+
 + (void)allocateSharedInstanceWithServer:(IMKServer *)server {
-	_sharedInstance = [[self alloc] initWithServer:server panelType:kIMKSingleRowSteppingCandidatePanel];
+    if (_sharedInstance == nil) {
+        _sharedInstance = [[self alloc] initWithServer:server panelType:kIMKSingleColumnScrollingCandidatePanel];
+        [_sharedInstance setAttributes:[NSDictionary 
+                                        dictionaryWithObject:[NSNumber numberWithBool:YES] 
+                                        forKey:IMKCandidatesSendServerKeyEventFirst]];
+        
+        [_sharedInstance setDismissesAutomatically:NO];
+    }
 }
 
 + (void)deallocateSharedInstance {

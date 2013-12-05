@@ -6,7 +6,10 @@
 //
 
 #import "MainMenuAppDelegate.h"
-
+#import "AutoCorrect.h"
+#import "CacheManager.h"
+#import "Database.h"
+#import "RegexParser.h"
 
 @implementation MainMenuAppDelegate
 
@@ -23,6 +26,20 @@
 	if (preferences) {
 		[preferences setAction:@selector(showPreferences:)];
 	}
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IncludeDictionary"]) {
+        NSLog(@"Loading Dictionary...");
+        [Database sharedInstance];
+        [RegexParser sharedInstance];
+        [CacheManager sharedInstance];
+    }
+    [AutoCorrect sharedInstance];
+}
+
+- (void)applicationWillTerminate:(NSNotification *)notification {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IncludeDictionary"]) {
+        [[CacheManager sharedInstance] persist];
+    }
 }
 
 @end

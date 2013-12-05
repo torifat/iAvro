@@ -1,2 +1,7 @@
 .*
 !.gitignore
+!.gitattributes
+
+# User specific settings folder
+AvroKeyboard.xcodeproj/xcuserdata/
+AvroKeyboard.xcodeproj/project.xcworkspace/xcuserdata/

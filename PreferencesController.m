@@ -29,8 +29,11 @@
         case 0:
             view = _generalView;
             break;
-        case 2: default:
+        case 1:
             view = _autoCorrectView;
+            break;
+        case 2: default:
+            view = _aboutView;
             break;
     }
     return view;
@@ -47,6 +50,10 @@
 	[[self window] setContentSize:[_generalView frame].size];
     [[[self window] contentView] addSubview:_generalView];
     [[[self window] contentView] setWantsLayer:YES];
+    
+    // Load Credits
+    [_aboutContent readRTFDFromFile:[[NSBundle mainBundle] pathForResource:@"Credits" ofType:@"rtfd"]];
+    [_aboutContent scrollToBeginningOfDocument:_aboutContent];
 }
 
 - (IBAction)switchView:(id)sender {
