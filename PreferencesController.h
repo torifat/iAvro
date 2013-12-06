@@ -8,6 +8,7 @@
 #import <Cocoa/Cocoa.h>
 
 @interface PreferencesController : NSWindowController {
+    @private
     IBOutlet NSView*                    _aboutView;
     IBOutlet NSView*                    _autoCorrectView;
     IBOutlet NSView*                    _generalView;
