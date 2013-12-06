@@ -7,16 +7,12 @@
 
 #import "PreferencesController.h"
 
-@implementation PreferencesController {
-    NSPredicate* _searchPredicate;
-}
+@implementation PreferencesController
 
 - (void)awakeFromNib {
 	[[self window] setContentSize:[_generalView frame].size];
     [[[self window] contentView] addSubview:_generalView];
     [[[self window] contentView] setWantsLayer:YES];
-    
-    _searchPredicate = [NSPredicate predicateWithFormat:@"(key CONTAINS[c] $searchTerm) OR (value CONTAINS $searchTerm)"];
     
     // Load Credits
     [_aboutContent readRTFDFromFile:[[NSBundle mainBundle] pathForResource:@"Credits" ofType:@"rtfd"]];
@@ -83,8 +79,7 @@
     NSString *searchTerm = [[sender stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSPredicate *predicate = nil;
     if ([searchTerm length]) {
-        NSDictionary* dictionary = @{@"searchTerm" : searchTerm};
-        predicate = [_searchPredicate predicateWithSubstitutionVariables:dictionary];
+        predicate = [NSPredicate predicateWithFormat:@"(key CONTAINS[c] %@) OR (value CONTAINS %@)", searchTerm, searchTerm];
     }
     [_autoCorrectController setFilterPredicate:predicate];
 }
