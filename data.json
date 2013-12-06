@@ -1192,5 +1192,5 @@
       ],
       "vowel":"aeiou",
       "consonant":"bcdfghjklmnpqrstvwxyz",
-      "ignore":"|()[]{}^$*+?.~!@#%&-_='\";<>/\\,:`"
+      "casesensitive":"oiudgjnrstyz"
 }
