@@ -8,14 +8,17 @@
 #import <Cocoa/Cocoa.h>
 
 @interface PreferencesController : NSWindowController {
-    @private
+@private
     IBOutlet NSView*                    _aboutView;
     IBOutlet NSView*                    _autoCorrectView;
     IBOutlet NSView*                    _generalView;
     IBOutlet NSTextView*                _aboutContent;
-    IBOutlet NSDictionaryController*    _autoCorrectController;
+    IBOutlet NSArrayController*         _autoCorrectController;
 
     int                                 _currentViewTag;
+    NSMutableArray*                     _autoCorrectItemsArray;
 }
+
+@property (assign) NSMutableArray* autoCorrectItemsArray;
 
 @end

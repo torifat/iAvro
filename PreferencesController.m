@@ -6,8 +6,35 @@
 //
 
 #import "PreferencesController.h"
+#import "AutoCorrect.h"
+#import "AutoCorrectItem.h"
 
 @implementation PreferencesController
+
+@synthesize autoCorrectItemsArray = _autoCorrectItemsArray;
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        NSMutableDictionary *autoCorrectEntries = [[AutoCorrect sharedInstance] autoCorrectEntries];
+        _autoCorrectItemsArray = [[NSMutableArray alloc] init];
+        for (id key in autoCorrectEntries) {
+            AutoCorrectItem* item = [[AutoCorrectItem alloc] init];
+            item.replace = key;
+            item.with = [autoCorrectEntries objectForKey:key];
+            [_autoCorrectItemsArray addObject:item];
+            [item release];
+        }
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    [_autoCorrectItemsArray release];
+    [super dealloc];
+}
 
 - (void)awakeFromNib {
 	[[self window] setContentSize:[_generalView frame].size];
@@ -76,12 +103,12 @@
 }
 
 - (IBAction)changePredicate:(id)sender {
-    NSString *searchTerm = [[sender stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSPredicate *predicate = nil;
-    if ([searchTerm length]) {
-        predicate = [NSPredicate predicateWithFormat:@"(key CONTAINS[c] %@) OR (value CONTAINS %@)", searchTerm, searchTerm];
-    }
-    [_autoCorrectController setFilterPredicate:predicate];
+//    NSString *searchTerm = [[sender stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//    NSPredicate *predicate = nil;
+//    if ([searchTerm length]) {
+//        predicate = [NSPredicate predicateWithFormat:@"(replace CONTAINS[c] %@) OR (with CONTAINS %@)", searchTerm, searchTerm];
+//    }
+//    [_autoCorrectController setFilterPredicate:predicate];
 }
 
 @end

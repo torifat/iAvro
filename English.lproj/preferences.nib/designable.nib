@@ -16,7 +16,7 @@
             <connections>
                 <outlet property="_aboutContent" destination="I4c-pT-HXY" id="f5B-O2-Kfz"/>
                 <outlet property="_aboutView" destination="254" id="260"/>
-                <outlet property="_autoCorrectController" destination="K1d-FU-tQS" id="G8t-Ky-rdM"/>
+                <outlet property="_autoCorrectController" destination="uta-3m-pmz" id="BRi-53-DhL"/>
                 <outlet property="_autoCorrectView" destination="159" id="193"/>
                 <outlet property="_generalView" destination="207" id="208"/>
                 <outlet property="window" destination="5" id="rKK-uj-hcU"/>
@@ -115,46 +115,20 @@
             </subviews>
         </customView>
         <customView id="159" userLabel="AutoCorrect View">
-            <rect key="frame" x="0.0" y="0.0" width="450" height="335"/>
+            <rect key="frame" x="0.0" y="0.0" width="450" height="331"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <textField verticalHuggingPriority="750" id="223">
-                    <rect key="frame" x="285" y="24" width="147" height="17"/>
+                    <rect key="frame" x="285" y="22" width="147" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="total" id="224">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
-                    <connections>
-                        <binding destination="K1d-FU-tQS" name="value" keyPath="arrangedObjects.@count" id="5jv-JK-nkS"/>
-                    </connections>
                 </textField>
-                <button id="QGM-BX-zg1">
-                    <rect key="frame" x="20" y="20" width="26" height="25"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSAddTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="TP6-HO-SoY">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="add:" target="K1d-FU-tQS" id="S7k-OR-2Zf"/>
-                    </connections>
-                </button>
-                <button id="ud2-wa-VBA">
-                    <rect key="frame" x="45" y="20" width="25" height="25"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6s9-KP-wrm">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="remove:" target="K1d-FU-tQS" id="UJk-fA-Cf2"/>
-                        <binding destination="K1d-FU-tQS" name="enabled" keyPath="selection.@count" id="QoV-nW-SFD"/>
-                    </connections>
-                </button>
                 <searchField verticalHuggingPriority="750" id="wYR-3V-BaT">
-                    <rect key="frame" x="20" y="288" width="410" height="22"/>
+                    <rect key="frame" x="20" y="284" width="410" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="Hwz-c4-W7x">
                         <font key="font" metaFont="system"/>
@@ -166,13 +140,13 @@
                     </connections>
                 </searchField>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="mQW-Uc-Ivt">
-                    <rect key="frame" x="20" y="53" width="410" height="227"/>
+                    <rect key="frame" x="20" y="49" width="410" height="227"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" id="Qva-Vs-A9k">
                         <rect key="frame" x="1" y="17" width="408" height="209"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="6cc-ai-4bu" id="J1h-Y9-3il">
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="6cc-ai-4bu" id="J1h-Y9-3il">
                                 <rect key="frame" x="0.0" y="0.0" width="408" height="209"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -192,7 +166,11 @@
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <connections>
-                                            <binding destination="K1d-FU-tQS" name="value" keyPath="arrangedObjects.key" id="k6A-3p-lNI"/>
+                                            <binding destination="uta-3m-pmz" name="value" keyPath="arrangedObjects.replace" id="R1C-Ca-0NR">
+                                                <dictionary key="options">
+                                                    <bool key="NSValidatesImmediately" value="YES"/>
+                                                </dictionary>
+                                            </binding>
                                         </connections>
                                     </tableColumn>
                                     <tableColumn width="201" minWidth="40" maxWidth="1000" id="JtV-6O-XYL">
@@ -208,7 +186,11 @@
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <connections>
-                                            <binding destination="K1d-FU-tQS" name="value" keyPath="arrangedObjects.value" id="cEQ-Pa-OkC"/>
+                                            <binding destination="uta-3m-pmz" name="value" keyPath="arrangedObjects.with" id="8f9-M9-IeO">
+                                                <dictionary key="options">
+                                                    <bool key="NSValidatesImmediately" value="YES"/>
+                                                </dictionary>
+                                            </binding>
                                         </connections>
                                     </tableColumn>
                                 </tableColumns>
@@ -229,6 +211,22 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
+                <button verticalHuggingPriority="750" id="qbf-v5-b7P">
+                    <rect key="frame" x="20" y="19" width="26" height="23"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="GDg-WD-mGh">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <button verticalHuggingPriority="750" id="Aag-RQ-xiS">
+                    <rect key="frame" x="45" y="19" width="26" height="23"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UhW-QK-5i1">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
             </subviews>
         </customView>
         <customView wantsLayer="YES" id="254" userLabel="About View">
@@ -266,12 +264,16 @@
                 </scrollView>
             </subviews>
         </customView>
-        <dictionaryController objectClassName="_NSControllerKeyValuePair" id="K1d-FU-tQS">
-            <connections>
-                <binding destination="XIi-Er-8Mo" name="contentDictionary" keyPath="autoCorrectEntries" id="pPo-xQ-RXs"/>
-            </connections>
-        </dictionaryController>
         <userDefaultsController representsSharedInstance="YES" id="177"/>
+        <arrayController objectClassName="AutoCorrectItem" id="uta-3m-pmz">
+            <declaredKeys>
+                <string>replace</string>
+                <string>with</string>
+            </declaredKeys>
+            <connections>
+                <binding destination="173" name="contentArray" keyPath="self.autoCorrectItemsArray" id="w1u-SV-yFf"/>
+            </connections>
+        </arrayController>
     </objects>
     <resources>
         <image name="AutoCorrect" width="32" height="32"/>
