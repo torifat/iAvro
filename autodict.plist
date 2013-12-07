@@ -29,11 +29,11 @@
 	<key>1st</key>
 	<string>১ম</string>
 	<key>2nd</key>
-	<string>২ইয়</string>
+	<string>২য়</string>
 	<key>3:-O</key>
 	<string>3:-O</string>
 	<key>3rd</key>
-	<string>৩ইয়</string>
+	<string>৩য়</string>
 	<key>4th</key>
 	<string>৪র্থ</string>
 	<key>5th</key>
@@ -735,7 +735,7 @@
 	<key>bank</key>
 	<string>ব্যাংক</string>
 	<key>baseball</key>
-	<string>বেস্‌বল</string>
+	<string>বেসবল</string>
 	<key>basu</key>
 	<string>বসু</string>
 	<key>basundhara</key>
@@ -837,7 +837,7 @@
 	<key>brazil</key>
 	<string>ব্রাজিল</string>
 	<key>brb</key>
-	<string>এক্টু পরে আসছি</string>
+	<string>একটু পরে আসছি</string>
 	<key>break</key>
 	<string>ব্রেক</string>
 	<key>britain</key>
@@ -889,7 +889,7 @@
 	<key>byy</key>
 	<string>ব্যয়</string>
 	<key>cable</key>
-	<string>কেব্‌ল</string>
+	<string>কেবল</string>
 	<key>cadre</key>
 	<string>ক্যাডার</string>
 	<key>cake</key>
@@ -1333,7 +1333,7 @@
 	<key>dr.</key>
 	<string>dr.</string>
 	<key>draft</key>
-	<string>ড্রাফ্‌ট</string>
+	<string>ড্রাফট</string>
 	<key>drawing</key>
 	<string>ড্রয়িং</string>
 	<key>dreamweaver</key>
@@ -1485,7 +1485,7 @@
 	<key>email</key>
 	<string>ইমেইল</string>
 	<key>emirates</key>
-	<string>এমিরেট্‌স</string>
+	<string>এমিরেটস</string>
 	<key>emni</key>
 	<string>এমনি</string>
 	<key>emnikore</key>
@@ -1525,7 +1525,7 @@
 	<key>entrance</key>
 	<string>এন্ট্রান্স</string>
 	<key>entries</key>
-	<string>এন্ট্রিজ্‌</string>
+	<string>এন্ট্রিজ</string>
 	<key>entry</key>
 	<string>এন্ট্রি</string>
 	<key>epsiode</key>
@@ -1557,7 +1557,7 @@
 	<key>express</key>
 	<string>এক্সপ্রেস</string>
 	<key>extension</key>
-	<string>এক্সটেন্সান</string>
+	<string>এক্সটেনশন</string>
 	<key>fa^ktal</key>
 	<string>ফাঁকতাল</string>
 	<key>facebook</key>
@@ -1627,7 +1627,7 @@
 	<key>flash</key>
 	<string>ফ্ল্যাশ</string>
 	<key>flickr</key>
-	<string>ফ্লিক্‌র</string>
+	<string>ফ্লিকার</string>
 	<key>floppy</key>
 	<string>ফ্লপি</string>
 	<key>flyover</key>
@@ -1651,7 +1651,7 @@
 	<key>fossil</key>
 	<string>ফসিল</string>
 	<key>fossils</key>
-	<string>ফসিল্‌স</string>
+	<string>ফসিলস</string>
 	<key>foundation</key>
 	<string>ফাউন্ডেশন</string>
 	<key>fountain</key>
@@ -1719,7 +1719,7 @@
 	<key>gatarrthe</key>
 	<string>জ্ঞাতার্থে</string>
 	<key>gates</key>
-	<string>গেট্‌স</string>
+	<string>গেটস</string>
 	<key>gautam</key>
 	<string>গৌতম</string>
 	<key>gb</key>
@@ -1839,7 +1839,7 @@
 	<key>head</key>
 	<string>হেড</string>
 	<key>health</key>
-	<string>হেল্‌থ</string>
+	<string>হেলথ</string>
 	<key>heart</key>
 	<string>হার্ট</string>
 	<key>heatsink</key>
@@ -1856,6 +1856,8 @@
 	<string>হাই-ফাই</string>
 	<key>hifi</key>
 	<string>হাইফাই</string>
+	<key>hi5</key>
+	<string>হাইফাইভ</string>
 	<key>highfive</key>
 	<string>হাইফাইভ</string>
 	<key>history</key>
@@ -1982,8 +1984,6 @@
 	<string>জ্যোৎস্নারাত</string>
 	<key>jOsnaratri</key>
 	<string>জ্যোৎস্নারাত্রি</string>
-	<key>jZOt``snarater</key>
-	<string>jZOt``snarater</string>
 	<key>jabe</key>
 	<string>যাবে</string>
 	<key>jalpaiguri</key>
@@ -2007,7 +2007,7 @@
 	<key>je</key>
 	<string>যে</string>
 	<key>jeans</key>
-	<string>জিন্‌স</string>
+	<string>জিনস</string>
 	<key>jedin</key>
 	<string>যেদিন</string>
 	<key>jehetu</key>
@@ -2467,7 +2467,7 @@
 	<key>matador</key>
 	<string>ম্যাটাডর</string>
 	<key>maths</key>
-	<string>ম্যাথ্‌স</string>
+	<string>ম্যাথস</string>
 	<key>maximize</key>
 	<string>ম্যাক্সিমাইজ</string>
 	<key>maximum</key>
@@ -2601,7 +2601,7 @@
 	<key>msn</key>
 	<string>এমএসএন</string>
 	<key>muffler</key>
-	<string>মাফ্‌লার</string>
+	<string>মাফলার</string>
 	<key>mukherjee</key>
 	<string>মুখার্জি</string>
 	<key>multimedia</key>
@@ -2693,7 +2693,7 @@
 	<key>nolkUp</key>
 	<string>নলকূপ</string>
 	<key>nonsense</key>
-	<string>নন্‌সেন্স</string>
+	<string>ননসেন্স</string>
 	<key>norokkunDe</key>
 	<string>নরককুন্ডে</string>
 	<key>norokkunDo</key>
@@ -2711,7 +2711,7 @@
 	<key>notepad</key>
 	<string>নোটপ্যাড</string>
 	<key>notes</key>
-	<string>নোট্‌স</string>
+	<string>নোটস</string>
 	<key>notification</key>
 	<string>নোটিফিকেশান</string>
 	<key>nouka</key>
@@ -2855,7 +2855,7 @@
 	<key>option</key>
 	<string>অপশন</string>
 	<key>options</key>
-	<string>অপশন্‌স</string>
+	<string>অপশনস</string>
 	<key>optionti</key>
 	<string>অপশনটি</string>
 	<key>orange</key>
@@ -3313,7 +3313,7 @@
 	<key>right</key>
 	<string>রাইট</string>
 	<key>rights</key>
-	<string>রাইট্‌স</string>
+	<string>রাইটস</string>
 	<key>ringtone</key>
 	<string>রিংটোন</string>
 	<key>rituparna</key>
@@ -3473,7 +3473,7 @@
 	<key>setting</key>
 	<string>সেটিং</string>
 	<key>settings</key>
-	<string>সেটিংস্‌</string>
+	<string>সেটিংস</string>
 	<key>sexy</key>
 	<string>সেক্সি</string>
 	<key>shOnni</key>
@@ -4207,12 +4207,38 @@
 	<key>zokhontokhon</key>
 	<string>যখনতখন</string>
 	<key>zompUrI</key>
-	<string>যমপূর</string>
+	<string>যমপূরী</string>
 	<key>~:&gt;</key>
 	<string>~:&gt;</string>
 	<key>~O)</key>
 	<string>~O)</string>
 	<key>~X(</key>
 	<string>~X(</string>
+	<key>bdnews</key>
+	<string>বিডিনিউজ</string>
+	<key>bdnews24</key>
+	<string>বিডিনিউজ২৪</string>
+	<key>banglanews</key>
+	<string>বাংলানিউজ</string>
+	<key>banglanews24</key>
+	<string>বাংলানিউজ২৪</string>
+	<key>sachalayatan</key>
+	<string>সচলায়তন</string>
+	<key>sachalayatani</key>
+	<string>সচলায়তনই</string>
+	<key>sachalayataner</key>
+	<string>সচলায়তনের</string>
+	<key>avropad</key>
+	<string>অভ্রপ্যাড</string>
+	<key>avropader</key>
+	<string>অভ্রপ্যাডের</string>
+	<key>avropaD</key>
+	<string>অভ্রপ্যাড</string>
+	<key>avropaDer</key>
+	<string>অভ্রপ্যাডের</string>
+	<key>iavro</key>
+	<string>আইঅভ্র</string>
+	<key>iavror</key>
+	<string>আইঅভ্রর</string>
 </dict>
 </plist>
