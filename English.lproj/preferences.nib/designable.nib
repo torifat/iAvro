@@ -126,6 +126,13 @@
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <binding destination="uta-3m-pmz" name="displayPatternValue1" keyPath="arrangedObjects.@count" id="1Xi-aV-07C">
+                            <dictionary key="options">
+                                <string key="NSDisplayPattern">%{value1}@ Items</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
                 </textField>
                 <searchField verticalHuggingPriority="750" id="wYR-3V-BaT">
                     <rect key="frame" x="20" y="284" width="410" height="22"/>
@@ -146,14 +153,14 @@
                         <rect key="frame" x="1" y="17" width="408" height="209"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="6cc-ai-4bu" id="J1h-Y9-3il">
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="flA-t0-btP" id="J1h-Y9-3il">
                                 <rect key="frame" x="0.0" y="0.0" width="408" height="209"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn width="200.81640625" minWidth="40" maxWidth="1000" id="Trk-HU-Hgf">
+                                    <tableColumn editable="NO" width="200.81640625" minWidth="40" maxWidth="1000" id="Trk-HU-Hgf">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Replace">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -173,7 +180,7 @@
                                             </binding>
                                         </connections>
                                     </tableColumn>
-                                    <tableColumn width="201" minWidth="40" maxWidth="1000" id="JtV-6O-XYL">
+                                    <tableColumn editable="NO" width="201" minWidth="40" maxWidth="1000" id="JtV-6O-XYL">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="With">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -202,31 +209,15 @@
                         <rect key="frame" x="1" y="119" width="223" height="15"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="qmn-E6-TJN">
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="qmn-E6-TJN">
                         <rect key="frame" x="224" y="17" width="15" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <tableHeaderView key="headerView" id="6cc-ai-4bu">
+                    <tableHeaderView key="headerView" id="flA-t0-btP">
                         <rect key="frame" x="0.0" y="0.0" width="408" height="17"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
-                <button verticalHuggingPriority="750" id="qbf-v5-b7P">
-                    <rect key="frame" x="20" y="19" width="26" height="23"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="GDg-WD-mGh">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                </button>
-                <button verticalHuggingPriority="750" id="Aag-RQ-xiS">
-                    <rect key="frame" x="45" y="19" width="26" height="23"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UhW-QK-5i1">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                </button>
             </subviews>
         </customView>
         <customView wantsLayer="YES" id="254" userLabel="About View">
@@ -279,7 +270,5 @@
         <image name="AutoCorrect" width="32" height="32"/>
         <image name="Credits" width="32" height="32"/>
         <image name="General" width="32" height="32"/>
-        <image name="NSAddTemplate" width="8" height="8"/>
-        <image name="NSRemoveTemplate" width="8" height="8"/>
     </resources>
 </document>

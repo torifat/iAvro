@@ -103,12 +103,12 @@
 }
 
 - (IBAction)changePredicate:(id)sender {
-//    NSString *searchTerm = [[sender stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//    NSPredicate *predicate = nil;
-//    if ([searchTerm length]) {
-//        predicate = [NSPredicate predicateWithFormat:@"(replace CONTAINS[c] %@) OR (with CONTAINS %@)", searchTerm, searchTerm];
-//    }
-//    [_autoCorrectController setFilterPredicate:predicate];
+    NSString *searchTerm = [[sender stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSPredicate *predicate = nil;
+    if ([searchTerm length]) {
+        predicate = [NSPredicate predicateWithFormat:@"(replace CONTAINS[c] %@) OR (with CONTAINS %@)", searchTerm, searchTerm];
+    }
+    [_autoCorrectController setFilterPredicate:predicate];
 }
 
 @end
