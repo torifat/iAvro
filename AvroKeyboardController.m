@@ -22,7 +22,7 @@
     self = [super initWithServer:server delegate:delegate client:inputClient];
     
 	if (self) {
-        _currentClient = inputClient;
+        _currentClient = [inputClient retain];
         _composedBuffer = [[NSMutableString alloc] initWithString:@""];
         _currentCandidates = [[NSMutableArray alloc] initWithCapacity:0];
         _prevSelected = -1;
@@ -37,6 +37,7 @@
     [_suffix release];
     [_currentCandidates release];
     [_composedBuffer release];
+    [_currentClient release];
 	[super dealloc];
 }
 
