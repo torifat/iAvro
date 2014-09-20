@@ -143,6 +143,10 @@
 	[self clearCompositionBuffer];
 	[_currentCandidates removeAllObjects];
     [self updateCandidatesPanel];
+    // Persist Data
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IncludeDictionary"]) {
+        [[CacheManager sharedInstance] persist];
+    }
 }
 
 - (id)composedString:(id)sender {
