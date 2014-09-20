@@ -97,7 +97,7 @@ static Suggestion* sharedInstance = nil;
                     [_suggestions removeObjectIdenticalTo:autoCorrect];
                 }
                 // Remove parserString if it is already in the dictionary
-                if ([_suggestions containsObject:paresedString] == YES) {
+                if ([dicList containsObject:paresedString] == YES) {
                     [_suggestions removeObjectIdenticalTo:paresedString];
                 }
                 // Sort dicList based on edit distance
