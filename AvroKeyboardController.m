@@ -68,7 +68,7 @@
                     [_currentCandidates replaceObjectAtIndex:i withObject:
                      [NSString stringWithFormat:@"%@%@%@", [self prefix], item, [self suffix]]];
                 }
-                // Emoticons                
+                // Emoticons
                 if ([_composedBuffer isEqualToString:[self term]] == NO && 
                     [[NSUserDefaults standardUserDefaults] boolForKey:@"IncludeDictionary"]) {
                     NSString* smily = [[AutoCorrect sharedInstance] find:_composedBuffer];
