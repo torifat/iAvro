@@ -36,6 +36,7 @@
     [AutoCorrect sharedInstance];
 }
 
+// Currently doesn't work
 - (void)applicationWillTerminate:(NSNotification *)notification {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IncludeDictionary"]) {
         [[CacheManager sharedInstance] persist];
