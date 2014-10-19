@@ -26,6 +26,7 @@
         _composedBuffer = [[NSMutableString alloc] initWithString:@""];
         _currentCandidates = [[NSMutableArray alloc] initWithCapacity:0];
         _prevSelected = -1;
+        _usedArrowKeys = false;
     }
 
 	return self;
@@ -136,6 +137,13 @@
 	[self clearCompositionBuffer];
 	[_currentCandidates removeAllObjects];
     [self updateCandidatesPanel];
+    
+    if (_usedArrowKeys) {
+        _usedArrowKeys = false;
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IncludeDictionary"]) {
+            [[CacheManager sharedInstance] persist];
+        }
+    }
 }
 
 - (void)commitComposition:(id)sender {
@@ -216,6 +224,18 @@
     }
 }
 
+- (void)moveUp:(id)sender {
+    if ([[Candidates sharedInstance] isVisible]) {
+        _usedArrowKeys = true;
+    }
+}
+
+- (void)moveDown:(id)sender {
+    if ([[Candidates sharedInstance] isVisible]) {
+        _usedArrowKeys = true;
+    }
+}
+
 - (BOOL)didCommandBySelector:(SEL)aSelector client:(id)sender {
     if ([self respondsToSelector:aSelector]) {
 		// The NSResponder methods like insertNewline: or deleteBackward: are
@@ -231,6 +251,10 @@
                 || aSelector == @selector(deleteBackward:)) {
                 [self performSelector:aSelector withObject:sender];
                 return YES;
+            } else if (aSelector == @selector(moveUp:)
+                || aSelector == @selector(moveDown:)) {
+                [self performSelector:aSelector withObject:sender];
+                return NO;
             }
         }
     }

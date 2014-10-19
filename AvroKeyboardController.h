@@ -18,6 +18,7 @@
     NSString*               _prefix;                // Converted Prefix
     NSString*               _term;                  // Original Non-Converted Term
     NSString*               _suffix;                // Converted Suffix
+    BOOL                    _usedArrowKeys;
 }
 
 @property (nonatomic, retain) NSString* prefix;
