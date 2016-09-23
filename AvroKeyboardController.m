@@ -100,7 +100,16 @@
         [[Candidates sharedInstance] updateCandidates];
         [[Candidates sharedInstance] show:kIMKLocateCandidatesBelowHint];
         if (_prevSelected > -1) {
-            [[Candidates sharedInstance] selectCandidate:_prevSelected];
+            // IMKCandidates:selectCandidate not working here in sierra
+            // Temporary workaounrd
+            for (int i = 0 ; i < _prevSelected; ++i) {
+                if ([[Candidates sharedInstance] panelType] == kIMKSingleColumnScrollingCandidatePanel) {
+                    [[Candidates sharedInstance] moveDown:self];
+                } else if ([[Candidates sharedInstance] panelType] == kIMKSingleRowSteppingCandidatePanel) {
+                    [[Candidates sharedInstance] moveRight:self];
+                }
+            }
+            // [[Candidates sharedInstance] selectCandidate:_prevSelected];
         }
     }
     else {
@@ -129,6 +138,7 @@
             }
         }
     }
+    _selectedCandidateIndex = [_currentCandidates indexOfObject:candidateString.string];
 }
 
 - (void)candidateSelected:(NSAttributedString*)candidateString {
@@ -190,7 +200,10 @@
     // Returning NO means the original key down will be passed on to the client.
     if ([string isEqualToString:@" "]) {
         if (_currentCandidates && [_currentCandidates count]) {
-            [self candidateSelected:[[Candidates sharedInstance] selectedCandidateString]];
+            // IMKCandidates:selectedCandidateString returns null for some reason, so null is commited when user presses enter.
+            // Temporary fix for macOS sierra, use our own _selectedCandidateIndex instead.
+            // TODO: Figure out why IMKCandidates:selectedCandidateString isn't working.
+            [self candidateSelected:_currentCandidates[_selectedCandidateIndex]];
         }
         return NO;
     }
@@ -263,7 +276,7 @@
 
 - (void)commitText:(NSString*)string {
     if (_currentCandidates) {
-        [self candidateSelected:[[Candidates sharedInstance] selectedCandidateString]];
+        [self candidateSelected:_currentCandidates[_selectedCandidateIndex]];
         [_currentClient insertText:string replacementRange:NSMakeRange(NSNotFound, 0)];
     }
     else {
