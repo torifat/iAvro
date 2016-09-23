@@ -100,8 +100,16 @@
         [[Candidates sharedInstance] updateCandidates];
         [[Candidates sharedInstance] show:kIMKLocateCandidatesBelowHint];
         if (_prevSelected > -1) {
-            // TODO: IMKCandidates:selectCandidate not working here in sierra
-            [[Candidates sharedInstance] selectCandidate:_prevSelected];
+            // IMKCandidates:selectCandidate not working here in sierra
+            // Temporary workaounrd
+            for (int i = 0 ; i < _prevSelected; ++i) {
+                if ([[Candidates sharedInstance] panelType] == kIMKSingleColumnScrollingCandidatePanel) {
+                    [[Candidates sharedInstance] moveDown:self];
+                } else if ([[Candidates sharedInstance] panelType] == kIMKSingleRowSteppingCandidatePanel) {
+                    [[Candidates sharedInstance] moveRight:self];
+                }
+            }
+            // [[Candidates sharedInstance] selectCandidate:_prevSelected];
         }
     }
     else {
