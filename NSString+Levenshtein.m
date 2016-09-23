@@ -29,8 +29,8 @@ int minimum(int a,int b,int c)
 	int i,j,k; // indexes
 	int cost, distance;
 	
-	int n = [self length];
-	int m = [string length];
+	int n = (int)[self length];
+	int m = (int)[string length];
 	
 	if( n!=0 && m!=0 ){
 		

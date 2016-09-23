@@ -13,7 +13,7 @@
 		NSString*           _number;
 		NSString*           _casesensitive;
 		NSArray*            _patterns;
-		int                 _maxPatternLength;
+		NSInteger           _maxPatternLength;
 }
 
 + (AvroParser *)sharedInstance;

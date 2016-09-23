@@ -93,19 +93,19 @@ static AvroParser* sharedInstance = nil;
     NSString * fixed = [self fix:string];
     NSMutableString* output = [[NSMutableString alloc] initWithCapacity:0];
 
-    int len = [fixed length], cur;
+    NSInteger len = [fixed length], cur;
     for(cur = 0; cur < len; ++cur) {
-        int start = cur, end;
+        NSInteger start = cur, end;
         BOOL matched = FALSE;
 
-        int chunkLen;
+        NSInteger chunkLen;
         for(chunkLen = _maxPatternLength; chunkLen > 0; --chunkLen) {
             end = start + chunkLen;
             if(end <= len) {
                 NSString* chunk = [fixed substringWithRange:NSMakeRange(start, chunkLen)];
 
                 // Binary Search
-                int left = 0, right = [_patterns count] - 1, mid;
+                NSInteger left = 0, right = [_patterns count] - 1, mid;
                 while(right >= left) {
                     mid = (right + left) / 2;
                     NSDictionary* pattern = [_patterns objectAtIndex:mid];
@@ -115,7 +115,7 @@ static AvroParser* sharedInstance = nil;
                         for(NSDictionary* rule in rules) {
 
                             BOOL replace = TRUE;
-                            int chk = 0;
+                            NSInteger chk = 0;
                             NSArray* matches = [rule objectForKey:@"matches"];
                             for(NSDictionary* match in matches) {
                                 NSString* value = [match objectForKey:@"value"];
@@ -191,7 +191,7 @@ static AvroParser* sharedInstance = nil;
                                 }
                                 // Exact
                                 else if([scope isEqualToString:@"exact"]) {
-                                    int s, e;
+                                    NSInteger s, e;
                                     if([type isEqualToString:@"suffix"]) {
                                         s = end;
                                         e = end + [value length];
@@ -201,7 +201,7 @@ static AvroParser* sharedInstance = nil;
                                         s = start - [value length];
                                         e = start;
                                     }
-                                    if(![self isExact:value heystack:fixed start:s end:e not:isNegative]) {
+                                    if(![self isExact:value heystack:fixed start:(int)s end:(int)e not:isNegative]) {
                                         replace = FALSE;
                                         break;
                                     }
@@ -248,41 +248,30 @@ static AvroParser* sharedInstance = nil;
     return output;
 }
 
-- (BOOL)isVowel:(unichar)c {
+- (BOOL)inString:(NSString*) str c:(unichar) c {
     // Making it lowercase for checking
     c = [self smallCap:c];
-    int i, len = [_vowel length];
+    NSInteger i, len = [str length];
     for (i = 0; i < len; ++i) {
-        if ([_vowel characterAtIndex:i] == c) {
+        if ([str characterAtIndex:i] == c) {
             return TRUE;
         }
     }
     return FALSE;
+
+}
+
+- (BOOL)isVowel:(unichar)c {
+    return [self inString:_vowel c:c];
 }
 
 - (BOOL)isConsonant:(unichar)c {
-    // Making it lowercase for checking
-    c = [self smallCap:c];
-    int i, len = [_consonant length];
-    for (i = 0; i < len; ++i) {
-        if ([_consonant characterAtIndex:i] == c) {
-            return TRUE;
-        }
-    }
-    return FALSE;
+    return [self inString:_consonant c:c];
     //return [consonant rangeOfString:c options:NSCaseInsensitiveSearch].location != NSNotFound;
 }
 
 - (BOOL)isNumber:(unichar)c {
-    // Making it lowercase for checking
-    c = [self smallCap:c];
-    int i, len = [_number length];
-    for (i = 0; i < len; ++i) {
-        if ([_number characterAtIndex:i] == c) {
-            return TRUE;
-        }
-    }
-    return FALSE;
+    return [self inString:_number c:c];
 }
 
 - (BOOL)isPunctuation:(unichar)c {
@@ -290,15 +279,7 @@ static AvroParser* sharedInstance = nil;
 }
 
 - (BOOL)isCaseSensitive:(unichar)c {
-    // Making it lowercase for checking
-    c = [self smallCap:c];
-    int i, len = [_casesensitive length];
-    for (i = 0; i < len; ++i) {
-        if ([_casesensitive characterAtIndex:i] == c) {
-            return TRUE;
-        }
-    }
-    return FALSE;
+    return [self inString:_casesensitive c:c];
 }
 
 - (BOOL)isExact:(NSString*) needle heystack:(NSString*)heystack start:(int)start end:(int)end not:(BOOL)not {
@@ -317,7 +298,7 @@ static AvroParser* sharedInstance = nil;
 
 - (NSString*)fix:(NSString *)string {
     NSMutableString* fixed = [[NSMutableString alloc] initWithCapacity:0];
-    int i, len = [string length];
+    NSInteger i, len = [string length];
     for (i = 0; i < len; ++i) {
         unichar c = [string characterAtIndex:i];
         if (![self isCaseSensitive:c]) {

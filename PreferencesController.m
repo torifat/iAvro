@@ -60,7 +60,7 @@
     return frame;
 }
 
-- (NSView*)viewForTag:(int)tag {
+- (NSView*)viewForTag:(NSInteger)tag {
     NSView* view = nil;
     switch (tag) {
         case 0:
@@ -84,7 +84,7 @@
 }
 
 - (IBAction)switchView:(id)sender {
-    int tag = [sender tag];
+    NSInteger tag = [sender tag];
     NSView* view = [self viewForTag:tag];
     NSView* previousView = [self viewForTag:_currentViewTag];
     _currentViewTag = tag;

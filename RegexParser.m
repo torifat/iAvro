@@ -92,19 +92,19 @@ static RegexParser* sharedInstance = nil;
     NSString* fixed = [self clean:string];
     NSMutableString* output = [[NSMutableString alloc] initWithCapacity:0];
     
-    int len = [fixed length], cur;
+    NSInteger len = [fixed length], cur;
     for(cur = 0; cur < len; ++cur) {
-        int start = cur, end;
+        NSInteger start = cur, end;
         BOOL matched = FALSE;
         
-        int chunkLen;
+        NSInteger chunkLen;
         for(chunkLen = _maxPatternLength; chunkLen > 0; --chunkLen) {
             end = start + chunkLen;
             if(end <= len) {
                 NSString* chunk = [fixed substringWithRange:NSMakeRange(start, chunkLen)];
                 
                 // Binary Search
-                int left = 0, right = [_patterns count] - 1, mid;
+                NSInteger left = 0, right = [_patterns count] - 1, mid;
                 while(right >= left) {
                     mid = (right + left) / 2;
                     NSDictionary* pattern = [_patterns objectAtIndex:mid];
@@ -114,7 +114,7 @@ static RegexParser* sharedInstance = nil;
                         for(NSDictionary* rule in rules) {
                             
                             BOOL replace = TRUE;
-                            int chk = 0;
+                            NSInteger chk = 0;
                             NSArray* matches = [rule objectForKey:@"matches"];
                             for(NSDictionary* match in matches) {
                                 NSString* value = [match objectForKey:@"value"];
@@ -175,7 +175,7 @@ static RegexParser* sharedInstance = nil;
                                 }
                                 // Exact
                                 else if([scope isEqualToString:@"exact"]) {
-                                    int s, e;
+                                    NSInteger s, e;
                                     if([type isEqualToString:@"suffix"]) {
                                         s = end;
                                         e = end + [value length];
@@ -185,7 +185,7 @@ static RegexParser* sharedInstance = nil;
                                         s = start - [value length];
                                         e = start;
                                     }
-                                    if(![self isExact:value heystack:fixed start:s end:e not:isNegative]) {
+                                    if(![self isExact:value heystack:fixed start:(int)s end:(int)e not:isNegative]) {
                                         replace = FALSE;
                                         break;
                                     }
@@ -237,7 +237,7 @@ static RegexParser* sharedInstance = nil;
 - (BOOL)isVowel:(unichar)c {
     // Making it lowercase for checking
     c = [self smallCap:c];
-    int i, len = [_vowel length];
+    NSInteger i, len = [_vowel length];
     for (i = 0; i < len; ++i) {
         if ([_vowel characterAtIndex:i] == c) {
             return TRUE;
@@ -249,7 +249,7 @@ static RegexParser* sharedInstance = nil;
 - (BOOL)isConsonant:(unichar)c {
     // Making it lowercase for checking
     c = [self smallCap:c];
-    int i, len = [_consonant length];
+    NSInteger i, len = [_consonant length];
     for (i = 0; i < len; ++i) {
         if ([_consonant characterAtIndex:i] == c) {
             return TRUE;
@@ -265,7 +265,7 @@ static RegexParser* sharedInstance = nil;
 - (BOOL)isCaseSensitive:(unichar)c {
     // Making it lowercase for checking
     c = [self smallCap:c];
-    int i, len = [_casesensitive length];
+    NSInteger i, len = [_casesensitive length];
     for (i = 0; i < len; ++i) {
         if ([_casesensitive characterAtIndex:i] == c) {
             return TRUE;
@@ -289,7 +289,7 @@ static RegexParser* sharedInstance = nil;
 
 - (NSString*)clean:(NSString *)string {
     NSMutableString* fixed = [[NSMutableString alloc] initWithCapacity:0];
-    int i, len = [string length];
+    NSInteger i, len = [string length];
     for (i = 0; i < len; ++i) {
         unichar c = [string characterAtIndex:i];
         if (![self isCaseSensitive:c]) {

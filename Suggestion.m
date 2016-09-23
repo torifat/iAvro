@@ -112,7 +112,7 @@ static Suggestion* sharedInstance = nil;
         }
         
         // Suggestions with Suffix
-        int i;
+        NSInteger i;
         BOOL alreadySelected = FALSE;
         [[CacheManager sharedInstance] removeAllBase];
         for (i = [term length]-1; i > 0; --i) {
@@ -134,7 +134,7 @@ static Suggestion* sharedInstance = nil;
                         }
                         NSString* word;
                         // Again saving humanity cause I'm Superman, no I'm not drunk or on weed :D 
-                        int cutPos = [item length] - 1;
+                        NSInteger cutPos = [item length] - 1;
                         
                         NSString* itemRMC = [item substringFromIndex:cutPos];   // RMC is Right Most Character
                         NSString* suffixLMC = [suffix substringToIndex:1];      // LMC is Left Most Character

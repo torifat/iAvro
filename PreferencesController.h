@@ -15,7 +15,7 @@
     IBOutlet NSTextView*                _aboutContent;
     IBOutlet NSArrayController*         _autoCorrectController;
 
-    int                                 _currentViewTag;
+    NSInteger                           _currentViewTag;
     NSMutableArray*                     _autoCorrectItemsArray;
 }
 

@@ -49,4 +49,10 @@ static NSInteger const  iAVRO_INVALID_WITH_CODE = -2;
     return YES;
 }
 
+-(void)dealloc {
+    [replace release];
+    [with release];
+    [super dealloc];
+}
+
 @end
