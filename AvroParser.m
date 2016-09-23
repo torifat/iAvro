@@ -63,7 +63,7 @@ static AvroParser* sharedInstance = nil;
             } else {
                 _vowel = [[NSString alloc] initWithString:[jsonArray objectForKey:@"vowel"]];
                 _consonant = [[NSString alloc] initWithString:[jsonArray objectForKey:@"consonant"]];
-								_number = = [[NSString alloc] initWithString:[jsonArray objectForKey:@"number"]];
+                _number = [[NSString alloc] initWithString:[jsonArray objectForKey:@"number"]];
                 _casesensitive = [[NSString alloc] initWithString:[jsonArray objectForKey:@"casesensitive"]];
                 _patterns = [[NSArray alloc] initWithArray:[jsonArray objectForKey:@"patterns"]];
                 _maxPatternLength = [[[_patterns objectAtIndex:0] objectForKey:@"find"] length];
@@ -174,7 +174,7 @@ static AvroParser* sharedInstance = nil;
                                         break;
                                     }
                                 }
-																// Number
+								// Number
                                 else if([scope isEqualToString:@"number"]) {
                                     if(
                                        ! (

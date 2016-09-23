@@ -92,7 +92,7 @@
     
     [NSAnimationContext beginGrouping];
     
-    if ([[NSApp currentEvent] modifierFlags] & NSShiftKeyMask) {
+    if ([[NSApp currentEvent] modifierFlags] & NSEventModifierFlagShift) {
         [[NSAnimationContext currentContext] setDuration:1.0];
     }
     

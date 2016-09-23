@@ -6,6 +6,7 @@
 //
 
 #import "AvroKeyboardController.h"
+#import "MainMenuAppDelegate.h"
 #import "Suggestion.h"
 #import "Candidates.h"
 #import "CacheManager.h"
@@ -89,12 +90,6 @@
 - (void)updateCandidatesPanel {
     if (_currentCandidates && [_currentCandidates count] > 0) {
         NSUserDefaults *defaultsDictionary = [NSUserDefaults standardUserDefaults];
-        
-        // NSString *candidateFontName = [defaultsDictionary objectForKey:@"candidateFontName"];
-        // float candidateFontSize = [[defaultsDictionary objectForKey:@"candidateFontSize"] floatValue];
-        
-        // NSFont *candidateFont = [NSFont fontWithName:candidateFontName size:candidateFontSize];
-        // [[Candidates sharedInstance] setAttributes:[NSDictionary dictionaryWithObject:candidateFont forKey:NSFontAttributeName]];
         
         [[Candidates sharedInstance] setPanelType:[defaultsDictionary integerForKey:@"CandidatePanelType"]];
         [[Candidates sharedInstance] updateCandidates];
@@ -285,7 +280,7 @@
 }
 
 - (NSMenu*)menu {
-    return [[NSApp delegate] menu];
+    return [(MainMenuAppDelegate *)[NSApp delegate] menu];
 }
 
 @end

@@ -33,9 +33,20 @@ int main(int argc, char *argv[]) {
 	[Candidates allocateSharedInstanceWithServer:server];
     
     //load the bundle explicitly because in this case the input method is a background only application 
-	[NSBundle loadNibNamed:@"MainMenu" owner:[NSApplication sharedApplication]];
-	
-	//finally run everything
+    if ([[NSBundle mainBundle] respondsToSelector:@selector(loadNibNamed:owner:topLevelObjects:)]) {
+        // We're running on Mountain Lion or higher
+        [[NSBundle mainBundle] loadNibNamed:@"MainMenu"
+                                      owner:[NSApplication sharedApplication]
+                            topLevelObjects:nil];
+    } else {
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        [NSBundle loadNibNamed:@"MainMenu"
+                         owner:[NSApplication sharedApplication]];
+        #pragma clang diagnostic pop
+    }
+
+    //finally run everything
 	[[NSApplication sharedApplication] run];
 	
     [Candidates deallocateSharedInstance];
