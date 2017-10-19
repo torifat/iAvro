@@ -280,4 +280,12 @@
     return [(MainMenuAppDelegate *)[NSApp delegate] menu];
 }
 
+- (void)showPreferences:(id)sender {
+    NSWindow *pw = [[[(MainMenuAppDelegate *)[NSApp delegate] imPref] windowController] window];
+
+    [pw setHidesOnDeactivate:NO];
+    [pw setLevel:NSModalPanelWindowLevel];
+    [pw makeKeyAndOrderFront:self];
+}
+
 @end

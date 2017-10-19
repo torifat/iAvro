@@ -14,6 +14,8 @@
 
 @implementation MainMenuAppDelegate
 
+@synthesize imPref;
+
 //this method is added so that our controllers can access the shared NSMenu.
 -(NSMenu*)menu {
 	return _menu;
