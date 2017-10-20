@@ -10,7 +10,6 @@
 #import "CacheManager.h"
 #import "Database.h"
 #import "RegexParser.h"
-#import "Candidates.h"
 
 @implementation MainMenuAppDelegate
 
@@ -37,12 +36,6 @@
         [CacheManager sharedInstance];
     }
     [AutoCorrect sharedInstance];
-    [self configureCandidate];
-}
-
--(void)configureCandidate {
-    NSUserDefaults *defaultsDictionary = [NSUserDefaults standardUserDefaults];
-    [[Candidates sharedInstance] setPanelType:[defaultsDictionary integerForKey:@"CandidatePanelType"]];
 }
 
 // Currently doesn't work

@@ -89,6 +89,9 @@
 
 - (void)updateCandidatesPanel {
     if (_currentCandidates && [_currentCandidates count] > 0) {
+        NSUserDefaults *defaultsDictionary = [NSUserDefaults standardUserDefaults];
+        
+        [[Candidates sharedInstance] setPanelType:[defaultsDictionary integerForKey:@"CandidatePanelType"]];
         [[Candidates sharedInstance] updateCandidates];
         [[Candidates sharedInstance] show:kIMKLocateCandidatesBelowHint];
         if (_prevSelected > -1) {
