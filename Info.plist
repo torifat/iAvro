@@ -39,6 +39,6 @@
 		<string>Beng</string>
 	</array>
 	<key>tsInputMethodIconFileKey</key>
-	<string>AppIcon</string>
+	<string>MenuIcon</string>
 </dict>
 </plist>
