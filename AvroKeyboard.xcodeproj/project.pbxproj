@@ -26,12 +26,13 @@
 		35895BF01597639A00F2A3ED /* AutoCorrect.m in Sources */ = {isa = PBXBuildFile; fileRef = 35895BEF1597639A00F2A3ED /* AutoCorrect.m */; };
 		35895BFE1597706800F2A3ED /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 35895BFA1597706800F2A3ED /* MainMenu.nib */; };
 		359C1C70159286750080E2FD /* Candidates.m in Sources */ = {isa = PBXBuildFile; fileRef = 359C1C6F159286750080E2FD /* Candidates.m */; };
-		35A273011847E28900689B17 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35A273001847E28900689B17 /* Images.xcassets */; };
 		35B007CB1597BF9A000CE409 /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B007CA1597BF9A000CE409 /* PreferencesController.m */; };
 		35B6EE6D15A0C4F2004C7C9B /* NSString+Levenshtein.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B6EE6C15A0C4F2004C7C9B /* NSString+Levenshtein.m */; };
 		35DBC86B1597A15B00B9772E /* MainMenuAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 35DBC86A1597A15B00B9772E /* MainMenuAppDelegate.m */; };
 		35F4DE73159404A3001EAC81 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 35F4DE72159404A3001EAC81 /* data.json */; };
 		35F4DE7F1594096B001EAC81 /* AvroParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F4DE7E1594096B001EAC81 /* AvroParser.m */; };
+		832F563D1F993C5800432D7A /* IMPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 832F563C1F993C5800432D7A /* IMPreferences.m */; };
+		832F56411F994B6500432D7A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 832F56401F994B6500432D7A /* Images.xcassets */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -73,7 +74,6 @@
 		35895BFB1597706800F2A3ED /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		359C1C6E159286750080E2FD /* Candidates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Candidates.h; sourceTree = "<group>"; };
 		359C1C6F159286750080E2FD /* Candidates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Candidates.m; sourceTree = "<group>"; };
-		35A273001847E28900689B17 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Avro Keyboard/Images.xcassets"; sourceTree = "<group>"; };
 		35B007C91597BF9A000CE409 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
 		35B007CA1597BF9A000CE409 /* PreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesController.m; sourceTree = "<group>"; };
 		35B6EE6B15A0C4F2004C7C9B /* NSString+Levenshtein.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Levenshtein.h"; sourceTree = "<group>"; };
@@ -84,6 +84,9 @@
 		35F4DE7D1594096B001EAC81 /* AvroParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvroParser.h; sourceTree = "<group>"; };
 		35F4DE7E1594096B001EAC81 /* AvroParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvroParser.m; sourceTree = "<group>"; };
 		37361BFC8512F1D38B7962DD /* libPods-Avro Keyboard.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Avro Keyboard.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		832F563B1F993C5800432D7A /* IMPreferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMPreferences.h; sourceTree = "<group>"; };
+		832F563C1F993C5800432D7A /* IMPreferences.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMPreferences.m; sourceTree = "<group>"; };
+		832F56401F994B6500432D7A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Avro Keyboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Avro Keyboard.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BE514399134C547D83E8518 /* Pods-Avro Keyboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Avro Keyboard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Avro Keyboard/Pods-Avro Keyboard.debug.xcconfig"; sourceTree = "<group>"; };
@@ -118,6 +121,8 @@
 				35B6EE6915A0C4AD004C7C9B /* Libraries */,
 				35DBC8691597A15B00B9772E /* MainMenuAppDelegate.h */,
 				35DBC86A1597A15B00B9772E /* MainMenuAppDelegate.m */,
+				832F563B1F993C5800432D7A /* IMPreferences.h */,
+				832F563C1F993C5800432D7A /* IMPreferences.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -173,7 +178,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				35A273001847E28900689B17 /* Images.xcassets */,
+				832F56401F994B6500432D7A /* Images.xcassets */,
 				356B186115A4434D00091215 /* Icons */,
 				3515102C184B99AE00D5059A /* autodict.plist */,
 				35F4DE72159404A3001EAC81 /* data.json */,
@@ -312,8 +317,7 @@
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					8D1107260486CEB800E47090 = {
-						DevelopmentTeam = 8FVM4CE4C6;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -342,13 +346,13 @@
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				35F4DE73159404A3001EAC81 /* data.json in Resources */,
+				832F56411F994B6500432D7A /* Images.xcassets in Resources */,
 				35895BFE1597706800F2A3ED /* MainMenu.nib in Resources */,
 				3512ED5A159785400085E81E /* preferences.nib in Resources */,
 				3515102D184B99AE00D5059A /* autodict.plist in Resources */,
 				350CECE5159C45790009F0FE /* database.db3 in Resources */,
 				350CECE9159C45790009F0FE /* regex.json in Resources */,
 				3578E8FD15A26EC100C1FB8E /* Credits.rtfd in Resources */,
-				35A273011847E28900689B17 /* Images.xcassets in Resources */,
 				356B186915A445DA00091215 /* AutoCorrect.png in Resources */,
 				356B186D15A4499B00091215 /* Credits.png in Resources */,
 				356B186E15A4499B00091215 /* General.png in Resources */,
@@ -380,13 +384,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Avro Keyboard-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F814C1255182EAD15FF17547 /* [CP] Copy Pods Resources */ = {
@@ -411,6 +418,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				832F563D1F993C5800432D7A /* IMPreferences.m in Sources */,
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				E93074E20A5C2F1200470842 /* AvroKeyboardController.m in Sources */,
 				359C1C70159286750080E2FD /* Candidates.m in Sources */,
@@ -462,10 +470,11 @@
 			baseConfigurationReference = 9BE514399134C547D83E8518 /* Pods-Avro Keyboard.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Developer ID Application: Mehdi Hasan Hasan (8FVM4CE4C6)";
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = 8FVM4CE4C6;
+				DEVELOPMENT_TEAM = "";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -475,6 +484,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.omicronlab.inputmethod.AvroKeyboard;
 				PRODUCT_NAME = "Avro Keyboard";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};
@@ -485,9 +495,10 @@
 			baseConfigurationReference = F63F96C5EF8B57064296B7BD /* Pods-Avro Keyboard.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Developer ID Application: Mehdi Hasan Hasan (8FVM4CE4C6)";
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 8FVM4CE4C6;
+				DEVELOPMENT_TEAM = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -496,6 +507,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.omicronlab.inputmethod.AvroKeyboard;
 				PRODUCT_NAME = "Avro Keyboard";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

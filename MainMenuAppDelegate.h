@@ -5,11 +5,13 @@
 //  Copyright (c) 2012 OmicronLab. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <IMPreferences.h>
 
 @interface MainMenuAppDelegate : NSObject <NSApplicationDelegate> {
 	IBOutlet NSMenu* _menu;
 }
+
+@property(retain) IMPreferences* imPref;
 
 -(NSMenu*)menu;
 

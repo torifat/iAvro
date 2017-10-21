@@ -10,9 +10,10 @@
 #import "CacheManager.h"
 #import "Database.h"
 #import "RegexParser.h"
-#import "Candidates.h"
 
 @implementation MainMenuAppDelegate
+
+@synthesize imPref;
 
 //this method is added so that our controllers can access the shared NSMenu.
 -(NSMenu*)menu {
@@ -35,12 +36,6 @@
         [CacheManager sharedInstance];
     }
     [AutoCorrect sharedInstance];
-    [self configureCandidate];
-}
-
--(void)configureCandidate {
-    NSUserDefaults *defaultsDictionary = [NSUserDefaults standardUserDefaults];
-    [[Candidates sharedInstance] setPanelType:[defaultsDictionary integerForKey:@"CandidatePanelType"]];
 }
 
 // Currently doesn't work

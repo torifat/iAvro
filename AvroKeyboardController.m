@@ -89,6 +89,9 @@
 
 - (void)updateCandidatesPanel {
     if (_currentCandidates && [_currentCandidates count] > 0) {
+        NSUserDefaults *defaultsDictionary = [NSUserDefaults standardUserDefaults];
+        
+        [[Candidates sharedInstance] setPanelType:[defaultsDictionary integerForKey:@"CandidatePanelType"]];
         [[Candidates sharedInstance] updateCandidates];
         [[Candidates sharedInstance] show:kIMKLocateCandidatesBelowHint];
         if (_prevSelected > -1) {
@@ -278,6 +281,14 @@
 
 - (NSMenu*)menu {
     return [(MainMenuAppDelegate *)[NSApp delegate] menu];
+}
+
+- (void)showPreferences:(id)sender {
+    NSWindow *pw = [[[(MainMenuAppDelegate *)[NSApp delegate] imPref] windowController] window];
+
+    [pw setHidesOnDeactivate:NO];
+    [pw setLevel:NSModalPanelWindowLevel];
+    [pw makeKeyAndOrderFront:self];
 }
 
 @end
