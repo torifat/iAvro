@@ -238,12 +238,28 @@
 - (void)moveUp:(id)sender {
     if ([[Candidates sharedInstance] isVisible]) {
         _usedArrowKeys = true;
+        [[Candidates sharedInstance] moveUp:self];
     }
 }
 
 - (void)moveDown:(id)sender {
     if ([[Candidates sharedInstance] isVisible]) {
         _usedArrowKeys = true;
+        [[Candidates sharedInstance] moveDown:self];
+    }
+}
+
+- (void)moveLeft:(id)sender {
+    if ([[Candidates sharedInstance] isVisible]) {
+        _usedArrowKeys = true;
+        [[Candidates sharedInstance] moveLeft:self];
+    }
+}
+
+- (void)moveRight:(id)sender {
+    if ([[Candidates sharedInstance] isVisible]) {
+        _usedArrowKeys = true;
+        [[Candidates sharedInstance] moveRight:self];
     }
 }
 
@@ -259,13 +275,13 @@
 		if (_composedBuffer && [_composedBuffer length] > 0) {
             if (aSelector == @selector(insertTab:) 
                 || aSelector == @selector(insertNewline:)
-                || aSelector == @selector(deleteBackward:)) {
-                [self performSelector:aSelector withObject:sender];
-                return YES;
-            } else if (aSelector == @selector(moveUp:)
+                || aSelector == @selector(deleteBackward:)
+                || aSelector == @selector(moveLeft:)
+                || aSelector == @selector(moveRight:)
+                || aSelector == @selector(moveUp:)
                 || aSelector == @selector(moveDown:)) {
                 [self performSelector:aSelector withObject:sender];
-                return NO;
+                return YES;
             }
         }
     }
