@@ -91,7 +91,10 @@
     if (_currentCandidates && [_currentCandidates count] > 0) {
         NSUserDefaults *defaultsDictionary = [NSUserDefaults standardUserDefaults];
         
-        [[Candidates sharedInstance] setPanelType:[defaultsDictionary integerForKey:@"CandidatePanelType"]];
+        // delete and init IMKCandidates instance because setPanelType doesn't work. panelType during init is permament in macos mojave.
+        if ([[Candidates sharedInstance] panelType] != [defaultsDictionary integerForKey:@"CandidatePanelType"]) {
+            [Candidates reallocate];
+        }
         [[Candidates sharedInstance] updateCandidates];
         [[Candidates sharedInstance] show:kIMKLocateCandidatesBelowHint];
         if (_prevSelected > -1) {
