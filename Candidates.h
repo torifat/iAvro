@@ -12,6 +12,7 @@
 
 + (void)allocateSharedInstanceWithServer:(IMKServer *)server;
 + (void)deallocateSharedInstance;
++ (void)reallocate;
 + (Candidates *)sharedInstance;
 
 @end
