@@ -1,7 +1,7 @@
 PODS:
-  - FMDB (2.6.2):
-    - FMDB/standard (= 2.6.2)
-  - FMDB/standard (2.6.2)
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
   - RegexKitLite (4.0)
 
 DEPENDENCIES:
@@ -14,7 +14,7 @@ SPEC REPOS:
     - RegexKitLite
 
 SPEC CHECKSUMS:
-  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   RegexKitLite: c0e4c12e6e7de0769f3a3ed679f0f61604170661
 
 PODFILE CHECKSUM: 5acf89e667c8a2413ccf87dcbc6c7740d01c8708
