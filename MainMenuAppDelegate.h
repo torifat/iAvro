@@ -5,7 +5,7 @@
 //  Copyright (c) 2012 OmicronLab. All rights reserved.
 //
 
-#import <IMPreferences.h>
+#import "IMPreferences.h"
 
 @interface MainMenuAppDelegate : NSObject <NSApplicationDelegate> {
 	IBOutlet NSMenu* _menu;
