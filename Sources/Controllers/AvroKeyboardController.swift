@@ -125,6 +125,7 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
     }
 
     @objc override func candidateSelectionChanged(_ candidateString: NSAttributedString!) {
+        guard let candidateString else { return }
         if UserDefaults.standard.bool(forKey: "IncludeDictionary") {
             if !termStr.isEmpty {
                 let isFirst = candidateString.string == currentCandidates.first
@@ -152,6 +153,7 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
     }
 
     @objc override func candidateSelected(_ candidateString: NSAttributedString!) {
+        guard let candidateString else { return }
         currentClient?.insertText(candidateString.string, replacementRange: NSRange(location: NSNotFound, length: 0))
 
         clearCompositionBuffer()
