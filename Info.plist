@@ -31,7 +31,7 @@
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSSupportsSuddenTermination</key>
-	<true/>
+	<false/>
 	<key>TISIntendedLanguage</key>
 	<string>bn</string>
 	<key>tsInputMethodCharacterRepertoireKey</key>

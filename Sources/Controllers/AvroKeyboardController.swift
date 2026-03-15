@@ -158,11 +158,9 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
         currentCandidates.removeAll()
         updateCandidatesPanel()
 
-        if usedArrowKeys {
-            usedArrowKeys = false
-            if UserDefaults.standard.bool(forKey: "IncludeDictionary") {
-                CacheManager.shared.persist()
-            }
+        usedArrowKeys = false
+        if UserDefaults.standard.bool(forKey: "IncludeDictionary") {
+            CacheManager.shared.persist()
         }
     }
 
