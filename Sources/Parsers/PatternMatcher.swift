@@ -25,18 +25,32 @@ func loadPatterns(from resource: String) -> (vowel: String, consonant: String, c
         fatalError("Failed to load \(resource).json")
     }
 
-    let vowel = json["vowel"] as! String
-    let consonant = json["consonant"] as! String
-    let caseSensitive = json["casesensitive"] as! String
+    guard let vowel = json["vowel"] as? String else {
+        fatalError("\(resource).json: missing or invalid 'vowel' key")
+    }
+    guard let consonant = json["consonant"] as? String else {
+        fatalError("\(resource).json: missing or invalid 'consonant' key")
+    }
+    guard let caseSensitive = json["casesensitive"] as? String else {
+        fatalError("\(resource).json: missing or invalid 'casesensitive' key")
+    }
     let number = json["number"] as? String
-    let rawPatterns = json["patterns"] as! [[String: Any]]
+    guard let rawPatterns = json["patterns"] as? [[String: Any]] else {
+        fatalError("\(resource).json: missing or invalid 'patterns' key")
+    }
 
     let patterns = rawPatterns.map { dict -> Pattern in
-        let find = dict["find"] as! String
-        let replace = dict["replace"] as! String
+        guard let find = dict["find"] as? String else {
+            fatalError("\(resource).json: pattern missing 'find' key")
+        }
+        guard let replace = dict["replace"] as? String else {
+            fatalError("\(resource).json: pattern missing 'replace' key")
+        }
         let rawRules = dict["rules"] as? [[String: Any]] ?? []
         let rules = rawRules.map { ruleDict -> Rule in
-            let ruleReplace = ruleDict["replace"] as! String
+            guard let ruleReplace = ruleDict["replace"] as? String else {
+                fatalError("\(resource).json: rule missing 'replace' key")
+            }
             let rawMatches = ruleDict["matches"] as? [[String: Any]] ?? []
             let matches = rawMatches.map { matchDict -> Match in
                 Match(

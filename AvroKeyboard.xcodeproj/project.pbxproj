@@ -44,6 +44,7 @@
 		BB00000100000001CCDD0040 /* SuggestionEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000100000001CCDD0041 /* SuggestionEngineTests.swift */; };
 		BB00000100000001CCDD0050 /* CacheManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000100000001CCDD0051 /* CacheManagerTests.swift */; };
 		BB00000100000001CCDD0060 /* DatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000100000001CCDD0061 /* DatabaseTests.swift */; };
+		BB00000100000001CCDD0070 /* PatternMatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000100000001CCDD0071 /* PatternMatcherTests.swift */; };
 		E93074B70A5C264700470842 /* InputMethodKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E93074B60A5C264700470842 /* InputMethodKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -99,6 +100,7 @@
 		BB00000100000001CCDD0041 /* SuggestionEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionEngineTests.swift; sourceTree = "<group>"; };
 		BB00000100000001CCDD0051 /* CacheManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManagerTests.swift; sourceTree = "<group>"; };
 		BB00000100000001CCDD0061 /* DatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseTests.swift; sourceTree = "<group>"; };
+		BB00000100000001CCDD0071 /* PatternMatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatternMatcherTests.swift; sourceTree = "<group>"; };
 		BB00000100000001CCDD0004 /* AvroKeyboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AvroKeyboardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E93074B60A5C264700470842 /* InputMethodKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InputMethodKit.framework; path = /System/Library/Frameworks/InputMethodKit.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -266,6 +268,7 @@
 				BB00000100000001CCDD0041 /* SuggestionEngineTests.swift */,
 				BB00000100000001CCDD0051 /* CacheManagerTests.swift */,
 				BB00000100000001CCDD0061 /* DatabaseTests.swift */,
+				BB00000100000001CCDD0071 /* PatternMatcherTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 				BB00000100000001CCDD0040 /* SuggestionEngineTests.swift in Sources */,
 				BB00000100000001CCDD0050 /* CacheManagerTests.swift in Sources */,
 				BB00000100000001CCDD0060 /* DatabaseTests.swift in Sources */,
+				BB00000100000001CCDD0070 /* PatternMatcherTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
