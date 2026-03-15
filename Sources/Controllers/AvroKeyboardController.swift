@@ -167,6 +167,8 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
     }
 
     @objc override func commitComposition(_ sender: Any!) {
+        guard !composedBuffer.isEmpty else { return }
+
         (sender as? IMKTextInput)?.insertText(composedBuffer, replacementRange: NSRange(location: NSNotFound, length: 0))
 
         clearCompositionBuffer()
