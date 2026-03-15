@@ -88,7 +88,7 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
     internal override func updateComposition() {
         currentClient?.setMarkedText(
             composedBuffer,
-            selectionRange: NSRange(location: composedBuffer.count, length: 0),
+            selectionRange: NSRange(location: composedBuffer.utf16.count, length: 0),
             replacementRange: NSRange(location: NSNotFound, length: NSNotFound)
         )
     }
@@ -129,8 +129,8 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
             if !termStr.isEmpty {
                 let isFirst = candidateString.string == currentCandidates.first
                 if !(isFirst && prevSelected == -1) {
-                    let prefLen = prefixStr.count
-                    let sufLen = suffixStr.count
+                    let prefLen = (prefixStr as NSString).length
+                    let sufLen = (suffixStr as NSString).length
                     let range = NSRange(
                         location: prefLen,
                         length: candidateString.length - (prefLen + sufLen)

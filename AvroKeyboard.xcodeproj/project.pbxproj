@@ -38,6 +38,7 @@
 		AA00000100000001AABB000E /* AvroKeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000200000001AABB000E /* AvroKeyboardController.swift */; };
 		AA00000100000001AABB000F /* PreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000200000001AABB000F /* PreferencesController.swift */; };
 		BB00000100000001CCDD0002 /* LevenshteinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000100000001CCDD0001 /* LevenshteinTests.swift */; };
+		BB00000100000001CCDD0010 /* UTF16RangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000100000001CCDD0011 /* UTF16RangeTests.swift */; };
 		E93074B70A5C264700470842 /* InputMethodKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E93074B60A5C264700470842 /* InputMethodKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +88,7 @@
 		AA00000200000001AABB000E /* AvroKeyboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvroKeyboardController.swift; sourceTree = "<group>"; };
 		AA00000200000001AABB000F /* PreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesController.swift; sourceTree = "<group>"; };
 		BB00000100000001CCDD0001 /* LevenshteinTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevenshteinTests.swift; sourceTree = "<group>"; };
+		BB00000100000001CCDD0011 /* UTF16RangeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UTF16RangeTests.swift; sourceTree = "<group>"; };
 		BB00000100000001CCDD0004 /* AvroKeyboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AvroKeyboardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E93074B60A5C264700470842 /* InputMethodKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InputMethodKit.framework; path = /System/Library/Frameworks/InputMethodKit.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -248,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				BB00000100000001CCDD0001 /* LevenshteinTests.swift */,
+				BB00000100000001CCDD0011 /* UTF16RangeTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -380,6 +383,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB00000100000001CCDD0002 /* LevenshteinTests.swift in Sources */,
+				BB00000100000001CCDD0010 /* UTF16RangeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
