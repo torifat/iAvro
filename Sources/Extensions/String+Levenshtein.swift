@@ -5,7 +5,7 @@ extension String {
         let n = self.count
         let m = other.count
 
-        guard n != 0, m != 0 else { return -1 }
+        guard n != 0, m != 0 else { return max(n, m) }
 
         let selfChars = Array(self.unicodeScalars)
         let otherChars = Array(other.unicodeScalars)

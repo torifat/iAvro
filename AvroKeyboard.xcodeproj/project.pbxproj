@@ -37,8 +37,19 @@
 		AA00000100000001AABB000D /* CandidatesPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000200000001AABB000D /* CandidatesPanel.swift */; };
 		AA00000100000001AABB000E /* AvroKeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000200000001AABB000E /* AvroKeyboardController.swift */; };
 		AA00000100000001AABB000F /* PreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000200000001AABB000F /* PreferencesController.swift */; };
+		BB00000100000001CCDD0002 /* LevenshteinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000100000001CCDD0001 /* LevenshteinTests.swift */; };
 		E93074B70A5C264700470842 /* InputMethodKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E93074B60A5C264700470842 /* InputMethodKit.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BB00000100000001CCDD0008 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1107260486CEB800E47090;
+			remoteInfo = "Avro Keyboard";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -75,6 +86,8 @@
 		AA00000200000001AABB000D /* CandidatesPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidatesPanel.swift; sourceTree = "<group>"; };
 		AA00000200000001AABB000E /* AvroKeyboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvroKeyboardController.swift; sourceTree = "<group>"; };
 		AA00000200000001AABB000F /* PreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesController.swift; sourceTree = "<group>"; };
+		BB00000100000001CCDD0001 /* LevenshteinTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevenshteinTests.swift; sourceTree = "<group>"; };
+		BB00000100000001CCDD0004 /* AvroKeyboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AvroKeyboardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E93074B60A5C264700470842 /* InputMethodKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InputMethodKit.framework; path = /System/Library/Frameworks/InputMethodKit.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -89,6 +102,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BB00000100000001CCDD0005 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -96,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				8D1107320486CEB800E47090 /* Avro Keyboard.app */,
+				BB00000100000001CCDD0004 /* AvroKeyboardTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -104,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				AA00000300000001AABB0001 /* Sources */,
+				BB00000100000001CCDD0003 /* Tests */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -222,6 +244,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		BB00000100000001CCDD0003 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				BB00000100000001CCDD0001 /* LevenshteinTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -243,6 +273,23 @@
 			productReference = 8D1107320486CEB800E47090 /* Avro Keyboard.app */;
 			productType = "com.apple.product-type.application";
 		};
+		BB00000100000001CCDD0007 /* AvroKeyboardTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BB00000100000001CCDD000C /* Build configuration list for PBXNativeTarget "AvroKeyboardTests" */;
+			buildPhases = (
+				BB00000100000001CCDD0006 /* Sources */,
+				BB00000100000001CCDD0005 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BB00000100000001CCDD0009 /* PBXTargetDependency */,
+			);
+			name = AvroKeyboardTests;
+			productName = AvroKeyboardTests;
+			productReference = BB00000100000001CCDD0004 /* AvroKeyboardTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -256,6 +303,10 @@
 				TargetAttributes = {
 					8D1107260486CEB800E47090 = {
 						LastSwiftMigration = 1600;
+					};
+					BB00000100000001CCDD0007 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 8D1107260486CEB800E47090;
 					};
 				};
 			};
@@ -273,6 +324,7 @@
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* Avro Keyboard */,
+				BB00000100000001CCDD0007 /* AvroKeyboardTests */,
 			);
 		};
 /* End PBXProject section */
@@ -323,7 +375,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BB00000100000001CCDD0006 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB00000100000001CCDD0002 /* LevenshteinTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BB00000100000001CCDD0009 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D1107260486CEB800E47090 /* Avro Keyboard */;
+			targetProxy = BB00000100000001CCDD0008 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
@@ -353,6 +421,38 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		BB00000100000001CCDD000A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 22LN73JVY9;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.omicronlab.AvroKeyboardTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Avro Keyboard.app/Contents/MacOS/Avro Keyboard";
+			};
+			name = Debug;
+		};
+		BB00000100000001CCDD000B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 22LN73JVY9;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.omicronlab.AvroKeyboardTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Avro Keyboard.app/Contents/MacOS/Avro Keyboard";
+			};
+			name = Release;
+		};
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -494,6 +594,15 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BB00000100000001CCDD000C /* Build configuration list for PBXNativeTarget "AvroKeyboardTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB00000100000001CCDD000A /* Debug */,
+				BB00000100000001CCDD000B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
