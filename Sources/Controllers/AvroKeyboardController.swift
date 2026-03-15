@@ -3,9 +3,9 @@ import Cocoa
 
 @objc(AvroKeyboardController)
 @MainActor
-class AvroKeyboardController: IMKInputController {
+class AvroKeyboardController: IMKInputController, @unchecked Sendable {
 
-    private var currentClient: (any IMKTextInput)?
+    nonisolated(unsafe) private var currentClient: (any IMKTextInput)?
     private var prevSelected: Int = -1
     private var composedBuffer = ""
     private var currentCandidates: [String] = []
@@ -18,6 +18,18 @@ class AvroKeyboardController: IMKInputController {
     @objc override init!(server: IMKServer!, delegate: Any!, client inputClient: Any!) {
         super.init(server: server, delegate: delegate, client: inputClient)
         self.currentClient = inputClient as? (any IMKTextInput)
+        NSLog("AvroKeyboard: Controller initialized for client: \(String(describing: inputClient))")
+    }
+
+    @objc override func activateServer(_ sender: Any!) {
+        super.activateServer(sender)
+        self.currentClient = sender as? (any IMKTextInput)
+        NSLog("AvroKeyboard: activateServer called, client: \(String(describing: sender))")
+    }
+
+    @objc override func deactivateServer(_ sender: Any!) {
+        commitComposition(sender)
+        super.deactivateServer(sender)
     }
 
     // MARK: - Candidate Finding
@@ -73,6 +85,14 @@ class AvroKeyboardController: IMKInputController {
         }
     }
 
+    internal override func updateComposition() {
+        currentClient?.setMarkedText(
+            composedBuffer,
+            selectionRange: NSRange(location: composedBuffer.count, length: 0),
+            replacementRange: NSRange(location: NSNotFound, length: NSNotFound)
+        )
+    }
+
     private func updateCandidatesPanel() {
         if !currentCandidates.isEmpty {
             let defaults = UserDefaults.standard
@@ -85,9 +105,9 @@ class AvroKeyboardController: IMKInputController {
 
             if prevSelected > -1 {
                 for _ in 0..<prevSelected {
-                    if CandidatesPanel.shared.panelType == Int(kIMKSingleColumnScrollingCandidatePanel.rawValue) {
+                    if CandidatesPanel.shared.panelType == kIMKSingleColumnScrollingCandidatePanel {
                         CandidatesPanel.shared.moveDown(self)
-                    } else if CandidatesPanel.shared.panelType == Int(kIMKSingleRowSteppingCandidatePanel.rawValue) {
+                    } else if CandidatesPanel.shared.panelType == kIMKSingleRowSteppingCandidatePanel {
                         CandidatesPanel.shared.moveRight(self)
                     }
                 }
@@ -100,7 +120,8 @@ class AvroKeyboardController: IMKInputController {
     // MARK: - IMK Callbacks
 
     @objc override func candidates(_ sender: Any!) -> [Any]! {
-        return currentCandidates
+        let candidates = currentCandidates
+        return candidates
     }
 
     @objc override func candidateSelectionChanged(_ candidateString: NSAttributedString!) {
@@ -154,16 +175,25 @@ class AvroKeyboardController: IMKInputController {
     }
 
     @objc override func composedString(_ sender: Any!) -> Any! {
-        return NSAttributedString(string: composedBuffer)
+        let buffer = composedBuffer
+        return NSAttributedString(string: buffer)
     }
 
     private func clearCompositionBuffer() {
         composedBuffer = ""
+        currentClient?.setMarkedText(
+            "",
+            selectionRange: NSRange(location: 0, length: 0),
+            replacementRange: NSRange(location: NSNotFound, length: NSNotFound)
+        )
     }
 
     // MARK: - Input Handling
 
     @objc override func inputText(_ string: String!, client sender: Any!) -> Bool {
+        NSLog("AvroKeyboard: inputText called with: \(string ?? "nil")")
+        self.currentClient = sender as? (any IMKTextInput)
+
         if string == " " {
             if !currentCandidates.isEmpty {
                 candidateSelected(NSAttributedString(string: currentCandidates[selectedCandidateIndex]))
@@ -171,6 +201,7 @@ class AvroKeyboardController: IMKInputController {
             return false
         } else {
             composedBuffer += string
+            NSLog("AvroKeyboard: composedBuffer is now: \(composedBuffer)")
             findCurrentCandidates()
             updateComposition()
             updateCandidatesPanel()
@@ -178,7 +209,7 @@ class AvroKeyboardController: IMKInputController {
         }
     }
 
-    @objc func deleteBackward(_ sender: Any?) {
+    @objc public func deleteBackward(_ sender: Any?) {
         guard !composedBuffer.isEmpty else { return }
         composedBuffer.removeLast()
         findCurrentCandidates()
@@ -186,11 +217,11 @@ class AvroKeyboardController: IMKInputController {
         updateCandidatesPanel()
     }
 
-    @objc func insertTab(_ sender: Any?) {
+    @objc public func insertTab(_ sender: Any?) {
         commitText("\t")
     }
 
-    @objc func insertNewline(_ sender: Any?) {
+    @objc public func insertNewline(_ sender: Any?) {
         if UserDefaults.standard.bool(forKey: "CommitNewLineOnEnter") {
             commitText("\n")
         } else {
@@ -198,28 +229,28 @@ class AvroKeyboardController: IMKInputController {
         }
     }
 
-    @objc func moveUp(_ sender: Any?) {
+    @objc public func moveUp(_ sender: Any?) {
         if CandidatesPanel.shared.isVisible {
             usedArrowKeys = true
             CandidatesPanel.shared.moveUp(self)
         }
     }
 
-    @objc func moveDown(_ sender: Any?) {
+    @objc public func moveDown(_ sender: Any?) {
         if CandidatesPanel.shared.isVisible {
             usedArrowKeys = true
             CandidatesPanel.shared.moveDown(self)
         }
     }
 
-    @objc func moveLeft(_ sender: Any?) {
+    @objc public func moveLeft(_ sender: Any?) {
         if CandidatesPanel.shared.isVisible {
             usedArrowKeys = true
             CandidatesPanel.shared.moveLeft(self)
         }
     }
 
-    @objc func moveRight(_ sender: Any?) {
+    @objc public func moveRight(_ sender: Any?) {
         if CandidatesPanel.shared.isVisible {
             usedArrowKeys = true
             CandidatesPanel.shared.moveRight(self)
@@ -227,6 +258,7 @@ class AvroKeyboardController: IMKInputController {
     }
 
     @objc override func didCommand(by aSelector: Selector, client sender: Any!) -> Bool {
+        self.currentClient = sender as? (any IMKTextInput)
         if responds(to: aSelector) && !composedBuffer.isEmpty {
             if aSelector == #selector(insertTab(_:)) ||
                aSelector == #selector(insertNewline(_:)) ||
@@ -242,7 +274,7 @@ class AvroKeyboardController: IMKInputController {
         return false
     }
 
-    @objc func commitText(_ string: String) {
+    @objc public func commitText(_ string: String) {
         if !currentCandidates.isEmpty {
             candidateSelected(NSAttributedString(string: currentCandidates[selectedCandidateIndex]))
             currentClient?.insertText(string, replacementRange: NSRange(location: NSNotFound, length: 0))
@@ -252,10 +284,11 @@ class AvroKeyboardController: IMKInputController {
     }
 
     @objc override func menu() -> NSMenu! {
-        return (NSApp.delegate as? AppDelegate)?.menu
+        let appMenu = (NSApp.delegate as? AppDelegate)?.menu
+        return appMenu
     }
 
-    @objc func showPreferences(_ sender: Any?) {
+    @objc override func showPreferences(_ sender: Any?) {
         guard let appDelegate = NSApp.delegate as? AppDelegate,
               let pw = appDelegate.imPref?.getWindowController().window else { return }
         pw.hidesOnDeactivate = false

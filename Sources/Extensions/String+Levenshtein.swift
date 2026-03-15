@@ -18,8 +18,7 @@ extension String {
             for j in 1...m {
                 let cost = selfChars[i - 1] == otherChars[j - 1] ? 0 : 1
                 currentRow[j] = min(
-                    previousRow[j] + 1,
-                    currentRow[j - 1] + 1,
+                    min(previousRow[j] + 1, currentRow[j - 1] + 1),
                     previousRow[j - 1] + cost
                 )
             }

@@ -16,7 +16,7 @@ final class CandidatesPanel {
         let panelType = UserDefaults.standard.integer(forKey: "CandidatePanelType")
         self.candidates = IMKCandidates(
             server: server,
-            panelType: IMKCandidatePanelType(rawValue: UInt(panelType))!
+            panelType: IMKCandidatePanelType(panelType)
         )
         candidates.setAttributes([
             IMKCandidatesSendServerKeyEventFirst: NSNumber(value: true)
@@ -28,7 +28,7 @@ final class CandidatesPanel {
         let panelType = UserDefaults.standard.integer(forKey: "CandidatePanelType")
         self.candidates = IMKCandidates(
             server: server,
-            panelType: IMKCandidatePanelType(rawValue: UInt(panelType))!
+            panelType: IMKCandidatePanelType(panelType)
         )
         candidates.setAttributes([
             IMKCandidatesSendServerKeyEventFirst: NSNumber(value: true)
@@ -36,7 +36,7 @@ final class CandidatesPanel {
         candidates.setDismissesAutomatically(false)
     }
 
-    var panelType: Int { Int(candidates.panelType().rawValue) }
+    var panelType: Int { candidates.panelType() }
     var isVisible: Bool { candidates.isVisible() }
 
     func updateCandidates() { candidates.update() }
