@@ -41,6 +41,7 @@
 		BB00000100000001CCDD0010 /* UTF16RangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000100000001CCDD0011 /* UTF16RangeTests.swift */; };
 		BB00000100000001CCDD0020 /* CommitCompositionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000100000001CCDD0021 /* CommitCompositionTests.swift */; };
 		BB00000100000001CCDD0030 /* CandidateNilGuardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000100000001CCDD0031 /* CandidateNilGuardTests.swift */; };
+		BB00000100000001CCDD0040 /* SuggestionEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000100000001CCDD0041 /* SuggestionEngineTests.swift */; };
 		E93074B70A5C264700470842 /* InputMethodKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E93074B60A5C264700470842 /* InputMethodKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -93,6 +94,7 @@
 		BB00000100000001CCDD0011 /* UTF16RangeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UTF16RangeTests.swift; sourceTree = "<group>"; };
 		BB00000100000001CCDD0021 /* CommitCompositionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitCompositionTests.swift; sourceTree = "<group>"; };
 		BB00000100000001CCDD0031 /* CandidateNilGuardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateNilGuardTests.swift; sourceTree = "<group>"; };
+		BB00000100000001CCDD0041 /* SuggestionEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionEngineTests.swift; sourceTree = "<group>"; };
 		BB00000100000001CCDD0004 /* AvroKeyboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AvroKeyboardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E93074B60A5C264700470842 /* InputMethodKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InputMethodKit.framework; path = /System/Library/Frameworks/InputMethodKit.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -257,6 +259,7 @@
 				BB00000100000001CCDD0011 /* UTF16RangeTests.swift */,
 				BB00000100000001CCDD0021 /* CommitCompositionTests.swift */,
 				BB00000100000001CCDD0031 /* CandidateNilGuardTests.swift */,
+				BB00000100000001CCDD0041 /* SuggestionEngineTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 				BB00000100000001CCDD0010 /* UTF16RangeTests.swift in Sources */,
 				BB00000100000001CCDD0020 /* CommitCompositionTests.swift in Sources */,
 				BB00000100000001CCDD0030 /* CandidateNilGuardTests.swift in Sources */,
+				BB00000100000001CCDD0040 /* SuggestionEngineTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

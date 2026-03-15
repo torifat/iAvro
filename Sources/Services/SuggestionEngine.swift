@@ -60,7 +60,7 @@ final class SuggestionEngine {
 
                     let cutPos = item.index(before: item.endIndex)
                     let itemRMC = String(item[cutPos...])
-                    let suffixLMC = String(suffix[suffix.startIndex...suffix.startIndex])
+                    let suffixLMC = String(suffix.prefix(1))
 
                     let word: String
                     if isVowel(itemRMC) && isKar(suffixLMC) {
