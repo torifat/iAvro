@@ -6,6 +6,8 @@ final class CacheManager {
 
     private var weightCache: [String: String]
     private var phoneticCache: [String: [String]]
+    private var phoneticAccessOrder: [String]
+    private static let phoneticCacheCapacity = 512
     private var recentBaseCache: [String: [String]]
 
     private static var sharedFolderURL: URL {
@@ -28,6 +30,7 @@ final class CacheManager {
             self.weightCache = [:]
         }
         self.phoneticCache = [:]
+        self.phoneticAccessOrder = []
         self.recentBaseCache = [:]
     }
 
@@ -36,9 +39,30 @@ final class CacheManager {
     func removeString(forKey key: String) { weightCache.removeValue(forKey: key) }
     func setString(_ value: String, forKey key: String) { weightCache[key] = value }
 
-    // MARK: - Phonetic Cache
-    func array(forKey key: String) -> [String]? { phoneticCache[key] }
-    func setArray(_ value: [String], forKey key: String) { phoneticCache[key] = value }
+    // MARK: - Phonetic Cache (LRU, capped at phoneticCacheCapacity)
+    func array(forKey key: String) -> [String]? {
+        guard let value = phoneticCache[key] else { return nil }
+        // Move to end (most recently used)
+        if let idx = phoneticAccessOrder.firstIndex(of: key) {
+            phoneticAccessOrder.remove(at: idx)
+        }
+        phoneticAccessOrder.append(key)
+        return value
+    }
+
+    func setArray(_ value: [String], forKey key: String) {
+        if phoneticCache[key] != nil {
+            if let idx = phoneticAccessOrder.firstIndex(of: key) {
+                phoneticAccessOrder.remove(at: idx)
+            }
+        } else if phoneticCache.count >= Self.phoneticCacheCapacity {
+            // Evict oldest entry
+            let oldest = phoneticAccessOrder.removeFirst()
+            phoneticCache.removeValue(forKey: oldest)
+        }
+        phoneticCache[key] = value
+        phoneticAccessOrder.append(key)
+    }
 
     // MARK: - Base Cache
     func removeAllBase() { recentBaseCache.removeAll() }
