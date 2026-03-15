@@ -18,13 +18,11 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
     @objc override init!(server: IMKServer!, delegate: Any!, client inputClient: Any!) {
         super.init(server: server, delegate: delegate, client: inputClient)
         self.currentClient = inputClient as? (any IMKTextInput)
-        NSLog("AvroKeyboard: Controller initialized for client: \(String(describing: inputClient))")
     }
 
     @objc override func activateServer(_ sender: Any!) {
         super.activateServer(sender)
         self.currentClient = sender as? (any IMKTextInput)
-        NSLog("AvroKeyboard: activateServer called, client: \(String(describing: sender))")
     }
 
     @objc override func deactivateServer(_ sender: Any!) {
@@ -195,7 +193,6 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
     // MARK: - Input Handling
 
     @objc override func inputText(_ string: String!, client sender: Any!) -> Bool {
-        NSLog("AvroKeyboard: inputText called with: \(string ?? "nil")")
         self.currentClient = sender as? (any IMKTextInput)
 
         if string == " " {
@@ -205,7 +202,6 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
             return false
         } else {
             composedBuffer += string
-            NSLog("AvroKeyboard: composedBuffer is now: \(composedBuffer)")
             findCurrentCandidates()
             updateComposition()
             updateCandidatesPanel()
