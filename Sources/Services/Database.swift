@@ -6,6 +6,7 @@ final class Database: @unchecked Sendable {
 
     private let db: [String: [String]]
     private let suffixes: [String: String]
+    private var regexCache: [String: NSRegularExpression] = [:]
 
     private init() {
         guard let filePath = Bundle.main.path(forResource: "database", ofType: "db3") else {
@@ -70,8 +71,15 @@ final class Database: @unchecked Sendable {
         let tables = Self.tableLookup[lmc] ?? []
         let regexPattern = "^\(RegexParser.shared.parse(term))$"
 
-        guard let regex = try? NSRegularExpression(pattern: regexPattern) else {
-            return []
+        let regex: NSRegularExpression
+        if let cached = regexCache[regexPattern] {
+            regex = cached
+        } else {
+            guard let compiled = try? NSRegularExpression(pattern: regexPattern) else {
+                return []
+            }
+            regexCache[regexPattern] = compiled
+            regex = compiled
         }
 
         var suggestions = Set<String>()
