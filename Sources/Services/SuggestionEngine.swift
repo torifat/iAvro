@@ -10,23 +10,27 @@ final class SuggestionEngine {
         guard !term.isEmpty else { return [] }
 
         var suggestions: [String] = []
+        var suggestionSet: Set<String> = []
         let parsedString = AvroParser.shared.parse(term)
 
         if UserDefaults.standard.bool(forKey: "IncludeDictionary") {
             // Check phonetic cache first
             if let cached = CacheManager.shared.array(forKey: term), !cached.isEmpty {
                 suggestions.append(contentsOf: cached)
+                suggestionSet.formUnion(cached)
             } else {
                 // AutoCorrect suggestions
                 let autoCorrect = AutoCorrect.shared.find(term)
                 if let ac = autoCorrect {
                     suggestions.append(ac)
+                    suggestionSet.insert(ac)
                 }
 
                 // Dictionary suggestions sorted by Levenshtein distance
                 let dicList = Database.shared.find(term: term)
                 if let ac = autoCorrect, dicList.contains(ac) {
                     suggestions.removeAll { $0 == ac }
+                    suggestionSet.remove(ac)
                 }
 
                 let sorted = dicList.sorted { left, right in
@@ -34,6 +38,7 @@ final class SuggestionEngine {
                     < parsedString.levenshteinDistance(to: right)
                 }
                 suggestions.append(contentsOf: sorted)
+                suggestionSet.formUnion(sorted)
 
                 CacheManager.shared.setArray(suggestions, forKey: term)
             }
@@ -76,7 +81,7 @@ final class SuggestionEngine {
                     // Reverse suffix caching
                     CacheManager.shared.setBase([base, item], forKey: word)
 
-                    if !suggestions.contains(word) {
+                    if !suggestionSet.contains(word) {
                         if !alreadySelected, let sel = selected, item == sel {
                             if CacheManager.shared.string(forKey: term) == nil {
                                 CacheManager.shared.setString(word, forKey: term)
@@ -84,12 +89,13 @@ final class SuggestionEngine {
                             alreadySelected = true
                         }
                         suggestions.append(word)
+                        suggestionSet.insert(word)
                     }
                 }
             }
         }
 
-        if !suggestions.contains(parsedString) {
+        if !suggestionSet.contains(parsedString) {
             suggestions.append(parsedString)
         }
 
