@@ -14,11 +14,11 @@
         <customObject id="-3" userLabel="Application"/>
         <customObject id="173" customClass="PreferencesController">
             <connections>
-                <outlet property="_aboutContent" destination="I4c-pT-HXY" id="f5B-O2-Kfz"/>
-                <outlet property="_aboutView" destination="254" id="260"/>
-                <outlet property="_autoCorrectController" destination="uta-3m-pmz" id="BRi-53-DhL"/>
-                <outlet property="_autoCorrectView" destination="159" id="193"/>
-                <outlet property="_generalView" destination="207" id="208"/>
+                <outlet property="aboutContent" destination="I4c-pT-HXY" id="f5B-O2-Kfz"/>
+                <outlet property="aboutView" destination="254" id="260"/>
+                <outlet property="autoCorrectController" destination="uta-3m-pmz" id="BRi-53-DhL"/>
+                <outlet property="autoCorrectView" destination="159" id="193"/>
+                <outlet property="generalView" destination="207" id="208"/>
                 <outlet property="window" destination="5" id="rKK-uj-hcU"/>
             </connections>
         </customObject>
