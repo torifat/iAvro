@@ -40,4 +40,35 @@ final class CacheManagerTests: XCTestCase {
         // lru0 was accessed recently, should survive eviction
         XCTAssertNotNil(cache.array(forKey: "lru0"))
     }
+
+    func testPersistUsesPropertyListEncoder() {
+        let cache = CacheManager.shared
+        cache.setString("testValue", forKey: "persistTestKey")
+        // persist() should not crash — uses PropertyListSerialization now
+        cache.persist()
+
+        // Verify the file was written (reload it)
+        let appSupport = FileManager.default.urls(for: .applicationSupportDirectory,
+                                                   in: .userDomainMask).first!
+        let weightPath = appSupport
+            .appendingPathComponent("OmicronLab")
+            .appendingPathComponent("Avro Keyboard")
+            .appendingPathComponent("weight.plist")
+        XCTAssertTrue(FileManager.default.fileExists(atPath: weightPath.path))
+
+        // Verify it's readable as [String: String]
+        if let data = try? Data(contentsOf: weightPath),
+           let dict = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String: String] {
+            XCTAssertEqual(dict["persistTestKey"], "testValue")
+        } else {
+            XCTFail("Could not read persisted weight.plist as [String: String]")
+        }
+    }
+
+    func testAutoCorrectLoadsPlistWithoutNSDictionary() {
+        // AutoCorrect.shared should load entries from autodict.plist
+        let entries = AutoCorrect.shared.entries
+        // autodict.plist has content — verify it loaded
+        XCTAssertFalse(entries.isEmpty, "AutoCorrect should load entries from autodict.plist")
+    }
 }

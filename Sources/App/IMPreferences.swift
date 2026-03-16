@@ -5,8 +5,9 @@ import AppKit
     private var windowController: NSWindowController?
 
     @objc static func initializeDefaults() {
-        guard let prefFile = Bundle.main.path(forResource: "preferences", ofType: "plist"),
-              let prefDict = NSDictionary(contentsOfFile: prefFile) as? [String: Any] else {
+        guard let url = Bundle.main.url(forResource: "preferences", withExtension: "plist"),
+              let data = try? Data(contentsOf: url),
+              let prefDict = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any] else {
             return
         }
         UserDefaults.standard.register(defaults: prefDict)

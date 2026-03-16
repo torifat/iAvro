@@ -11,8 +11,10 @@ final class CacheManager {
     private var recentBaseCache: [String: [String]]
 
     private static var sharedFolderURL: URL {
-        let appSupport = FileManager.default.urls(for: .applicationSupportDirectory,
-                                                   in: .userDomainMask).first!
+        guard let appSupport = FileManager.default.urls(for: .applicationSupportDirectory,
+                                                         in: .userDomainMask).first else {
+            fatalError("Application Support directory not found")
+        }
         return appSupport
             .appendingPathComponent("OmicronLab")
             .appendingPathComponent("Avro Keyboard")
@@ -24,7 +26,8 @@ final class CacheManager {
                                                    withIntermediateDirectories: true)
 
         let weightPath = folderURL.appendingPathComponent("weight.plist")
-        if let dict = NSDictionary(contentsOf: weightPath) as? [String: String] {
+        if let data = try? Data(contentsOf: weightPath),
+           let dict = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String: String] {
             self.weightCache = dict
         } else {
             self.weightCache = [:]
@@ -72,6 +75,15 @@ final class CacheManager {
     // MARK: - Persistence
     func persist() {
         let path = Self.sharedFolderURL.appendingPathComponent("weight.plist")
-        (weightCache as NSDictionary).write(to: path, atomically: true)
+        do {
+            let data = try PropertyListSerialization.data(
+                fromPropertyList: weightCache,
+                format: .xml,
+                options: 0
+            )
+            try data.write(to: path, options: .atomic)
+        } catch {
+            NSLog("Failed to persist weight cache: %@", error.localizedDescription)
+        }
     }
 }

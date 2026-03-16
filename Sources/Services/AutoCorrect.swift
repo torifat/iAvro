@@ -7,8 +7,9 @@ final class AutoCorrect {
     private(set) var entries: [String: String]
 
     private init() {
-        if let path = Bundle.main.path(forResource: "autodict", ofType: "plist"),
-           let dict = NSDictionary(contentsOfFile: path) as? [String: String] {
+        if let url = Bundle.main.url(forResource: "autodict", withExtension: "plist"),
+           let data = try? Data(contentsOf: url),
+           let dict = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String: String] {
             self.entries = dict
         } else {
             self.entries = [:]
