@@ -46,6 +46,7 @@
 		BB00000100000001CCDD0060 /* DatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000100000001CCDD0061 /* DatabaseTests.swift */; };
 		BB00000100000001CCDD0070 /* PatternMatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000100000001CCDD0071 /* PatternMatcherTests.swift */; };
 		BB00000100000001CCDD0080 /* UserDefaultsKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000100000001CCDD0081 /* UserDefaultsKeyTests.swift */; };
+		BB00000100000001CCDD0090 /* ParserStringBuildingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000100000001CCDD0091 /* ParserStringBuildingTests.swift */; };
 		AA00000100000001AABB0010 /* UserDefaults+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000200000001AABB0010 /* UserDefaults+Keys.swift */; };
 		E93074B70A5C264700470842 /* InputMethodKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E93074B60A5C264700470842 /* InputMethodKit.framework */; };
 /* End PBXBuildFile section */
@@ -104,6 +105,7 @@
 		BB00000100000001CCDD0061 /* DatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseTests.swift; sourceTree = "<group>"; };
 		BB00000100000001CCDD0071 /* PatternMatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatternMatcherTests.swift; sourceTree = "<group>"; };
 		BB00000100000001CCDD0081 /* UserDefaultsKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeyTests.swift; sourceTree = "<group>"; };
+		BB00000100000001CCDD0091 /* ParserStringBuildingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserStringBuildingTests.swift; sourceTree = "<group>"; };
 		AA00000200000001AABB0010 /* UserDefaults+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Keys.swift"; sourceTree = "<group>"; };
 		BB00000100000001CCDD0004 /* AvroKeyboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AvroKeyboardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E93074B60A5C264700470842 /* InputMethodKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InputMethodKit.framework; path = /System/Library/Frameworks/InputMethodKit.framework; sourceTree = "<absolute>"; };
@@ -275,6 +277,7 @@
 				BB00000100000001CCDD0061 /* DatabaseTests.swift */,
 				BB00000100000001CCDD0071 /* PatternMatcherTests.swift */,
 				BB00000100000001CCDD0081 /* UserDefaultsKeyTests.swift */,
+				BB00000100000001CCDD0091 /* ParserStringBuildingTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -416,6 +419,7 @@
 				BB00000100000001CCDD0060 /* DatabaseTests.swift in Sources */,
 				BB00000100000001CCDD0070 /* PatternMatcherTests.swift in Sources */,
 				BB00000100000001CCDD0080 /* UserDefaultsKeyTests.swift in Sources */,
+				BB00000100000001CCDD0090 /* ParserStringBuildingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

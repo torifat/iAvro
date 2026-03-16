@@ -36,12 +36,13 @@ final class RegexParser: @unchecked Sendable {
     }
 
     private func clean(_ string: String) -> String {
-        var result = ""
-        for c in string.utf16 {
-            if !PatternMatcher.inString(caseSensitive, c: c) {
-                result += String(utf16CodeUnits: [PatternMatcher.smallCap(c)], count: 1)
+        var result = String.UnicodeScalarView()
+        for scalar in string.unicodeScalars {
+            let code = UInt16(scalar.value)
+            if !PatternMatcher.inString(caseSensitive, c: code) {
+                result.append(Unicode.Scalar(PatternMatcher.smallCap(code))!)
             }
         }
-        return result
+        return String(result)
     }
 }
