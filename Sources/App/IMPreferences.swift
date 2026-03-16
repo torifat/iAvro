@@ -1,8 +1,9 @@
 import AppKit
+import SwiftUI
 
 @MainActor
 @objc final class IMPreferences: NSObject {
-    private lazy var windowController = NSWindowController(windowNibName: "preferences")
+    private var preferencesWindow: NSWindow?
 
     @objc static func initializeDefaults() {
         guard let url = Bundle.main.url(forResource: "preferences", withExtension: "plist"),
@@ -11,10 +12,31 @@ import AppKit
             return
         }
         UserDefaults.standard.register(defaults: prefDict)
-        NSUserDefaultsController.shared.initialValues = prefDict
     }
 
-    @objc func getWindowController() -> NSWindowController {
-        windowController
+    @objc func showPreferencesWindow() {
+        if let existing = preferencesWindow, existing.isVisible {
+            existing.makeKeyAndOrderFront(nil)
+            return
+        }
+
+        let hostingView = NSHostingView(rootView: PreferencesView())
+        hostingView.frame = NSRect(x: 0, y: 0, width: 450, height: 250)
+
+        let window = NSPanel(
+            contentRect: NSRect(x: 0, y: 0, width: 450, height: 250),
+            styleMask: [.titled, .closable],
+            backing: .buffered,
+            defer: false
+        )
+        window.title = "Preferences"
+        window.contentView = hostingView
+        window.center()
+        window.isReleasedWhenClosed = false
+        window.hidesOnDeactivate = false
+        window.level = .modalPanel
+
+        preferencesWindow = window
+        window.makeKeyAndOrderFront(nil)
     }
 }

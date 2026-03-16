@@ -286,10 +286,7 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
     }
 
     @objc override func showPreferences(_ sender: Any?) {
-        guard let appDelegate = NSApp.delegate as? AppDelegate,
-              let pw = appDelegate.imPref?.getWindowController().window else { return }
-        pw.hidesOnDeactivate = false
-        pw.level = .modalPanel
-        pw.makeKeyAndOrderFront(self)
+        guard let appDelegate = NSApp.delegate as? AppDelegate else { return }
+        appDelegate.imPref?.showPreferencesWindow()
     }
 }
