@@ -17,7 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             prefsItem.action = #selector(AvroKeyboardController.showPreferences(_:))
         }
 
-        if UserDefaults.standard.bool(forKey: "IncludeDictionary") {
+        if UserDefaults.standard.bool(for: .includeDictionary) {
             NSLog("Loading Dictionary...")
             _ = Database.shared
             _ = RegexParser.shared
@@ -27,7 +27,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationWillTerminate(_ notification: Notification) {
-        if UserDefaults.standard.bool(forKey: "IncludeDictionary") {
+        if UserDefaults.standard.bool(for: .includeDictionary) {
             CacheManager.shared.persist()
         }
     }

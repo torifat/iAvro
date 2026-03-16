@@ -57,14 +57,14 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
             currentCandidates = suggestions
 
             var prevString: String?
-            if UserDefaults.standard.bool(forKey: "IncludeDictionary") {
+            if UserDefaults.standard.bool(for: .includeDictionary) {
                 prevSelected = -1
                 prevString = CacheManager.shared.string(forKey: self.termStr)
             }
 
             for i in 0..<currentCandidates.count {
                 let item = currentCandidates[i]
-                if UserDefaults.standard.bool(forKey: "IncludeDictionary"),
+                if UserDefaults.standard.bool(for: .includeDictionary),
                    let prev = prevString, item == prev {
                     prevSelected = i
                 }
@@ -73,7 +73,7 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
 
             // Emoticons
             if composedBuffer != self.termStr &&
-               UserDefaults.standard.bool(forKey: "IncludeDictionary") {
+               UserDefaults.standard.bool(for: .includeDictionary) {
                 if let smiley = AutoCorrect.shared.find(composedBuffer) {
                     currentCandidates.insert(smiley, at: 0)
                 }
@@ -95,7 +95,7 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
         if !currentCandidates.isEmpty {
             let defaults = UserDefaults.standard
 
-            if CandidatesPanel.shared.panelType != defaults.integer(forKey: "CandidatePanelType") {
+            if CandidatesPanel.shared.panelType != defaults.integer(for: .candidatePanelType) {
                 CandidatesPanel.shared.reallocate()
             }
             CandidatesPanel.shared.updateCandidates()
@@ -124,7 +124,7 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
 
     @objc override func candidateSelectionChanged(_ candidateString: NSAttributedString!) {
         guard let candidateString else { return }
-        if UserDefaults.standard.bool(forKey: "IncludeDictionary") {
+        if UserDefaults.standard.bool(for: .includeDictionary) {
             if !termStr.isEmpty {
                 let isFirst = candidateString.string == currentCandidates.first
                 if !(isFirst && prevSelected == -1) {
@@ -159,7 +159,7 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
         updateCandidatesPanel()
 
         usedArrowKeys = false
-        if UserDefaults.standard.bool(forKey: "IncludeDictionary") {
+        if UserDefaults.standard.bool(for: .includeDictionary) {
             CacheManager.shared.persist()
         }
     }
@@ -220,7 +220,7 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
     }
 
     @objc public func insertNewline(_ sender: Any?) {
-        if UserDefaults.standard.bool(forKey: "CommitNewLineOnEnter") {
+        if UserDefaults.standard.bool(for: .commitNewLineOnEnter) {
             commitText("\n")
         } else {
             commitText("")

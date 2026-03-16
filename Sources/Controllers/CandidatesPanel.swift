@@ -13,7 +13,7 @@ final class CandidatesPanel {
 
     private init(server: IMKServer) {
         self.server = server
-        let panelType = UserDefaults.standard.integer(forKey: "CandidatePanelType")
+        let panelType = UserDefaults.standard.integer(for: .candidatePanelType)
         self.candidates = IMKCandidates(
             server: server,
             panelType: IMKCandidatePanelType(panelType)
@@ -25,7 +25,7 @@ final class CandidatesPanel {
     }
 
     func reallocate() {
-        let panelType = UserDefaults.standard.integer(forKey: "CandidatePanelType")
+        let panelType = UserDefaults.standard.integer(for: .candidatePanelType)
         self.candidates = IMKCandidates(
             server: server,
             panelType: IMKCandidatePanelType(panelType)

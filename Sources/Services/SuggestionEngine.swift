@@ -13,7 +13,7 @@ final class SuggestionEngine {
         var suggestionSet: Set<String> = []
         let parsedString = AvroParser.shared.parse(term)
 
-        if UserDefaults.standard.bool(forKey: "IncludeDictionary") {
+        if UserDefaults.standard.bool(for: .includeDictionary) {
             // Check phonetic cache first
             if let cached = CacheManager.shared.array(forKey: term), !cached.isEmpty {
                 suggestions.append(contentsOf: cached)
