@@ -2,13 +2,12 @@ import Foundation
 
 extension String {
     func levenshteinDistance(to other: String) -> Int {
-        let n = self.count
-        let m = other.count
-
-        guard n != 0, m != 0 else { return max(n, m) }
-
         let selfChars = Array(self.unicodeScalars)
         let otherChars = Array(other.unicodeScalars)
+        let n = selfChars.count
+        let m = otherChars.count
+
+        guard n != 0, m != 0 else { return max(n, m) }
 
         var previousRow = Array(0...m)
         var currentRow = [Int](repeating: 0, count: m + 1)
