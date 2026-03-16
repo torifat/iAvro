@@ -3,17 +3,14 @@ import Cocoa
 @objc(MainMenuAppDelegate)
 @MainActor
 class AppDelegate: NSObject, NSApplicationDelegate {
-    // Outlet name must match NIB key "_menu" (from original ObjC ivar)
-    @IBOutlet @objc var _menu: NSMenu!
+    @IBOutlet @objc var menu: NSMenu!
 
     @objc var imPref: IMPreferences?
-
-    var menu: NSMenu! { _menu }
 
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        if let prefsItem = _menu?.item(withTag: 1) {
+        if let prefsItem = menu?.item(withTag: 1) {
             prefsItem.action = #selector(AvroKeyboardController.showPreferences(_:))
         }
 

@@ -70,7 +70,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">_menu</string>
+						<string key="label">menu</string>
 						<reference key="source" ref="812544592"/>
 						<reference key="destination" ref="22029703"/>
 					</object>
@@ -143,13 +143,13 @@
 					<string key="className">MainMenuAppDelegate</string>
 					<string key="superclassName">NSObject</string>
 					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">_menu</string>
+						<string key="NS.key.0">menu</string>
 						<string key="NS.object.0">NSMenu</string>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">_menu</string>
+						<string key="NS.key.0">menu</string>
 						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">_menu</string>
+							<string key="name">menu</string>
 							<string key="candidateClassName">NSMenu</string>
 						</object>
 					</object>

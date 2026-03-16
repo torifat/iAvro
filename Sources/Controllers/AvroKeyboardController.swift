@@ -52,28 +52,27 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
         self.suffixStr = AvroParser.shared.parse(nsString.substring(with: match.range(at: 3)))
 
         let suggestions = SuggestionEngine.shared.getList(self.termStr)
+        let useDict = UserDefaults.standard.bool(for: .includeDictionary)
 
         if !suggestions.isEmpty {
             currentCandidates = suggestions
 
             var prevString: String?
-            if UserDefaults.standard.bool(for: .includeDictionary) {
+            if useDict {
                 prevSelected = -1
                 prevString = CacheManager.shared.string(forKey: self.termStr)
             }
 
             for i in 0..<currentCandidates.count {
                 let item = currentCandidates[i]
-                if UserDefaults.standard.bool(for: .includeDictionary),
-                   let prev = prevString, item == prev {
+                if useDict, let prev = prevString, item == prev {
                     prevSelected = i
                 }
                 currentCandidates[i] = "\(self.prefixStr)\(item)\(self.suffixStr)"
             }
 
             // Emoticons
-            if composedBuffer != self.termStr &&
-               UserDefaults.standard.bool(for: .includeDictionary) {
+            if composedBuffer != self.termStr && useDict {
                 if let smiley = AutoCorrect.shared.find(composedBuffer) {
                     currentCandidates.insert(smiley, at: 0)
                 }
@@ -272,7 +271,7 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
         return false
     }
 
-    @objc public func commitText(_ string: String) {
+    private func commitText(_ string: String) {
         if !currentCandidates.isEmpty {
             candidateSelected(NSAttributedString(string: currentCandidates[selectedCandidateIndex]))
             currentClient?.insertText(string, replacementRange: NSRange(location: NSNotFound, length: 0))

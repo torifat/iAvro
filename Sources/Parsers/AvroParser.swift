@@ -48,9 +48,9 @@ final class AvroParser: @unchecked Sendable {
         return String(result)
     }
 
-    func isVowel(_ c: unichar) -> Bool { PatternMatcher.inString(vowel, c: c) }
-    func isConsonant(_ c: unichar) -> Bool { PatternMatcher.inString(consonant, c: c) }
-    func isPunctuation(_ c: unichar) -> Bool { !(isVowel(c) || isConsonant(c)) }
-    func isNumber(_ c: unichar) -> Bool { PatternMatcher.inString(number, c: c) }
-    func isCaseSensitive(_ c: unichar) -> Bool { PatternMatcher.inString(caseSensitive, c: c) }
+    private func isVowel(_ c: unichar) -> Bool { PatternMatcher.inString(vowel, c: c) }
+    private func isConsonant(_ c: unichar) -> Bool { PatternMatcher.inString(consonant, c: c) }
+    private func isPunctuation(_ c: unichar) -> Bool { !(isVowel(c) || isConsonant(c)) }
+    private func isNumber(_ c: unichar) -> Bool { PatternMatcher.inString(number, c: c) }
+    private func isCaseSensitive(_ c: unichar) -> Bool { PatternMatcher.inString(caseSensitive, c: c) }
 }
