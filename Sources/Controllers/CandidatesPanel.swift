@@ -2,13 +2,19 @@ import InputMethodKit
 
 @MainActor
 final class CandidatesPanel {
-    static var shared: CandidatesPanel!
+    private static var _shared: CandidatesPanel?
+    static var shared: CandidatesPanel {
+        guard let instance = _shared else {
+            fatalError("CandidatesPanel.initialize(with:) must be called before accessing .shared")
+        }
+        return instance
+    }
 
     private var candidates: IMKCandidates
     private let server: IMKServer
 
     static func initialize(with server: IMKServer) {
-        shared = CandidatesPanel(server: server)
+        _shared = CandidatesPanel(server: server)
     }
 
     private init(server: IMKServer) {

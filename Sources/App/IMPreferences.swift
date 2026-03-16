@@ -2,7 +2,7 @@ import AppKit
 
 @MainActor
 @objc final class IMPreferences: NSObject {
-    private var windowController: NSWindowController?
+    private lazy var windowController = NSWindowController(windowNibName: "preferences")
 
     @objc static func initializeDefaults() {
         guard let url = Bundle.main.url(forResource: "preferences", withExtension: "plist"),
@@ -15,9 +15,6 @@ import AppKit
     }
 
     @objc func getWindowController() -> NSWindowController {
-        if windowController == nil {
-            windowController = NSWindowController(windowNibName: "preferences")
-        }
-        return windowController!
+        windowController
     }
 }
