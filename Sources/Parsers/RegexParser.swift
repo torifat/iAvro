@@ -12,7 +12,7 @@ final class RegexParser: @unchecked Sendable {
     private static let banglaRegexSuffix = "(\u{09CD}[\u{09AF}\u{09AC}\u{09AE}])?(\u{09CD}?)([\u{09C3}\u{0981}]?)"
 
     private init() {
-        let data = loadPatterns(from: "regex")
+        let data = PatternMatcher.load(from: "regex")
         self.vowel = data.vowel
         self.consonant = data.consonant
         self.caseSensitive = data.caseSensitive
@@ -22,7 +22,7 @@ final class RegexParser: @unchecked Sendable {
 
     func parse(_ string: String) -> String {
         if string.isEmpty { return string }
-        return matchPatterns(
+        return PatternMatcher.match(
             in: string,
             vowel: vowel,
             consonant: consonant,
@@ -38,8 +38,8 @@ final class RegexParser: @unchecked Sendable {
     private func clean(_ string: String) -> String {
         var result = ""
         for c in string.utf16 {
-            if !inString(caseSensitive, c: c) {
-                result += String(utf16CodeUnits: [smallCap(c)], count: 1)
+            if !PatternMatcher.inString(caseSensitive, c: c) {
+                result += String(utf16CodeUnits: [PatternMatcher.smallCap(c)], count: 1)
             }
         }
         return result

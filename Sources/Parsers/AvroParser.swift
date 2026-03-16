@@ -11,7 +11,7 @@ final class AvroParser: @unchecked Sendable {
     private let maxPatternLength: Int
 
     private init() {
-        let data = loadPatterns(from: "data")
+        let data = PatternMatcher.load(from: "data")
         self.vowel = data.vowel
         self.consonant = data.consonant
         self.caseSensitive = data.caseSensitive
@@ -22,7 +22,7 @@ final class AvroParser: @unchecked Sendable {
 
     func parse(_ string: String) -> String {
         if string.isEmpty { return "" }
-        return matchPatterns(
+        return PatternMatcher.match(
             in: string,
             vowel: vowel,
             consonant: consonant,
@@ -38,8 +38,8 @@ final class AvroParser: @unchecked Sendable {
     func fix(_ string: String) -> String {
         var result = ""
         for c in string.utf16 {
-            if !inString(caseSensitive, c: c) {
-                result += String(utf16CodeUnits: [smallCap(c)], count: 1)
+            if !PatternMatcher.inString(caseSensitive, c: c) {
+                result += String(utf16CodeUnits: [PatternMatcher.smallCap(c)], count: 1)
             } else {
                 result += String(utf16CodeUnits: [c], count: 1)
             }
@@ -47,9 +47,9 @@ final class AvroParser: @unchecked Sendable {
         return result
     }
 
-    func isVowel(_ c: unichar) -> Bool { inString(vowel, c: c) }
-    func isConsonant(_ c: unichar) -> Bool { inString(consonant, c: c) }
+    func isVowel(_ c: unichar) -> Bool { PatternMatcher.inString(vowel, c: c) }
+    func isConsonant(_ c: unichar) -> Bool { PatternMatcher.inString(consonant, c: c) }
     func isPunctuation(_ c: unichar) -> Bool { !(isVowel(c) || isConsonant(c)) }
-    func isNumber(_ c: unichar) -> Bool { inString(number, c: c) }
-    func isCaseSensitive(_ c: unichar) -> Bool { inString(caseSensitive, c: c) }
+    func isNumber(_ c: unichar) -> Bool { PatternMatcher.inString(number, c: c) }
+    func isCaseSensitive(_ c: unichar) -> Bool { PatternMatcher.inString(caseSensitive, c: c) }
 }
