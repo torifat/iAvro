@@ -1,8 +1,10 @@
 import Cocoa
+import os
 
 @objc(MainMenuAppDelegate)
 @MainActor
 class AppDelegate: NSObject, NSApplicationDelegate {
+    private static let log = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.omicronlab.avro", category: "AppDelegate")
     @IBOutlet @objc var menu: NSMenu!
 
     @objc var imPref: IMPreferences?
@@ -15,7 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         if UserDefaults.standard.bool(for: .includeDictionary) {
-            NSLog("Loading Dictionary...")
+            Self.log.info("Loading Dictionary...")
             _ = Database.shared
             _ = RegexParser.shared
             _ = CacheManager.shared

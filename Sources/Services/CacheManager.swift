@@ -1,7 +1,9 @@
 import Foundation
+import os
 
 @MainActor
 final class CacheManager {
+    private static let log = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.omicronlab.avro", category: "CacheManager")
     static let shared = CacheManager()
 
     private var weightCache: [String: String]
@@ -83,7 +85,7 @@ final class CacheManager {
             )
             try data.write(to: path, options: .atomic)
         } catch {
-            NSLog("Failed to persist weight cache: %@", error.localizedDescription)
+            Self.log.error("Failed to persist weight cache: \(error.localizedDescription)")
         }
     }
 }

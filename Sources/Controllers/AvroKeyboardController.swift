@@ -206,7 +206,7 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
         }
     }
 
-    @objc public func deleteBackward(_ sender: Any?) {
+    @objc func deleteBackward(_ sender: Any?) {
         guard !composedBuffer.isEmpty else { return }
         composedBuffer.removeLast()
         findCurrentCandidates()
@@ -214,11 +214,11 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
         updateCandidatesPanel()
     }
 
-    @objc public func insertTab(_ sender: Any?) {
+    @objc func insertTab(_ sender: Any?) {
         commitText("\t")
     }
 
-    @objc public func insertNewline(_ sender: Any?) {
+    @objc func insertNewline(_ sender: Any?) {
         if UserDefaults.standard.bool(for: .commitNewLineOnEnter) {
             commitText("\n")
         } else {
@@ -226,28 +226,28 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
         }
     }
 
-    @objc public func moveUp(_ sender: Any?) {
+    @objc func moveUp(_ sender: Any?) {
         if CandidatesPanel.shared.isVisible {
             usedArrowKeys = true
             CandidatesPanel.shared.moveUp(self)
         }
     }
 
-    @objc public func moveDown(_ sender: Any?) {
+    @objc func moveDown(_ sender: Any?) {
         if CandidatesPanel.shared.isVisible {
             usedArrowKeys = true
             CandidatesPanel.shared.moveDown(self)
         }
     }
 
-    @objc public func moveLeft(_ sender: Any?) {
+    @objc func moveLeft(_ sender: Any?) {
         if CandidatesPanel.shared.isVisible {
             usedArrowKeys = true
             CandidatesPanel.shared.moveLeft(self)
         }
     }
 
-    @objc public func moveRight(_ sender: Any?) {
+    @objc func moveRight(_ sender: Any?) {
         if CandidatesPanel.shared.isVisible {
             usedArrowKeys = true
             CandidatesPanel.shared.moveRight(self)
