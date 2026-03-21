@@ -25,7 +25,7 @@
 	<key>InputMethodServerControllerClass</key>
 	<string>AvroKeyboardController</string>
 	<key>LSBackgroundOnly</key>
-	<string>1</string>
+	<string>$(LS_BACKGROUND_ONLY)</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
