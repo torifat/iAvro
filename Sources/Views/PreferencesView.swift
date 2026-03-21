@@ -1,30 +1,8 @@
 import SwiftUI
 
-struct PreferencesView: View {
-    var body: some View {
-        TabView {
-            GeneralTab()
-                .tabItem {
-                    Label("General", image: "General")
-                }
-
-            AutoCorrectTab()
-                .tabItem {
-                    Label("AutoCorrect", image: "AutoCorrect")
-                }
-
-            CreditsTab()
-                .tabItem {
-                    Label("Credits", image: "Credits")
-                }
-        }
-        .frame(minWidth: 450)
-    }
-}
-
 // MARK: - General Tab
 
-private struct GeneralTab: View {
+struct GeneralTab: View {
     @AppStorage("CandidatePanelType") private var candidatePanelType = 1
     @AppStorage("IncludeDictionary") private var includeDictionary = true
     @AppStorage("CommitNewLineOnEnter") private var commitNewLineOnEnter = false
@@ -40,7 +18,7 @@ private struct GeneralTab: View {
             Toggle("Commit new line on Enter/Return", isOn: $commitNewLineOnEnter)
         }
         .formStyle(.grouped)
-        .frame(width: 450, height: 150)
+        .frame(width: 450)
     }
 }
 
@@ -52,7 +30,7 @@ private struct AutoCorrectEntry: Identifiable {
     var id: String { replace }
 }
 
-private struct AutoCorrectTab: View {
+struct AutoCorrectTab: View {
     @State private var searchText = ""
     private let entries: [AutoCorrectEntry]
 
@@ -94,16 +72,14 @@ private struct AutoCorrectTab: View {
             .padding(.horizontal)
             .padding(.vertical, 6)
         }
-        .frame(width: 450, height: 331)
     }
 }
 
 // MARK: - Credits Tab
 
-private struct CreditsTab: View {
+struct CreditsTab: View {
     var body: some View {
         CreditsTextView()
-            .frame(width: 450, height: 450)
     }
 }
 
@@ -126,4 +102,18 @@ private struct CreditsTextView: NSViewRepresentable {
     }
 
     func updateNSView(_ nsView: NSScrollView, context: Context) {}
+}
+
+// MARK: - Previews
+
+#Preview("General") {
+    GeneralTab()
+}
+
+#Preview("AutoCorrect") {
+    AutoCorrectTab()
+}
+
+#Preview("Credits") {
+    CreditsTab()
 }
