@@ -1,5 +1,6 @@
 import Cocoa
 @preconcurrency import InputMethodKit
+import os
 
 @objc(AvroKeyboardController)
 @MainActor
@@ -13,6 +14,7 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
     private var prefixStr: String = ""
     private var termStr: String = ""
     private var suffixStr: String = ""
+    private static let log = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.omicronlab.avro", category: "KeyboardController")
     private var usedArrowKeys = false
 
     @objc override init!(server: IMKServer!, delegate: Any!, client inputClient: Any!) {
@@ -99,6 +101,17 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
             }
             CandidatesPanel.shared.updateCandidates()
             CandidatesPanel.shared.show(kIMKLocateCandidatesBelowHint)
+
+            // Fallback: some web editors (e.g. Google Docs) report cursor
+            // position (0,0), placing the panel at the bottom-left corner.
+            // Reposition near the mouse cursor instead.
+            let frame = CandidatesPanel.shared.candidateFrame()
+
+            if frame.origin.x < 1, frame.origin.y < 1 {
+                var point = NSEvent.mouseLocation
+                point.y -= 36
+                CandidatesPanel.shared.setCandidateFrameTopLeft(point)
+            }
 
             if prevSelected > -1 {
                 for _ in 0..<prevSelected {

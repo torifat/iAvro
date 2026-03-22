@@ -1,5 +1,6 @@
 #!/bin/bash
-# Deploy the debug build to ~/Library/Input Methods and relaunch.
+# Deploy the debug build to ~/Library/Input Methods.
+# After running, switch away from Avro and back to reload.
 
 set -e
 
@@ -14,11 +15,11 @@ if [ -z "$BUILD" ]; then
     exit 1
 fi
 
+# 1. Kill the running process
 killall "$APP_NAME" 2>/dev/null || true
 sleep 0.5
 
-cp -R "$BUILD" "$INSTALL_DIR/"
+# 2. Replace with new build (cp -R preserves the Xcode signature)
+cp -Rf "$BUILD" "$INSTALL_DIR/"
 
-open "$INSTALL_DIR/$APP_NAME.app"
-
-echo "Deployed and relaunched '$APP_NAME'."
+echo "Deployed '$APP_NAME'. Switch input source away and back to reload."

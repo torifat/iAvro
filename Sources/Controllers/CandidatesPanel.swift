@@ -47,6 +47,8 @@ final class CandidatesPanel {
 
     func updateCandidates() { candidates.update() }
     func show(_ locationHint: IMKCandidatesLocationHint) { candidates.show(locationHint) }
+    func candidateFrame() -> NSRect { candidates.candidateFrame() }
+    func setCandidateFrameTopLeft(_ point: NSPoint) { candidates.setCandidateFrameTopLeft(point) }
     func hide() { candidates.hide() }
     func moveUp(_ sender: Any?) { candidates.moveUp(sender) }
     func moveDown(_ sender: Any?) { candidates.moveDown(sender) }
