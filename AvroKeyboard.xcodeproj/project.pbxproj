@@ -11,6 +11,7 @@
 		350CECE9159C45790009F0FE /* regex.json in Resources */ = {isa = PBXBuildFile; fileRef = 350CECE0159C45790009F0FE /* regex.json */; };
 		350CECF6159C5C5F0009F0FE /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 350CECF5159C5C5F0009F0FE /* libsqlite3.dylib */; };
 		AA00000100000001AABB0011 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000200000001AABB0011 /* PreferencesView.swift */; };
+		AA00000100000001AABB0012 /* CandidateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000200000001AABB0012 /* CandidateView.swift */; };
 		3515102D184B99AE00D5059A /* autodict.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3515102C184B99AE00D5059A /* autodict.plist */; };
 		356B186915A445DA00091215 /* AutoCorrect.png in Resources */ = {isa = PBXBuildFile; fileRef = 356B186815A445DA00091215 /* AutoCorrect.png */; };
 		356B186D15A4499B00091215 /* Credits.png in Resources */ = {isa = PBXBuildFile; fileRef = 356B186B15A4499B00091215 /* Credits.png */; };
@@ -68,6 +69,7 @@
 		350CECE0159C45790009F0FE /* regex.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = regex.json; sourceTree = "<group>"; };
 		350CECF5159C5C5F0009F0FE /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = /usr/lib/libsqlite3.dylib; sourceTree = "<absolute>"; };
 		AA00000200000001AABB0011 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
+		AA00000200000001AABB0012 /* CandidateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateView.swift; sourceTree = "<group>"; };
 		3515102C184B99AE00D5059A /* autodict.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = autodict.plist; sourceTree = "<group>"; };
 		356B186815A445DA00091215 /* AutoCorrect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AutoCorrect.png; path = Icons/AutoCorrect.png; sourceTree = "<group>"; };
 		356B186B15A4499B00091215 /* Credits.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Credits.png; path = Icons/Credits.png; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 		AA00000300000001AABB0008 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				AA00000200000001AABB0012 /* CandidateView.swift */,
 				AA00000200000001AABB0011 /* PreferencesView.swift */,
 			);
 			path = Views;
@@ -394,6 +397,7 @@
 				AA00000100000001AABB000D /* CandidatesPanel.swift in Sources */,
 				AA00000100000001AABB000E /* AvroKeyboardController.swift in Sources */,
 				AA00000100000001AABB0011 /* PreferencesView.swift in Sources */,
+				AA00000100000001AABB0012 /* CandidateView.swift in Sources */,
 				AA00000100000001AABB0010 /* UserDefaults+Keys.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

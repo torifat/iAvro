@@ -6,6 +6,7 @@ struct GeneralTab: View {
     @AppStorage("CandidatePanelType") private var candidatePanelType = 1
     @AppStorage("IncludeDictionary") private var includeDictionary = true
     @AppStorage("CommitNewLineOnEnter") private var commitNewLineOnEnter = false
+    @AppStorage("UseCustomCandidatePanel") private var useCustomCandidatePanel = false
 
     var body: some View {
         Form {
@@ -16,6 +17,26 @@ struct GeneralTab: View {
 
             Toggle("Include Dictionary Suggestions", isOn: $includeDictionary)
             Toggle("Commit new line on Enter/Return", isOn: $commitNewLineOnEnter)
+
+            Section {
+                Toggle(isOn: $useCustomCandidatePanel) {
+                    Text("Use custom candidate panel")
+                    HStack(spacing: 4) {
+                        Text("BETA")
+                            .font(.system(size: 9, weight: .bold))
+                            .foregroundStyle(.white)
+                            .padding(.horizontal, 5)
+                            .padding(.vertical, 1.5)
+                            .background(Color.accentColor, in: RoundedRectangle(cornerRadius: 3))
+
+                        Text("If you encounter any issues, please [report them](https://github.com/torifat/iAvro/issues).")
+                    }
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                }
+            } header: {
+                Text("Experimental")
+            }
         }
         .formStyle(.grouped)
         .frame(width: 450)
