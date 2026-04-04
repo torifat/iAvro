@@ -3,15 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		350CECE5159C45790009F0FE /* database.db3 in Resources */ = {isa = PBXBuildFile; fileRef = 350CECD9159C45790009F0FE /* database.db3 */; };
 		350CECE9159C45790009F0FE /* regex.json in Resources */ = {isa = PBXBuildFile; fileRef = 350CECE0159C45790009F0FE /* regex.json */; };
 		350CECEB159C45790009F0FE /* RegexParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 350CECE4159C45790009F0FE /* RegexParser.m */; };
-		350CECF2159C5BEF0009F0FE /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 350CECF1159C5BEF0009F0FE /* libicucore.dylib */; };
-		350CECF6159C5C5F0009F0FE /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 350CECF5159C5C5F0009F0FE /* libsqlite3.dylib */; };
 		350CED1B159CF3300009F0FE /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 350CED18159CF3300009F0FE /* Database.m */; };
 		350CED1C159CF3300009F0FE /* Suggestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 350CED1A159CF3300009F0FE /* Suggestion.m */; };
 		3512ED5A159785400085E81E /* preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3512ED581597853F0085E81E /* preferences.nib */; };
@@ -52,8 +50,6 @@
 		350CECE0159C45790009F0FE /* regex.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = regex.json; sourceTree = "<group>"; };
 		350CECE3159C45790009F0FE /* RegexParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexParser.h; sourceTree = "<group>"; };
 		350CECE4159C45790009F0FE /* RegexParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexParser.m; sourceTree = "<group>"; };
-		350CECF1159C5BEF0009F0FE /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = /usr/lib/libicucore.dylib; sourceTree = "<absolute>"; };
-		350CECF5159C5C5F0009F0FE /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = /usr/lib/libsqlite3.dylib; sourceTree = "<absolute>"; };
 		350CED17159CF3300009F0FE /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Database.h; sourceTree = "<group>"; };
 		350CED18159CF3300009F0FE /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Database.m; sourceTree = "<group>"; };
 		350CED19159CF3300009F0FE /* Suggestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Suggestion.h; sourceTree = "<group>"; };
@@ -151,7 +147,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		29B97314FDCFA39411CA2CEA = {
+		29B97314FDCFA39411CA2CEA /* NumberInput */ = {
 			isa = PBXGroup;
 			children = (
 				080E96DDFE201D6D7F000001 /* Classes */,
@@ -324,7 +320,7 @@
 				en,
 				English,
 			);
-			mainGroup = 29B97314FDCFA39411CA2CEA;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* NumberInput */;
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -434,8 +430,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 778038602EF63D16E6854EA5 /* Pods-Avro Keyboard.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
@@ -445,7 +441,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "\"$(LOCAL_LIBRARY_DIR)/Input Methods/\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.omicronlab.inputmethod.AvroKeyboard;
 				PRODUCT_NAME = "Avro Keyboard";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -457,8 +453,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5FBEF35D48E5DB87984E4CFF /* Pods-Avro Keyboard.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
@@ -466,7 +462,7 @@
 				DEVELOPMENT_TEAM = VF3Y7UU4D6;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "\"$(LOCAL_LIBRARY_DIR)/Input Methods/\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.omicronlab.inputmethod.AvroKeyboard;
 				PRODUCT_NAME = "Avro Keyboard";
 				PROVISIONING_PROFILE_SPECIFIER = "";
