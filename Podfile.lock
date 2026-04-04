@@ -9,7 +9,7 @@ DEPENDENCIES:
   - RegexKitLite (~> 4.0)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - FMDB
     - RegexKitLite
 
@@ -17,6 +17,6 @@ SPEC CHECKSUMS:
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   RegexKitLite: c0e4c12e6e7de0769f3a3ed679f0f61604170661
 
-PODFILE CHECKSUM: 5acf89e667c8a2413ccf87dcbc6c7740d01c8708
+PODFILE CHECKSUM: bd85439e001649a630878d29d622c5eba22e2020
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.16.2
