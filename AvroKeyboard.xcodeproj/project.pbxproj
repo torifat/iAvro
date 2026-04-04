@@ -89,11 +89,9 @@
 		832F56401F994B6500432D7A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Avro Keyboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Avro Keyboard.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9BE514399134C547D83E8518 /* Pods-Avro Keyboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Avro Keyboard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Avro Keyboard/Pods-Avro Keyboard.debug.xcconfig"; sourceTree = "<group>"; };
 		E93074B60A5C264700470842 /* InputMethodKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InputMethodKit.framework; path = /System/Library/Frameworks/InputMethodKit.framework; sourceTree = "<absolute>"; };
 		E93074E00A5C2F1200470842 /* AvroKeyboardController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvroKeyboardController.h; sourceTree = "<group>"; };
 		E93074E10A5C2F1200470842 /* AvroKeyboardController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvroKeyboardController.m; sourceTree = "<group>"; };
-		F63F96C5EF8B57064296B7BD /* Pods-Avro Keyboard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Avro Keyboard.release.xcconfig"; path = "Pods/Target Support Files/Pods-Avro Keyboard/Pods-Avro Keyboard.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -277,8 +275,6 @@
 		DDDA97BE03464C15B5058815 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				9BE514399134C547D83E8518 /* Pods-Avro Keyboard.debug.xcconfig */,
-				F63F96C5EF8B57064296B7BD /* Pods-Avro Keyboard.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -315,8 +311,8 @@
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					8D1107260486CEB800E47090 = {
-						DevelopmentTeam = 8FVM4CE4C6;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = VF3Y7UU4D6;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -436,21 +432,21 @@
 /* Begin XCBuildConfiguration section */
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9BE514399134C547D83E8518 /* Pods-Avro Keyboard.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Developer ID Application: Mehdi Hasan Hasan (8FVM4CE4C6)";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = 8FVM4CE4C6;
+				DEVELOPMENT_TEAM = VF3Y7UU4D6;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "\"$(LOCAL_LIBRARY_DIR)/Input Methods/\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.omicronlab.inputmethod.AvroKeyboard;
 				PRODUCT_NAME = "Avro Keyboard";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -461,19 +457,19 @@
 		};
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F63F96C5EF8B57064296B7BD /* Pods-Avro Keyboard.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Developer ID Application: Mehdi Hasan Hasan (8FVM4CE4C6)";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 8FVM4CE4C6;
+				DEVELOPMENT_TEAM = VF3Y7UU4D6;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.omicronlab.inputmethod.AvroKeyboard;
 				PRODUCT_NAME = "Avro Keyboard";
 				PROVISIONING_PROFILE_SPECIFIER = "";
