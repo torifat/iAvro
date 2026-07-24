@@ -52,7 +52,7 @@ private struct AutoCorrectEntry: Identifiable {
 }
 
 struct AutoCorrectTab: View {
-    @State private var searchText = ""
+    @ObservedObject private var model = AutoCorrectSearchModel()
     private let entries: [AutoCorrectEntry]
 
     init() {
@@ -62,17 +62,17 @@ struct AutoCorrectTab: View {
     }
 
     private var filteredEntries: [AutoCorrectEntry] {
-        guard !searchText.isEmpty else { return entries }
+        guard !model.searchText.isEmpty else { return entries }
         return entries.filter {
-            $0.replace.localizedCaseInsensitiveContains(searchText) ||
-            $0.with.contains(searchText)
+            $0.replace.localizedCaseInsensitiveContains(model.searchText) ||
+            $0.with.contains(model.searchText)
         }
     }
 
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                TextField("Search", text: $searchText)
+                TextField("Search", text: $model.searchText)
                     .textFieldStyle(.roundedBorder)
             }
             .padding(.horizontal)
@@ -94,6 +94,11 @@ struct AutoCorrectTab: View {
             .padding(.vertical, 6)
         }
     }
+}
+
+@MainActor
+private final class AutoCorrectSearchModel: ObservableObject {
+    @Published var searchText = ""
 }
 
 // MARK: - Credits Tab
@@ -127,6 +132,7 @@ private struct CreditsTextView: NSViewRepresentable {
 
 // MARK: - Previews
 
+#if canImport(PreviewsMacros)
 #Preview("General") {
     GeneralTab()
 }
@@ -138,3 +144,4 @@ private struct CreditsTextView: NSViewRepresentable {
 #Preview("Credits") {
     CreditsTab()
 }
+#endif
