@@ -1,0 +1,56 @@
+import Foundation
+
+final class AvroParser: @unchecked Sendable {
+    static let shared = AvroParser()
+
+    private let vowel: String
+    private let consonant: String
+    private let number: String
+    private let caseSensitive: String
+    private let patterns: [Pattern]
+    private let maxPatternLength: Int
+
+    private init() {
+        let data = PatternMatcher.load(from: "data")
+        self.vowel = data.vowel
+        self.consonant = data.consonant
+        self.caseSensitive = data.caseSensitive
+        self.number = data.number ?? ""
+        self.patterns = data.patterns
+        self.maxPatternLength = data.maxPatternLength
+    }
+
+    func parse(_ string: String) -> String {
+        if string.isEmpty { return "" }
+        return PatternMatcher.match(
+            in: string,
+            vowel: vowel,
+            consonant: consonant,
+            number: number,
+            caseSensitive: caseSensitive,
+            patterns: patterns,
+            maxPatternLength: maxPatternLength,
+            prepareInput: { self.fix($0) },
+            postProcess: { $0 }
+        )
+    }
+
+    func fix(_ string: String) -> String {
+        var result = String.UnicodeScalarView()
+        for scalar in string.unicodeScalars {
+            let code = UInt16(scalar.value)
+            if PatternMatcher.inString(caseSensitive, c: code) {
+                result.append(scalar)
+            } else {
+                result.append(Unicode.Scalar(PatternMatcher.smallCap(code))!)
+            }
+        }
+        return String(result)
+    }
+
+    private func isVowel(_ c: unichar) -> Bool { PatternMatcher.inString(vowel, c: c) }
+    private func isConsonant(_ c: unichar) -> Bool { PatternMatcher.inString(consonant, c: c) }
+    private func isPunctuation(_ c: unichar) -> Bool { !(isVowel(c) || isConsonant(c)) }
+    private func isNumber(_ c: unichar) -> Bool { PatternMatcher.inString(number, c: c) }
+    private func isCaseSensitive(_ c: unichar) -> Bool { PatternMatcher.inString(caseSensitive, c: c) }
+}

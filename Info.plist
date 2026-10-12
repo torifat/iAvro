@@ -11,13 +11,13 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>«PROJECTNAME»</string>
+	<string>Avro Keyboard</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>13.0</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.5</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>InputMethodConnectionName</key>
@@ -25,13 +25,13 @@
 	<key>InputMethodServerControllerClass</key>
 	<string>AvroKeyboardController</string>
 	<key>LSBackgroundOnly</key>
-	<string>1</string>
+	<string>$(LS_BACKGROUND_ONLY)</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSSupportsSuddenTermination</key>
-	<true/>
+	<false/>
 	<key>TISIntendedLanguage</key>
 	<string>bn</string>
 	<key>tsInputMethodCharacterRepertoireKey</key>
