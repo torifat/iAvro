@@ -9,20 +9,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc var imPref: IMPreferences?
 
-    override func awakeFromNib() {
+    nonisolated override func awakeFromNib() {
         super.awakeFromNib()
+        MainActor.assumeIsolated {
+            if let prefsItem = menu?.item(withTag: 1) {
+                prefsItem.action = #selector(AvroKeyboardController.showPreferences(_:))
+            }
 
-        if let prefsItem = menu?.item(withTag: 1) {
-            prefsItem.action = #selector(AvroKeyboardController.showPreferences(_:))
+            if UserDefaults.standard.bool(for: .includeDictionary) {
+                Self.log.info("Loading Dictionary...")
+                _ = Database.shared
+                _ = RegexParser.shared
+                _ = CacheManager.shared
+            }
+            _ = AutoCorrect.shared
         }
-
-        if UserDefaults.standard.bool(for: .includeDictionary) {
-            Self.log.info("Loading Dictionary...")
-            _ = Database.shared
-            _ = RegexParser.shared
-            _ = CacheManager.shared
-        }
-        _ = AutoCorrect.shared
     }
 
     func applicationWillTerminate(_ notification: Notification) {

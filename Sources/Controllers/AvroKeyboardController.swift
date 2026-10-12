@@ -111,12 +111,12 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
             // Fallback: some web editors (e.g. Google Docs) report cursor
             // position (0,0), placing the panel at the bottom-left corner.
             // Reposition near the mouse cursor instead.
-            let frame = CandidatesPanel.shared.candidateFrame()
+            let frame = CandidatesPanel.shared.imkCandidateFrame()
 
             if frame.origin.x < 1, frame.origin.y < 1 {
                 var point = NSEvent.mouseLocation
                 point.y -= 36
-                CandidatesPanel.shared.setCandidateFrameTopLeft(point)
+                CandidatesPanel.shared.imkSetCandidateFrameTopLeft(point)
             }
 
             if prevSelected > -1 {
@@ -128,6 +128,7 @@ class AvroKeyboardController: IMKInputController, @unchecked Sendable {
                     }
                 }
             }
+            } // end IMK else
         } else {
             CandidatesPanel.shared.hide()
         }

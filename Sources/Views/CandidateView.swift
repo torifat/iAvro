@@ -37,6 +37,7 @@ struct CandidateView: View {
     }
 }
 
+#if canImport(PreviewsMacros)
 #Preview("Candidates") {
     let vm = CandidateViewModel()
     vm.candidates = ["আমি", "এম", "অ্যাম", "আম", "আঁ"]
@@ -45,3 +46,4 @@ struct CandidateView: View {
         .frame(width: 200)
         .background(.regularMaterial)
 }
+#endif
