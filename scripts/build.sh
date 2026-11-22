@@ -102,7 +102,8 @@ cp "${ROOT}/Icons/Credits.png" "${RESOURCES}/"
 cp "${ROOT}/Icons/General.png" "${RESOURCES}/"
 
 # Menu bar icon (referenced by tsInputMethodIconFileKey)
-cp "${ROOT}/Images.xcassets/MenuIcon.imageset/final16flat2.png" "${RESOURCES}/MenuIcon.png"
+cp "${ROOT}/Images.xcassets/MenuIcon.imageset/MenuIcon.png" "${RESOURCES}/MenuIcon.png"
+cp "${ROOT}/Images.xcassets/MenuIcon.imageset/MenuIcon@2x.png" "${RESOURCES}/MenuIcon@2x.png"
 
 # App icon — compile AppIcon.icon + Images.xcassets via actool when Xcode 26+ is available,
 # falling back to sips with the 512x512 PNG for older Xcode / Command Line Tools-only builds.
