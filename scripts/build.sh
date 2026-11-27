@@ -61,6 +61,8 @@ cat > "${CONTENTS}/Info.plist" <<EOF
 	<string>1</string>
 	<key>CFBundleIconFile</key>
 	<string>AppIcon</string>
+	<key>CFBundleIconName</key>
+	<string>AppIcon</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>LSBackgroundOnly</key>
@@ -82,7 +84,7 @@ cat > "${CONTENTS}/Info.plist" <<EOF
 		<string>Beng</string>
 	</array>
 	<key>tsInputMethodIconFileKey</key>
-	<string>MenuIcon</string>
+	<string>MenuIconTemplate</string>
 </dict>
 </plist>
 EOF
@@ -99,13 +101,29 @@ cp "${ROOT}/Icons/AutoCorrect.png" "${RESOURCES}/"
 cp "${ROOT}/Icons/Credits.png" "${RESOURCES}/"
 cp "${ROOT}/Icons/General.png" "${RESOURCES}/"
 
-# Menu bar icon (referenced by tsInputMethodIconFileKey)
-cp "${ROOT}/Images.xcassets/MenuIcon.imageset/final16flat2.png" "${RESOURCES}/MenuIcon.png"
+# Menu bar icon (referenced by tsInputMethodIconFileKey; Template suffix enables macOS auto-tinting)
+cp "${ROOT}/Images.xcassets/MenuIconTemplate.imageset/MenuIconTemplate.png" "${RESOURCES}/MenuIconTemplate.png"
+cp "${ROOT}/Images.xcassets/MenuIconTemplate.imageset/MenuIconTemplate@2x.png" "${RESOURCES}/MenuIconTemplate@2x.png"
 
-# App icon — sips can produce .icns without a full iconset
-sips -s format icns \
-  "${ROOT}/Images.xcassets/AppIcon.appiconset/final512_flat.png" \
-  --out "${RESOURCES}/AppIcon.icns" >/dev/null
+# App icon — compile AppIcon.icon + Images.xcassets via actool when Xcode 26+ is available,
+# falling back to sips with the 512x512 PNG for older Xcode / Command Line Tools-only builds.
+if xcrun --find actool >/dev/null 2>&1 && xcrun actool \
+  "${ROOT}/Images.xcassets" \
+  "${ROOT}/AppIcon.icon" \
+  --compile "${RESOURCES}" \
+  --app-icon AppIcon \
+  --enable-on-demand-resources NO \
+  --development-region en \
+  --target-device mac \
+  --minimum-deployment-target "${MACOSX_DEPLOYMENT_TARGET}" \
+  --platform macosx \
+  --output-partial-info-plist "${BUILD_DIR}/assetcatalog_generated_info.plist" >/dev/null 2>&1; then
+  :
+else
+  sips -s format icns \
+    "${ROOT}/Images.xcassets/AppIcon.appiconset/icon_512x512.png" \
+    --out "${RESOURCES}/AppIcon.icns" >/dev/null
+fi
 
 echo "==> Ad-hoc signing"
 codesign --force --deep --sign - "${APP_BUNDLE}"
